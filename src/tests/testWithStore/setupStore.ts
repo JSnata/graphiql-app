@@ -1,9 +1,11 @@
-import testSlice from '../../lib/features/testSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { testSlice } from '../../lib/features/testSlice';
 
 const rootReducer = combineReducers({
-    test: testSlice
+    test: testSlice,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 export const setupStore = (preloadedState?: Partial<RootState>) => {
     return configureStore({
@@ -15,6 +17,5 @@ export const setupStore = (preloadedState?: Partial<RootState>) => {
     });
 };
 
-export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];

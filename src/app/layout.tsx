@@ -15,27 +15,22 @@ export const metadata: Metadata = {
     description: 'GraphQL Task',
 };
 
-export default function RootLayout ({
+export default function RootLayout({
     children,
 }: Readonly<{
     children: ReactNode;
-}>)
-{
+}>) {
     return (
-
         <html lang="en">
-            <body className={ inter.className }>
+            <body className={inter.className}>
                 <AppRouterCacheProvider>
                     <StoreProvider>
                         <ToastProvider>
-                            <ThemeProvider theme={ theme }>
-                                { children }
-                            </ThemeProvider>
+                            <ThemeProvider theme={theme}>{children}</ThemeProvider>
                         </ToastProvider>
                     </StoreProvider>
                 </AppRouterCacheProvider>
             </body>
         </html>
-
     );
 }
