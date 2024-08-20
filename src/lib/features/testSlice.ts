@@ -20,4 +20,3 @@ export const testSlice = createSlice({
 
 export const { setNewNumber } = testSlice.actions;
 export default testSlice.reducer;
-
