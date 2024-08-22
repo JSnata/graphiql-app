@@ -1,15 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import AuthForm from '@/components/AuthForm';
+import { useSession } from 'next-auth/react';
 import { auth } from '../../lib/firebase/config';
 
 export default function SignUp() {
     const [error, setError] = useState('');
     const router = useRouter();
+    const session = useSession();
 
     const handleSubmit = async (values) => {
         try {
@@ -23,6 +25,10 @@ export default function SignUp() {
             toast.error(`Error: ${submiterror}`);
         }
     };
+
+    if (session) {
+        redirect('/');
+    }
 
     return (
         <AuthForm
