@@ -3,18 +3,15 @@
 import { Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function Home() {
     const { data: session, status } = useSession();
-    const router = useRouter();
 
-    useEffect(() => {
-        if (status === 'unauthenticated') {
-            router.push('/signin');
-        }
-    }, [status, router]);
+    // useEffect(() => {
+    //     if (status === 'unauthenticated') {
+    //         router.push('/signin');
+    //     }
+    // }, [status, router]);
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -29,9 +26,27 @@ export default function Home() {
                     <Link href="/restful">
                         <Button variant="contained">Restful</Button>
                     </Link>
+                    <Button onClick={() => signOut()}>Sign Out</Button>
                 </div>
             )}
-            <Button onClick={() => signOut()}>Sign Out</Button>
+            {!session && (
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '10px',
+                        alignItems: 'center',
+                        height: '100vh',
+                    }}
+                >
+                    <Link href="/signin">
+                        <Button variant="contained">SignIn</Button>
+                    </Link>
+                    <Link href="/signup">
+                        <Button variant="contained">SignUp</Button>
+                    </Link>
+                </Box>
+            )}
         </Box>
     );
 }

@@ -23,7 +23,7 @@ export default function SignUp() {
         try {
             const result = await createUserWithEmailAndPassword(auth, values.email, values.password);
             if (result.user) {
-                router.push('/');
+                router.push('/signin');
                 toast.success('Signed up successfully!');
             }
         } catch (submiterror) {

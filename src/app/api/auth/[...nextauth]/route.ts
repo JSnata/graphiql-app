@@ -20,7 +20,8 @@ export const authOptions = {
                         email: user.email,
                     };
                 } catch (error) {
-                    return error;
+                    const errorMessage = error.message || 'Login failed';
+                    throw new Error(errorMessage);
                 }
             },
         }),
