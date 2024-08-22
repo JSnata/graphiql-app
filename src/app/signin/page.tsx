@@ -1,7 +1,7 @@
 'use client';
 
 import { signIn, useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import AuthForm from '@/components/AuthForm';
@@ -9,7 +9,13 @@ import AuthForm from '@/components/AuthForm';
 export default function SignIn() {
     const [error, setError] = useState('');
     const router = useRouter();
-    const session = useSession();
+    const { data: session } = useSession();
+
+    useEffect(() => {
+        if (session) {
+            redirect('/');
+        }
+    }, [session, router]);
 
     const handleSubmit = async (values) => {
         const result = await signIn('credentials', {
@@ -26,10 +32,6 @@ export default function SignIn() {
             router.push('/restful');
         }
     };
-
-    if (session) {
-        redirect('/');
-    }
 
     return (
         <AuthForm
