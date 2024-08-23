@@ -18,18 +18,22 @@ export default function SignIn() {
     }, [session, router]);
 
     const handleSubmit = async (values) => {
-        const result = await signIn('credentials', {
-            redirect: false,
-            email: values.email,
-            password: values.password,
-        });
+        try {
+            const result = await signIn('credentials', {
+                redirect: false,
+                email: values.email,
+                password: values.password,
+            });
 
-        if (result?.error) {
-            setError(result.error);
-            toast.error(`Error: ${result.error}`);
-        } else {
-            toast.success('Logged in successfully!');
-            router.push('/restful');
+            if (result?.error) {
+                setError(result.error);
+                toast.error(`Error: ${result.error}`);
+            } else {
+                toast.success('Logged in successfully!');
+                router.push('/');
+            }
+        } catch (err) {
+            toast.error(`Error: ${err}`);
         }
     };
 
