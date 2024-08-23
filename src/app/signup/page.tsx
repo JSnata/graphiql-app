@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
-import AuthForm from '@/components/AuthForm';
+import AuthForm from '@/components/Auth/AuthForm';
 import { useSession } from 'next-auth/react';
 import { auth } from '../../lib/firebase/config';
 
@@ -12,12 +12,6 @@ export default function SignUp() {
     const [error, setError] = useState('');
     const router = useRouter();
     const { data: session } = useSession();
-
-    useEffect(() => {
-        if (session) {
-            redirect('/');
-        }
-    }, [session, router]);
 
     const handleSubmit = async (values) => {
         try {
@@ -31,6 +25,11 @@ export default function SignUp() {
             toast.error(`Error: ${submiterror}`);
         }
     };
+
+    if (session) {
+        router.push('/');
+        return null;
+    }
 
     return (
         <AuthForm

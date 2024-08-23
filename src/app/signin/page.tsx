@@ -1,21 +1,15 @@
 'use client';
 
 import { signIn, useSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import AuthForm from '@/components/AuthForm';
+import AuthForm from '@/components/Auth/AuthForm';
 
 export default function SignIn() {
     const [error, setError] = useState('');
     const router = useRouter();
     const { data: session } = useSession();
-
-    useEffect(() => {
-        if (session) {
-            redirect('/');
-        }
-    }, [session, router]);
 
     const handleSubmit = async (values) => {
         try {
@@ -36,6 +30,11 @@ export default function SignIn() {
             toast.error(`Error: ${err}`);
         }
     };
+
+    if (session) {
+        router.push('/');
+        return null;
+    }
 
     return (
         <AuthForm
