@@ -8,6 +8,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
+import { Box } from '@mui/material';
 import theme from './theme';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -30,7 +31,7 @@ export default function RootLayout({
                         <ToastProvider>
                             <ThemeProvider theme={theme}>
                                 <Header />
-                                {children}
+                                <Box component={'main'}>{children}</Box>
                                 <Footer />
                             </ThemeProvider>
                         </ToastProvider>
