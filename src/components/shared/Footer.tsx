@@ -7,12 +7,13 @@ export default function Footer() {
         <Box
             sx={{
                 width: '100%',
-                position: 'fixed',
+                position: 'sticky',
                 bottom: 0,
                 backgroundColor: 'primary.main',
                 padding: '1rem',
                 color: 'white',
             }}
+            component={'footer'}
         >
             <Container maxWidth="lg" sx={{ textAlign: 'center' }}>
                 <Grid container direction="row" alignItems={'center'} spacing={1}>
