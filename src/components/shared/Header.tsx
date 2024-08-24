@@ -5,10 +5,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
+import Link from 'next/link';
 
 export default function Header() {
     const router = useRouter();
-    const user = false;
+    const user = true; // Заглушка под авторизацию
 
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
@@ -19,6 +20,8 @@ export default function Header() {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
+
+    const handleLogout = () => {}; // Заглушка под выход
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -31,19 +34,13 @@ export default function Header() {
                         height={40}
                         style={{ marginRight: '10px' }}
                     />
-                    <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
-                        REST/GraphQL Client
-                    </Typography>
-
+                    <Link href={'/'}>
+                        <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
+                            REST/GraphQL Client
+                        </Typography>
+                    </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' }, justifyContent: 'flex-end' }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
+                        <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
                             <MenuIcon />
                         </IconButton>
                         <Menu
@@ -61,26 +58,38 @@ export default function Header() {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                         >
-                            <MenuItem onClick={() => router.push('/')}>Home</MenuItem>
-                            <MenuItem onClick={() => router.push('/restful')}>Restful</MenuItem>
+                            {user ? (
+                                <>
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                </>
+                            ) : (
+                                <>
+                                    <MenuItem onClick={() => router.push('/login')}>Login</MenuItem>
+                                    <MenuItem onClick={() => router.push('/register')}>Register</MenuItem>
+                                </>
+                            )}
                         </Menu>
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, justifyContent: 'flex-end' }}>
                         {user ? (
-                            <Stack direction={'row'} spacing={2}>
+                            <Stack direction={'row'} spacing={2} alignItems={'center'}>
                                 <Typography variant={'subtitle1'}>Hi user</Typography>
-                                <Button size={'small'} variant={'contained'} color="secondary">
+                                <Button size={'small'} variant={'contained'} color="secondary" onClick={handleLogout}>
                                     Logout
                                 </Button>
                             </Stack>
                         ) : (
                             <Stack direction={'row'} spacing={2}>
-                                <Button size={'small'} variant={'contained'} color="secondary">
-                                    Login
-                                </Button>
-                                <Button size={'small'} variant={'contained'} color="secondary">
-                                    Register
-                                </Button>
+                                <Link href={'/login'}>
+                                    <Button size={'small'} variant={'contained'} color="secondary">
+                                        Login
+                                    </Button>
+                                </Link>
+                                <Link href={'/register'}>
+                                    <Button size={'small'} variant={'contained'} color="secondary">
+                                        Register
+                                    </Button>
+                                </Link>
                             </Stack>
                         )}
                     </Box>
