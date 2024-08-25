@@ -1,5 +1,8 @@
 {
   "Header": {
-    "userTitle": "Hi,"
+    "userWelcome": "Hi,",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register"
   }
 }

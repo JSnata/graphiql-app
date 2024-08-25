@@ -1,5 +1,8 @@
 {
   "Header": {
-    "userTitle": "Привет,"
+    "userWelcome": "Привет,",
+    "login": "Вход",
+    "logout": "Выход",
+    "register": "Регистрация"
   }
 }
