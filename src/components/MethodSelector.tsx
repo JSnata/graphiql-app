@@ -1,16 +1,17 @@
 import { MenuItem, Select } from '@mui/material';
-import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 
 const methods = ['get', 'post', 'put', 'delete', 'head', 'options'];
 
 export default function MethodSelector() {
-    const [selectedMethod, setMethod] = useState('get');
+    const { replace } = useRouter();
+    const { request } = useParams<{ request: string[] }>();
 
     return (
         <Select
             sx={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
-            value={selectedMethod}
-            onChange={(e) => setMethod(e.target.value)}
+            value={request[0]}
+            onChange={(e) => replace(`/${e.target.value}`)}
         >
             {methods.map((method) => (
                 <MenuItem key={method} value={method}>

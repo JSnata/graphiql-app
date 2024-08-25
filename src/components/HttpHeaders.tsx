@@ -11,7 +11,9 @@ export default function HttpHeaders() {
                 gap: '20px',
             }}
         >
-            <Button variant="contained">Add header</Button>
+            <Button sx={{ textTransform: 'capitalize' }} variant="contained">
+                Add header
+            </Button>
             <Box>
                 <TextField
                     sx={{ '& .MuiInputBase-root': { borderTopRightRadius: 0, WebkitBorderBottomRightRadius: 0 } }}

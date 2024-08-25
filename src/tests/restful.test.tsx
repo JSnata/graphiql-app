@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from './testWithStore/renderWithProviders';
-import Restful from '../app/restful/page';
+import Restful from '../app/[...request]/page';
 
 describe('TEST ', () => {
     test('Preloaded state to render', () => {
