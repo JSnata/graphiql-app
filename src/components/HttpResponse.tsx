@@ -6,14 +6,7 @@ export default function HttpResponse() {
         <Box sx={{ width: '50%' }}>
             <Typography>Status: {''}</Typography>
             Body:
-            <CodeMirror
-                basicSetup={{ lineNumbers: false }}
-                editable={false}
-                readOnly
-                theme="light"
-                maxHeight="200px"
-                style={{ fontSize: '16px' }}
-            />
+            <CodeMirror editable={false} readOnly theme="light" maxHeight="200px" style={{ fontSize: '16px' }} />
         </Box>
     );
 }
