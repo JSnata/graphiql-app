@@ -36,7 +36,9 @@ export default async function RootLayout({
                             <ToastProvider>
                                 <ThemeProvider theme={theme}>
                                     <Header />
-                                    <Box component={'main'}>{children}</Box>
+                                    <Box component={'main'} sx={{ minHeight: 'calc(100vh - 132px)' }}>
+                                        {children}
+                                    </Box>
                                     <Footer />
                                 </ThemeProvider>
                             </ToastProvider>
