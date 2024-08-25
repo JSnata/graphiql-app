@@ -9,6 +9,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
 import { Box } from '@mui/material';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 import theme from './theme';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -18,25 +20,29 @@ export const metadata: Metadata = {
     description: 'GraphQL Task',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: ReactNode;
 }>) {
+    const locale = await getLocale();
+    const messages = await getMessages();
     return (
-        <html lang="en">
+        <html lang={locale}>
             <body className={inter.className}>
-                <AppRouterCacheProvider>
-                    <StoreProvider>
-                        <ToastProvider>
-                            <ThemeProvider theme={theme}>
-                                <Header />
-                                <Box component={'main'}>{children}</Box>
-                                <Footer />
-                            </ThemeProvider>
-                        </ToastProvider>
-                    </StoreProvider>
-                </AppRouterCacheProvider>
+                <NextIntlClientProvider messages={messages}>
+                    <AppRouterCacheProvider>
+                        <StoreProvider>
+                            <ToastProvider>
+                                <ThemeProvider theme={theme}>
+                                    <Header />
+                                    <Box component={'main'}>{children}</Box>
+                                    <Footer />
+                                </ThemeProvider>
+                            </ToastProvider>
+                        </StoreProvider>
+                    </AppRouterCacheProvider>
+                </NextIntlClientProvider>
             </body>
         </html>
     );
