@@ -1,4 +1,9 @@
 {
+  "LocaleSwitcher": {
+    "label": "Язык",
+    "ru": "Русский",
+    "en": "Английский"
+  },
   "Header": {
     "userWelcome": "Привет,",
     "login": "Вход",
