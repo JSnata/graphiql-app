@@ -5,6 +5,7 @@ import Endpoint from '@/components/Endpoint';
 import HttpHeaders from '@/components/HttpHeaders';
 import MethodSelector from '@/components/MethodSelector';
 import HttpBody from '@/components/HttpBody';
+import HttpResponse from '@/components/HttpResponse';
 
 export default function Restful() {
     return (
@@ -16,6 +17,7 @@ export default function Restful() {
 
             <HttpHeaders />
             <HttpBody />
+            <HttpResponse />
         </Stack>
     );
 }
