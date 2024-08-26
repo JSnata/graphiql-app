@@ -6,6 +6,9 @@ import ToastProvider from '@/providers/ToastProvider';
 import StoreProvider from '@/providers/StoreProvider';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
+import Header from '@/components/shared/Header';
+import Footer from '@/components/shared/Footer';
+import { Box } from '@mui/material';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '@/providers/SessionProvider';
 import theme from './theme';
@@ -27,15 +30,19 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <SessionProvider session={session}>
-                    <AppRouterCacheProvider>
-                        <StoreProvider>
-                            <ToastProvider>
-                                <ThemeProvider theme={theme}>{children}</ThemeProvider>
-                            </ToastProvider>
-                        </StoreProvider>
-                    </AppRouterCacheProvider>
-                </SessionProvider>
+         <SessionProvider session={session}>
+                <AppRouterCacheProvider>
+                    <StoreProvider>
+                        <ToastProvider>
+                            <ThemeProvider theme={theme}>
+                                <Header />
+                                <Box component={'main'}>{children}</Box>
+                                <Footer />
+                            </ThemeProvider>
+                        </ToastProvider>
+                    </StoreProvider>
+                </AppRouterCacheProvider>
+          </SessionProvider>
             </body>
         </html>
     );
