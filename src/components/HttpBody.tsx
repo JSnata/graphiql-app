@@ -3,7 +3,7 @@ import CodeMirror from '@uiw/react-codemirror';
 
 export default function HttpBody() {
     return (
-        <Box sx={{ width: '50%' }}>
+        <Box sx={{ width: '100%' }}>
             <CodeMirror
                 placeholder="Enter the request body here"
                 theme="light"
