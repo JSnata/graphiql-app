@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuItem, Select } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 
@@ -11,7 +13,7 @@ const methods = [
     { method: 'options', color: '#a61468' },
 ];
 
-const findColor = (selectedMethod: string) => methods.find(({ method }) => selectedMethod === method).color;
+const findColor = (selectedMethod: string) => methods.find(({ method }) => selectedMethod === method)?.color;
 
 export default function MethodSelector() {
     const { replace } = useRouter();
