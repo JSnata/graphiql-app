@@ -9,7 +9,10 @@ import { ThemeProvider } from '@mui/material/styles';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
 import { Box } from '@mui/material';
+import { getServerSession } from 'next-auth';
+import SessionProvider from '@/providers/SessionProvider';
 import theme from './theme';
+import { authOptions } from './api/auth/[...nextauth]/route';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,14 +21,16 @@ export const metadata: Metadata = {
     description: 'GraphQL Task',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: ReactNode;
 }>) {
+    const session = await getServerSession(authOptions);
     return (
         <html lang="en">
             <body className={inter.className}>
+         <SessionProvider session={session}>
                 <AppRouterCacheProvider>
                     <StoreProvider>
                         <ToastProvider>
@@ -37,6 +42,7 @@ export default function RootLayout({
                         </ToastProvider>
                     </StoreProvider>
                 </AppRouterCacheProvider>
+          </SessionProvider>
             </body>
         </html>
     );
