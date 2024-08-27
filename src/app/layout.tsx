@@ -8,16 +8,20 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
-import { Box } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
+import React from 'react';
 import theme from './theme';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'GraphQL',
-    description: 'GraphQL Task',
+    title: 'Rest/GraphQL Client',
+    description: 'Rest/GraphQL Client for testing all REST and GraphQL APIs',
+    icons: {
+        icon: '/favicon.png',
+    },
 };
 
 export default async function RootLayout({
@@ -35,6 +39,7 @@ export default async function RootLayout({
                         <StoreProvider>
                             <ToastProvider>
                                 <ThemeProvider theme={theme}>
+                                    <CssBaseline />
                                     <Header />
                                     <Box component={'main'} sx={{ minHeight: 'calc(100vh - 132px)' }}>
                                         {children}
