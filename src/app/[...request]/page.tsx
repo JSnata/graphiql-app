@@ -1,5 +1,3 @@
-'use client';
-
 import { Box, Stack } from '@mui/material';
 import Endpoint from '@/components/Endpoint';
 import HttpHeaders from '@/components/HttpHeaders';

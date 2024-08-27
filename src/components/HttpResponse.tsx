@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Typography } from '@mui/material';
 import CodeMirror from '@uiw/react-codemirror';
 
