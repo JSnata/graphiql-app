@@ -12,20 +12,20 @@ export default function LocaleSwitcher() {
     const locale = useLocale();
     const [, startTransition] = useTransition();
 
-    function localeChange(value: string) {
+    async function localeChange(value: string) {
         const localeValue = value as Locale;
         startTransition(() => {
             setUserLocale(localeValue);
         });
     }
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target as HTMLInputElement;
-        localeChange(value);
+        await localeChange(value);
     };
 
     return (
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small" color={'secondary'}>
+        <FormControl sx={{ m: 1, minWidth: 150 }} size="small" color={'secondary'}>
             <InputLabel id="" color={'secondary'}>
                 {t('label')}
             </InputLabel>
