@@ -1,7 +1,6 @@
 'use client';
 
 import { MenuItem, FormControl, Select, InputLabel } from '@mui/material';
-
 import React, { useTransition } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Locale } from '@/localeConf';
@@ -25,7 +24,15 @@ export default function LocaleSwitcher() {
     };
 
     return (
-        <FormControl sx={{ m: 1, minWidth: 150 }} size="small" color="secondary">
+        <FormControl
+            sx={{
+                m: 1,
+                minWidth: 150,
+                variant: 'standard',
+            }}
+            size="small"
+            color="secondary"
+        >
             <InputLabel id="" color="secondary">
                 {t('label')}
             </InputLabel>

@@ -4,6 +4,7 @@ import {
     AppBar,
     Box,
     Button,
+    Divider,
     IconButton,
     Menu,
     MenuItem,
@@ -113,10 +114,18 @@ export default function Header() {
                             >
                                 {session
                                     ? [
+                                          <MenuItem key="userWelcome" disableTouchRipple>
+                                              <Typography variant="subtitle1">
+                                                  {t('userWelcome')} {getName()}
+                                              </Typography>
+                                          </MenuItem>,
+                                          <Divider key="divider" />,
                                           <MenuItem key="logout" onClick={handleLogout}>
                                               {t('logout')}
                                           </MenuItem>,
-                                          <LocaleSwitcher key="localeSwitcher" />,
+                                          <MenuItem key="localeSwitcher">
+                                              <LocaleSwitcher />
+                                          </MenuItem>,
                                       ]
                                     : [
                                           <MenuItem key="login" onClick={() => router.push('/signin')}>
@@ -125,7 +134,9 @@ export default function Header() {
                                           <MenuItem key="register" onClick={() => router.push('/signup')}>
                                               {t('signup')}
                                           </MenuItem>,
-                                          <LocaleSwitcher key="localeSwitcher" />,
+                                          <MenuItem key="localeSwitcher">
+                                              <LocaleSwitcher />
+                                          </MenuItem>,
                                       ]}
                             </Menu>
                         </Box>
