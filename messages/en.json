@@ -4,10 +4,27 @@
     "ru": "Russian",
     "en": "English"
   },
-  "Header": {
+  "Auth": {
+    "welcome": "Welcome to",
     "userWelcome": "Hi,",
-    "login": "Login",
+    "signin": "Sign in",
     "logout": "Logout",
-    "register": "Register"
+    "signup": "Signup",
+    "email": "Email",
+    "password": "Password",
+    "noHaveAcc": "Do not have an account?",
+    "haveAcc": "Already have an account?",
+    "toastLoginS": "Logged in successfully!",
+    "toastRegisterS":"Signed up successfully!"
+
+  },
+  "Validation": {
+    "required": "Required",
+    "invalidEmail" : "Invalid email",
+    "passwordMin": "Password must be at least 8 characters long",
+    "passwordNumber":  "Password should contain at least one number",
+    "passwordLetter": "Password should contain at least one letter",
+    "passwordUnicode": "Password should contain valid Unicode characters",
+    "passwordSpecialChar": "Password should contain at least one special character"
   }
 }
