@@ -30,6 +30,7 @@
         "formik": "^2.4.6",
         "next": "14.2.5",
         "next-auth": "^4.24.7",
+        "prettier": "^3.3.3",
         "react": "^18",
         "react-dom": "^18",
         "react-firebase-hooks": "^5.1.1",
@@ -60,7 +61,6 @@
         "eslint-plugin-react-hooks": "^4.6.2",
         "husky": "^9.1.4",
         "jsdom": "^24.1.1",
-        "prettier": "^3.3.3",
         "typescript": "^5.5.4",
         "typescript-eslint": "^8.1.0",
         "vitest": "^2.0.5"
