@@ -61,18 +61,18 @@ export default function Header() {
     const handleLogout = () => {}; // Заглушка под выход
 
     return (
-        <Box sx={{ flexGrow: 1 }} component={'header'}>
+        <Box sx={{ flexGrow: 1 }} component="header">
             <AnimatedScroll>
-                <AppBar component={'nav'} position={'fixed'}>
+                <AppBar component="nav" position="fixed">
                     <Toolbar>
                         <Image
-                            src={'./graph.svg'}
-                            alt={'Background'}
+                            src="./graph.svg"
+                            alt="Background"
                             width={40}
                             height={40}
                             style={{ marginRight: '10px' }}
                         />
-                        <Link href={'/'}>
+                        <Link href="/">
                             <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
                                 REST/GraphQL Client
                             </Typography>
@@ -117,26 +117,21 @@ export default function Header() {
                         {/* desktop menu */}
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, justifyContent: 'flex-end' }}>
                             {user ? (
-                                <Stack direction={'row'} spacing={2} alignItems={'center'}>
-                                    <Typography variant={'subtitle1'}>{t('userWelcome')} user</Typography>
-                                    <Button
-                                        size={'small'}
-                                        variant={'contained'}
-                                        color="secondary"
-                                        onClick={handleLogout}
-                                    >
+                                <Stack direction="row" spacing={2} alignItems="center">
+                                    <Typography variant="subtitle1">{t('userWelcome')} user</Typography>
+                                    <Button size="small" variant="contained" color="secondary" onClick={handleLogout}>
                                         {t('logout')}
                                     </Button>
                                 </Stack>
                             ) : (
-                                <Stack direction={'row'} spacing={2}>
-                                    <Link href={'/login'}>
-                                        <Button size={'small'} variant={'contained'} color="secondary">
+                                <Stack direction="row" spacing={2}>
+                                    <Link href="/login">
+                                        <Button size="small" variant="contained" color="secondary">
                                             {t('login')}
                                         </Button>
                                     </Link>
-                                    <Link href={'/register'}>
-                                        <Button size={'small'} variant={'contained'} color="secondary">
+                                    <Link href="/register">
+                                        <Button size="small" variant="contained" color="secondary">
                                             {t('register')}
                                         </Button>
                                     </Link>

@@ -25,13 +25,13 @@ export default function LocaleSwitcher() {
     };
 
     return (
-        <FormControl sx={{ m: 1, minWidth: 150 }} size="small" color={'secondary'}>
-            <InputLabel id="" color={'secondary'}>
+        <FormControl sx={{ m: 1, minWidth: 150 }} size="small" color="secondary">
+            <InputLabel id="" color="secondary">
                 {t('label')}
             </InputLabel>
-            <Select labelId="" id="" value={locale} label="Locale" onChange={handleChange} color={'secondary'}>
-                <MenuItem value={'en'}>{t('en')}</MenuItem>
-                <MenuItem value={'ru'}>{t('ru')}</MenuItem>
+            <Select labelId="" id="" value={locale} label="Locale" onChange={handleChange} color="secondary">
+                <MenuItem value="en">{t('en')}</MenuItem>
+                <MenuItem value="ru">{t('ru')}</MenuItem>
             </Select>
         </FormControl>
     );

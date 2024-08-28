@@ -1,23 +1,34 @@
 {
   "extends": [
-    "airbnb-base",
-    "next/core-web-vitals", 
+    "airbnb",
+    "airbnb-typescript",
+    "next/core-web-vitals",
     "plugin:prettier/recommended"
   ],
   "globals": {
     "JSX": "readonly"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./",
+    "sourceType": "module"
+  },
   "rules": {
     "no-param-reassign": [
       "error",
       {
         "props": true,
-        "ignorePropertyModificationsFor": ["state"]
+        "ignorePropertyModificationsFor": [
+          "state"
+        ]
       }
     ],
-  "import/no-extraneous-dependencies": "off",
-   "import/extensions": [
+    "import/no-extraneous-dependencies": "off",
+    "import/extensions": [
       "error",
       "ignorePackages",
       {
@@ -26,7 +37,7 @@
         "ts": "never",
         "tsx": "never"
       }
-   ],
+    ],
     "prettier/prettier": [
       "error",
       {
@@ -37,5 +48,12 @@
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "no-console": "error"
-  }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    "build/",
+    "next-env.d.ts",
+    "next"
+  ]
 }
