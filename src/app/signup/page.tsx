@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
@@ -25,7 +25,7 @@ export default function SignUp() {
             }
         } catch (submiterror) {
             setError(submiterror.message);
-            toast.error(`Error: ${submiterror}`);
+            toast.error(`${'toastAuthE'} ${submiterror}`);
         }
     };
 

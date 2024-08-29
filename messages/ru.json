@@ -15,6 +15,7 @@
     "noHaveAcc": "Нет аккаунта?",
     "haveAcc": "Уже есть аккаунт?",
     "toastLoginS": "Вы успешно вошли!",
+    "toastAuthE": "Ошибка:",
     "toastRegisterS":"Вы успешно зарегестрировались!"
   },
   "Validation": {

@@ -15,8 +15,8 @@
     "noHaveAcc": "Do not have an account?",
     "haveAcc": "Already have an account?",
     "toastLoginS": "Logged in successfully!",
-    "toastRegisterS":"Signed up successfully!"
-
+    "toastRegisterS":"Signed up successfully!",
+    "toastAuthE": "Error:"
   },
   "Validation": {
     "required": "Required",

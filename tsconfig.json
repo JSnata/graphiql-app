@@ -25,7 +25,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "types": ["vitest"]
   },
   "include": [
     "next-env.d.ts",
