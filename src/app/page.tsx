@@ -1,52 +1,68 @@
 'use client';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
     const { data: session, status } = useSession();
-
-    // useEffect(() => {
-    //     if (status === 'unauthenticated') {
-    //         router.push('/signin');
-    //     }
-    // }, [status, router]);
-
+    const t = useTranslations('Auth');
     if (status === 'loading') {
         return <div>Loading...</div>;
     }
 
     return (
-        <Box>
-            {session && (
-                <div>
-                    <Typography variant="h5">Email: {session.user?.email}!</Typography>
-                    <Typography variant="h1">GraphQL Task</Typography>
-                    <Link href="/restful">
-                        <Button variant="contained">Restful</Button>
-                    </Link>
-                    <Button onClick={() => signOut()}>Sign Out</Button>
-                </div>
-            )}
-            {!session && (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        gap: '10px',
-                        alignItems: 'center',
-                        height: '100vh',
-                    }}
-                >
-                    <Link href="/signin">
-                        <Button variant="contained">SignIn</Button>
-                    </Link>
-                    <Link href="/signup">
-                        <Button variant="contained">SignUp</Button>
-                    </Link>
-                </Box>
-            )}
+        <Box
+            sx={{
+                textAlign: 'center',
+                display: 'flex',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}
+        >
+            <Box>
+                {session && (
+                    <Stack
+                        spacing={2}
+                        direction={{ xs: 'column', sm: 'row' }}
+                        divider={<Divider orientation="vertical" flexItem />}
+                    >
+                        <Link href="/restful">
+                            <Button variant="contained">Restful</Button>
+                        </Link>
+                        <Link href="/graphql">
+                            <Button variant="contained">GraphQL</Button>
+                        </Link>
+                        <Button variant="contained" color="secondary" onClick={() => signOut()}>
+                            {t('logout')}
+                        </Button>
+                    </Stack>
+                )}
+                {!session && (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            gap: '10px',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {' '}
+                        <Typography variant="h4">{`${t('welcome')} Restful/GraphQL Client`}</Typography>
+                        <Stack direction="row" spacing={2}>
+                            <Link href="/signin">
+                                <Button variant="contained">{t('signin')}</Button>
+                            </Link>
+                            <Link href="/signup">
+                                <Button variant="contained">{t('signup')}</Button>
+                            </Link>
+                        </Stack>
+                    </Box>
+                )}
+            </Box>
         </Box>
     );
 }

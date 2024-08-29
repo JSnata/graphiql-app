@@ -1,11 +1,9 @@
-'use client';
-
 import { Box, Typography } from '@mui/material';
 
-export default function Restful() {
+export default function Graphql() {
     return (
         <Box sx={{ margin: '0 auto', textAlign: 'center' }}>
-            <Typography variant="h5">Restful</Typography>
+            <Typography variant="h5">GraphQl</Typography>
         </Box>
     );
 }
