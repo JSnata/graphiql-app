@@ -27,8 +27,6 @@ export default function TabsSection({ elems, labels }: { elems: ReactNode[]; lab
                 </Tabs>
             </Box>
 
-            {/* {value === 0 && <MyComponent />} */}
-            {/* {value === 1 && <MyAnotherComponent />} */}
             {elems.map((child, index) => index === value && child)}
         </Box>
     );
