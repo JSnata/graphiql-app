@@ -3,6 +3,7 @@
 import isMethod from '@/helpers/isMethod';
 import { MenuItem, Select } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const methods = [
     { name: 'get', color: '#007f31' },
@@ -19,8 +20,11 @@ const findColor = (selectedMethod: string) => methods.find(({ name }) => selecte
 export default function MethodSelector() {
     const { replace } = useRouter();
     const { request } = useParams<{ request: string[] }>();
-    if (!isMethod(request[0])) replace('/get');
     const method = request[0];
+
+    useEffect(() => {
+        if (!isMethod(request[0])) replace('/get');
+    }, [replace, request]);
 
     return (
         <Select
@@ -30,7 +34,7 @@ export default function MethodSelector() {
                 color: findColor(method),
                 fontWeight: 'bold',
             }}
-            value={method}
+            value={isMethod(method) ? method : 'get'}
             onChange={(e) => replace(`/${e.target.value}/${request.slice(1).join('/')}`)}
         >
             {methods.map(({ color, name }) => (
