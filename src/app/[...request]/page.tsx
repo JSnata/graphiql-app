@@ -4,6 +4,7 @@ import HttpHeaders from '@/components/HttpHeaders';
 import MethodSelector from '@/components/MethodSelector';
 import HttpBody from '@/components/HttpBody';
 import HttpResponse from '@/components/HttpResponse';
+import Variables from '@/components/Variables';
 
 export default function Restful() {
     return (
@@ -17,6 +18,7 @@ export default function Restful() {
                 <MethodSelector />
                 <Endpoint />
             </Box>
+            <Variables />
 
             <HttpHeaders />
             <HttpBody />
