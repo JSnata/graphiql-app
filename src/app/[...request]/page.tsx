@@ -4,6 +4,7 @@ import HttpHeaders from '@/components/HttpHeaders';
 import MethodSelector from '@/components/MethodSelector';
 import HttpBody from '@/components/HttpBody';
 import HttpResponse from '@/components/HttpResponse';
+import TabsSection from '@/components/TabsSection';
 import Variables from '@/components/Variables';
 
 export default function Restful() {
@@ -20,7 +21,10 @@ export default function Restful() {
             </Box>
             <Variables />
 
-            <HttpHeaders />
+            <TabsSection
+                labels={['Headers', 'Variables']}
+                elems={[<HttpHeaders key="headers" />, <div key="variables">Variables here</div>]}
+            />
             <HttpBody />
             <HttpResponse />
         </Stack>
