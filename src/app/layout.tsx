@@ -8,17 +8,23 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import Header from '@/components/shared/Header';
 import Footer from '@/components/shared/Footer';
-import { Box } from '@mui/material';
 import { getServerSession } from 'next-auth';
 import SessionProvider from '@/providers/SessionProvider';
+import { Container, CssBaseline } from '@mui/material';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
+import React from 'react';
 import theme from './theme';
 import { authOptions } from './api/auth/[...nextauth]/route';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'GraphQL',
-    description: 'GraphQL Task',
+    title: 'Rest/GraphQL Client',
+    description: 'Rest/GraphQL Client for testing all REST and GraphQL APIs',
+    icons: {
+        icon: '/favicon.png',
+    },
 };
 
 export default async function RootLayout({
@@ -26,24 +32,41 @@ export default async function RootLayout({
 }: Readonly<{
     children: ReactNode;
 }>) {
+    const locale = await getLocale();
+    const messages = await getMessages();
     const session = await getServerSession(authOptions);
     return (
-        <html lang="en">
-            <body className={inter.className}>
-                <SessionProvider session={session}>
-                    <AppRouterCacheProvider>
-                        <StoreProvider>
-                            <ToastProvider>
-                                <ThemeProvider theme={theme}>
-                                    <Header />
-                                    <Box component="main">{children}</Box>
-                                    <Footer />
-                                </ThemeProvider>
-                            </ToastProvider>
-                        </StoreProvider>
-                    </AppRouterCacheProvider>
-                </SessionProvider>
-            </body>
-        </html>
+        <>
+            <CssBaseline />
+            <html lang={locale}>
+                <body className={inter.className}>
+                    <SessionProvider session={session}>
+                        <NextIntlClientProvider messages={messages}>
+                            <AppRouterCacheProvider>
+                                <StoreProvider>
+                                    <ToastProvider>
+                                        <ThemeProvider theme={theme}>
+                                            <Header />
+                                            <Container
+                                                component="main"
+                                                sx={{
+                                                    minHeight: 'calc(100vh - 132px)',
+                                                    display: 'flex',
+                                                    height: '100%',
+                                                    flexDirection: 'column',
+                                                }}
+                                            >
+                                                {children}
+                                            </Container>
+                                            <Footer />
+                                        </ThemeProvider>
+                                    </ToastProvider>
+                                </StoreProvider>
+                            </AppRouterCacheProvider>
+                        </NextIntlClientProvider>
+                    </SessionProvider>
+                </body>
+            </html>
+        </>
     );
 }
