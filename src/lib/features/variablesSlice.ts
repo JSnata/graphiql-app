@@ -12,17 +12,19 @@ export const variablesSlice = createSlice({
     name: 'variables',
     initialState,
     reducers: {
-        addVariable(state, action: PayloadAction<{ [key: string]: string }>) {
+        addVariableField(state, action: PayloadAction<{ [key: string]: string }>) {
             state.variables.push(action.payload);
         },
-        removeVariable(state, action: PayloadAction<string>) {
+        removeVariableField(state, action: PayloadAction<string>) {
             state.variables = state.variables.filter((data) => data.key !== action.payload);
         },
-        clearVariables(state) {
-            state.variables = [];
+        saveVariable(state, action: PayloadAction<{ key: string; value: string; selectedIndex: number }>) {
+            const { key, value, selectedIndex } = action.payload;
+            state.variables[selectedIndex].key = key;
+            state.variables[selectedIndex].value = value;
         },
     },
 });
 
-export const { addVariable, removeVariable, clearVariables } = variablesSlice.actions;
+export const { addVariableField, removeVariableField, saveVariable } = variablesSlice.actions;
 export default variablesSlice.reducer;
