@@ -12,7 +12,7 @@ export default function Restful() {
             spacing={3}
             component="section"
             alignItems="center"
-            sx={{ margin: '0 auto', padding: '20px', maxWidth: '1240px' }}
+            sx={{ margin: '0 auto', padding: '20px', width: '100%' }}
         >
             <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                 <MethodSelector />
@@ -21,7 +21,7 @@ export default function Restful() {
 
             <TabsSection
                 labels={['Headers', 'Variables']}
-                elems={[<HttpHeaders key="headers" />, <div key="variables">Variables here</div>]}
+                elems={[<HttpHeaders key="headers" />, <div key="variables">Variables</div>]}
             />
             <HttpBody />
             <HttpResponse />

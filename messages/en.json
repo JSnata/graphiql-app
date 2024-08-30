@@ -1,30 +1,36 @@
 {
-  "LocaleSwitcher": {
-    "label": "Language",
-    "ru": "Russian",
-    "en": "English"
-  },
-  "Auth": {
-    "welcome": "Welcome to",
-    "userWelcome": "Hi,",
-    "signin": "Sign in",
-    "logout": "Logout",
-    "signup": "Signup",
-    "email": "Email",
-    "password": "Password",
-    "noHaveAcc": "Do not have an account?",
-    "haveAcc": "Already have an account?",
-    "toastLoginS": "Logged in successfully!",
-    "toastRegisterS":"Signed up successfully!",
-    "toastAuthE": "Error:"
-  },
-  "Validation": {
-    "required": "Required",
-    "invalidEmail" : "Invalid email",
-    "passwordMin": "Password must be at least 8 characters long",
-    "passwordNumber":  "Password should contain at least one number",
-    "passwordLetter": "Password should contain at least one letter",
-    "passwordUnicode": "Password should contain valid Unicode characters",
-    "passwordSpecialChar": "Password should contain at least one special character"
-  }
+    "LocaleSwitcher": {
+        "label": "Language",
+        "ru": "Russian",
+        "en": "English"
+    },
+    "Auth": {
+        "welcome": "Welcome to",
+        "userWelcome": "Hi,",
+        "signin": "Sign in",
+        "logout": "Logout",
+        "signup": "Signup",
+        "email": "Email",
+        "password": "Password",
+        "noHaveAcc": "Do not have an account?",
+        "haveAcc": "Already have an account?",
+        "toastLoginS": "Logged in successfully!",
+        "toastRegisterS": "Signed up successfully!",
+        "toastAuthE": "Error:"
+    },
+    "Validation": {
+        "required": "Required",
+        "invalidEmail": "Invalid email",
+        "passwordMin": "Password must be at least 8 characters long",
+        "passwordNumber": "Password should contain at least one number",
+        "passwordLetter": "Password should contain at least one letter",
+        "passwordUnicode": "Password should contain valid Unicode characters",
+        "passwordSpecialChar": "Password should contain at least one special character"
+    },
+    "Request": {
+        "emptyEndpoint": "Please enter the endpoint",
+        "bodyError": "Oops... Error:",
+        "status": "Status: ",
+        "body": "Body: "
+    }
 }
