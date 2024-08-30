@@ -1,7 +1,7 @@
 'use client';
 
 import { signIn, useSession } from 'next-auth/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import AuthForm from '@/components/Auth/AuthForm';
@@ -24,13 +24,13 @@ export default function SignIn() {
 
             if (result?.error) {
                 setError(result.error);
-                toast.error(`Error: ${result.error}`);
+                toast.error(`${t('toastAuthE')} ${result.error}`);
             } else {
                 toast.success(t('toastLoginS'));
                 router.push('/');
             }
         } catch (err) {
-            toast.error(`Error: ${err}`);
+            toast.error(`${t('toastAuthE')} ${err}`);
         }
     };
 
