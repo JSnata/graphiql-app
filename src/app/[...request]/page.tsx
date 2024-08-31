@@ -23,7 +23,7 @@ export default function Restful() {
 
             <TabsSection
                 labels={['Headers', 'Variables']}
-                elems={[<HttpHeaders key="headers" />, <div key="variables">Variables here</div>]}
+                elems={[<HttpHeaders key="headers" />, <Variables key="variables" />]}
             />
             <HttpBody />
             <HttpResponse />
