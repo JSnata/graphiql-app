@@ -2,22 +2,19 @@
 
 import { IconButton, Stack, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAppDispatch, useAppSelector } from '@/lib/hook';
-import { removeVariableField, saveVariable } from '@/lib/features/variablesSlice';
 import { useState } from 'react';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
-import { toast } from 'react-toastify';
 
 interface IVariableInputProps {
     variable: { [key: string]: string };
     index: number;
+    deleteFn: (keyValue: string) => void;
+    saveFn: (keyField: string, valueField: string, index: number) => void;
 }
 
 export default function VariableInput(props: IVariableInputProps) {
-    const { variable, index } = props;
-    const allVariables = useAppSelector((state) => state.variables.variables);
-    const dispatch = useAppDispatch();
+    const { variable, index, deleteFn, saveFn } = props;
     const [keyField, setKeyField] = useState(variable.key);
     const [valueField, setValueField] = useState(variable.value);
     const [editMode, setEditMode] = useState(false);
@@ -30,19 +27,17 @@ export default function VariableInput(props: IVariableInputProps) {
         setValueField(e.target.value);
     };
 
-    const handleSave = () => {
-        if (keyField === '' && valueField === '') return;
-        const isExist = allVariables.find((data) => data.key === keyField);
-        if (isExist) {
-            toast.error('Key already exists');
-            return;
+    const handleSave = async () => {
+        try {
+            await saveFn(keyField, valueField, index);
+            setEditMode(false);
+        } catch (error) {
+            console.error(error);
         }
-        dispatch(saveVariable({ key: keyField, value: valueField, selectedIndex: index }));
-        setEditMode(false);
     };
 
-    const handleDelete = (keyValue: string) => {
-        dispatch(removeVariableField(keyValue));
+    const handleDelete = () => {
+        deleteFn(variable.key);
     };
 
     return (
@@ -75,12 +70,7 @@ export default function VariableInput(props: IVariableInputProps) {
                     <EditIcon fontSize="inherit" />
                 </IconButton>
             )}
-            <IconButton
-                aria-label="variable-delete"
-                size="small"
-                onClick={() => handleDelete(variable.key)}
-                color="error"
-            >
+            <IconButton aria-label="variable-delete" size="small" onClick={handleDelete} color="error">
                 <DeleteIcon fontSize="inherit" />
             </IconButton>
         </Stack>
