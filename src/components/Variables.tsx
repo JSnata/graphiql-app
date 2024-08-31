@@ -27,7 +27,7 @@ export default function Variables() {
 
     return (
         <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <Typography variant="h6">Varibales</Typography>
+            <Typography variant="h6">Variables</Typography>
             <Stack direction="row" spacing={2}>
                 <Button variant="contained" color="success" endIcon={<AddCircleIcon />} onClick={handleAddVariable}>
                     Add
