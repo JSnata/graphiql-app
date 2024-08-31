@@ -1,30 +1,79 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 export interface VariablesSlice {
-    variables: Array<{ [key: string]: string }>;
+    variablesBody: Array<{ [key: string]: string }>;
+    variablesHeader: Array<{ [key: string]: string }>;
 }
 
 const initialState: VariablesSlice = {
-    variables: [],
+    variablesBody: [],
+    variablesHeader: [
+        {
+            key: 'Content-Type',
+            value: '',
+        },
+        {
+            key: 'Authorization',
+            value: '',
+        },
+        {
+            key: 'Cookie',
+            value: '',
+        },
+        {
+            key: 'User-Agent',
+            value: '',
+        },
+        {
+            key: 'Referer',
+            value: '',
+        },
+        {
+            key: 'Origin',
+            value: '',
+        },
+        {
+            key: 'Host',
+            value: '',
+        },
+    ],
 };
 
-export const variablesSlice = createSlice({
+export const variableSlice = createSlice({
     name: 'variables',
     initialState,
     reducers: {
-        addVariableField(state, action: PayloadAction<{ [key: string]: string }>) {
-            state.variables.push(action.payload);
+        addVariableBodyField(state, action: PayloadAction<{ [key: string]: string }>) {
+            state.variablesBody.push(action.payload);
         },
-        removeVariableField(state, action: PayloadAction<string>) {
-            state.variables = state.variables.filter((data) => data.key !== action.payload);
+        removeVariableBodyField(state, action: PayloadAction<string>) {
+            state.variablesBody = state.variablesBody.filter((data) => data.key !== action.payload);
         },
-        saveVariable(state, action: PayloadAction<{ key: string; value: string; selectedIndex: number }>) {
+        saveBodyVariable(state, action: PayloadAction<{ key: string; value: string; selectedIndex: number }>) {
             const { key, value, selectedIndex } = action.payload;
-            state.variables[selectedIndex].key = key;
-            state.variables[selectedIndex].value = value;
+            state.variablesBody[selectedIndex].key = key;
+            state.variablesBody[selectedIndex].value = value;
+        },
+        addVariableHeaderField(state, action: PayloadAction<{ [key: string]: string }>) {
+            state.variablesHeader.push(action.payload);
+        },
+        removeVariableHeaderField(state, action: PayloadAction<string>) {
+            state.variablesHeader = state.variablesHeader.filter((data) => data.key !== action.payload);
+        },
+        saveHeaderVariable(state, action: PayloadAction<{ key: string; value: string; selectedIndex: number }>) {
+            const { key, value, selectedIndex } = action.payload;
+            state.variablesHeader[selectedIndex].key = key;
+            state.variablesHeader[selectedIndex].value = value;
         },
     },
 });
 
-export const { addVariableField, removeVariableField, saveVariable } = variablesSlice.actions;
-export default variablesSlice.reducer;
+export const {
+    addVariableBodyField,
+    removeVariableBodyField,
+    saveBodyVariable,
+    addVariableHeaderField,
+    removeVariableHeaderField,
+    saveHeaderVariable,
+} = variableSlice.actions;
+export default variableSlice.reducer;
