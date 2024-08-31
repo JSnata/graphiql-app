@@ -13,13 +13,12 @@ export default function Restful() {
             spacing={3}
             component="section"
             alignItems="center"
-            sx={{ margin: '0 auto', padding: '20px', maxWidth: '1240px' }}
+            sx={{ margin: '0 auto', padding: '20px', width: '100%' }}
         >
             <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                 <MethodSelector />
                 <Endpoint />
             </Box>
-            <Variables />
 
             <TabsSection
                 labels={['Headers', 'Variables']}

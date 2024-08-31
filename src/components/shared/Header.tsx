@@ -4,6 +4,7 @@ import {
     AppBar,
     Box,
     Button,
+    Divider,
     IconButton,
     Menu,
     MenuItem,
@@ -18,6 +19,9 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
+import { signOut, useSession } from 'next-auth/react';
 
 interface IScrollProps {
     children: React.ReactElement;
@@ -41,8 +45,9 @@ function AnimatedScroll(props: IScrollProps) {
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 export default function Header() {
+    const t = useTranslations('Auth');
+    const { data: session } = useSession();
     const router = useRouter();
-    const user = true; // Заглушка под авторизацию
 
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
@@ -54,7 +59,20 @@ export default function Header() {
         setAnchorElNav(null);
     };
 
-    const handleLogout = () => {}; // Заглушка под выход
+    const getName = () => {
+        if (!session) {
+            return null;
+        }
+        return (session?.user?.email ?? 'unknown').split('@')[0];
+    };
+
+    const handleLogout = async () => {
+        try {
+            await signOut();
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <Box sx={{ flexGrow: 1 }} component="header">
@@ -73,6 +91,8 @@ export default function Header() {
                                 REST/GraphQL Client
                             </Typography>
                         </Link>
+
+                        {/* mobile menu */}
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' }, justifyContent: 'flex-end' }}>
                             <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
                                 <MenuIcon />
@@ -92,40 +112,57 @@ export default function Header() {
                                 open={Boolean(anchorElNav)}
                                 onClose={handleCloseNavMenu}
                             >
-                                {user
+                                {session
                                     ? [
+                                          <MenuItem key="userWelcome" disableTouchRipple>
+                                              <Typography variant="subtitle1">
+                                                  {t('userWelcome')} {getName()}
+                                              </Typography>
+                                          </MenuItem>,
+                                          <Divider key="divider" />,
                                           <MenuItem key="logout" onClick={handleLogout}>
-                                              Logout
+                                              {t('logout')}
+                                          </MenuItem>,
+                                          <MenuItem key="localeSwitcher">
+                                              <LocaleSwitcher />
                                           </MenuItem>,
                                       ]
                                     : [
-                                          <MenuItem key="login" onClick={() => router.push('/login')}>
-                                              Login
+                                          <MenuItem key="login" onClick={() => router.push('/signin')}>
+                                              {t('signin')}
                                           </MenuItem>,
-                                          <MenuItem key="register" onClick={() => router.push('/register')}>
-                                              Register
+                                          <MenuItem key="register" onClick={() => router.push('/signup')}>
+                                              {t('signup')}
+                                          </MenuItem>,
+                                          <MenuItem key="localeSwitcher">
+                                              <LocaleSwitcher />
                                           </MenuItem>,
                                       ]}
                             </Menu>
                         </Box>
+                        {/* desktop menu */}
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, justifyContent: 'flex-end' }}>
-                            {user ? (
+                            {session ? (
                                 <Stack direction="row" spacing={2} alignItems="center">
-                                    <Typography variant="subtitle1">Hi user</Typography>
+                                    <LocaleSwitcher />
+                                    <Typography variant="subtitle1">
+                                        {t('userWelcome')} {getName()}
+                                    </Typography>
                                     <Button size="small" variant="contained" color="secondary" onClick={handleLogout}>
-                                        Logout
+                                        {t('logout')}
                                     </Button>
                                 </Stack>
                             ) : (
                                 <Stack direction="row" spacing={2}>
-                                    <Link href="/login">
+                                    <LocaleSwitcher />
+                                    <Link href="/signin">
                                         <Button size="small" variant="contained" color="secondary">
-                                            Login
+                                            {t('signin')}
                                         </Button>
                                     </Link>
-                                    <Link href="/register">
+                                    <Link href="/signup">
                                         <Button size="small" variant="contained" color="secondary">
-                                            Register
+                                            {t('signup')}
                                         </Button>
                                     </Link>
                                 </Stack>
