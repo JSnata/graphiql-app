@@ -44,10 +44,12 @@ export default function HttpBody() {
                 placeholder="Text/JSON"
                 theme="light"
                 height="150px"
-                style={{ fontSize: '18px' }}
+                // style={{ fontSize: '18px' }}
             />
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '25px' }}>
-                <Button onClick={makeBeautify}>Beautify</Button>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '25px', mt: 2 }}>
+                <Button onClick={makeBeautify} variant="contained">
+                    {t('beautify')}
+                </Button>
                 {error && <Typography sx={{ color: 'red' }}>{error}</Typography>}
             </Box>
         </Box>
