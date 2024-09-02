@@ -48,7 +48,7 @@ export default function VariablesField(props: IVariablesProps) {
     const handleSave = useCallback(
         async (keyField: string, valueField: string, index: number) => {
             return new Promise((resolve, reject) => {
-                const indexExist = variables.findIndex((data) => data.key === keyField && data.value === valueField);
+                const indexExist = variables.findIndex((data) => data.key === keyField);
                 if (indexExist === index) {
                     // dispatch(saveVariable({ key: keyField, value: valueField, selectedIndex: index }));
                     saveDispatch(keyField, valueField, index);
