@@ -21,7 +21,14 @@ export default function HttpResponse() {
                 <ChipStatusCode statusCode={statusCode} />
             </Stack>
             <Typography variant="body1">{t('responseBody')}</Typography>
-            <CodeMirror editable={false} value={formattedResponse} readOnly theme="light" height="150px" />
+            <CodeMirror
+                editable={false}
+                value={formattedResponse}
+                readOnly
+                theme="light"
+                minHeight="220px"
+                maxHeight="800px"
+            />
         </Box>
     );
 }
