@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { ILsRequestData } from '@/types/lsData';
 
 export interface RestSlice {
     method: string;
@@ -6,6 +7,7 @@ export interface RestSlice {
     responseBody: { [key: string]: string };
     statusCode: number;
     statusText: string;
+    dataLS?: ILsRequestData;
 }
 
 const initialState: RestSlice = {
@@ -14,6 +16,7 @@ const initialState: RestSlice = {
     responseBody: {},
     statusCode: null,
     statusText: '',
+    dataLS: null,
 };
 
 export const restSlice = createSlice({
@@ -35,8 +38,14 @@ export const restSlice = createSlice({
         setRequestBody(state, action: PayloadAction<{ [key: string]: string }>) {
             state.requestBody = action.payload;
         },
+        setDataLS(state, action: PayloadAction<ILsRequestData>) {
+            state.dataLS = action.payload;
+        },
+        clearDataLS(state) {
+            state.dataLS = null;
+        },
     },
 });
 
-export const { setResponseBody, setStatusCode, setMethod, setStatusText } = restSlice.actions;
+export const { setResponseBody, setStatusCode, setMethod, setStatusText, setDataLS, clearDataLS } = restSlice.actions;
 export default restSlice.reducer;
