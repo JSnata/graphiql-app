@@ -9,6 +9,7 @@ import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/re
 import { useTranslations } from 'next-intl';
 import generateRequestBodyWithVars, { generateHeaders } from '@/utils/generateRequestBodyWithVars';
 import { toast } from 'react-toastify';
+import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
 
 export default function SendRequestBar() {
     const pathname = usePathname();
@@ -49,6 +50,13 @@ export default function SendRequestBar() {
                     data = await response.text();
                 }
                 dispatch(setResponseBody(data));
+                saveRequestsToLocalStorage({
+                    type: 'REST',
+                    method: decodeData.method,
+                    url: decodeData.url,
+                    body: decodeData.body,
+                    headers,
+                });
             } catch (err) {
                 dispatch(setStatusText(err.message));
                 toast.error(`Error ${err}`);
