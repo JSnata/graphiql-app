@@ -3,6 +3,6 @@ export interface ILsRequestData {
     method: string;
     url: string;
     body: string;
-    headers: { [key: string]: string };
+    headers: Array<{ [key: string]: string }>;
     timestamp: string;
 }
