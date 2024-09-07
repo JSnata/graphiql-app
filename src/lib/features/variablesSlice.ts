@@ -10,31 +10,11 @@ const initialState: VariablesSlice = {
     variablesHeader: [
         {
             key: 'Content-Type',
-            value: '',
+            value: 'application/json',
         },
         {
             key: 'Authorization',
-            value: '',
-        },
-        {
-            key: 'Cookie',
-            value: '',
-        },
-        {
-            key: 'User-Agent',
-            value: '',
-        },
-        {
-            key: 'Referer',
-            value: '',
-        },
-        {
-            key: 'Origin',
-            value: '',
-        },
-        {
-            key: 'Host',
-            value: '',
+            value: 'your-token-here',
         },
     ],
 };
