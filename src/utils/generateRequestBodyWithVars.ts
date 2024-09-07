@@ -9,19 +9,17 @@ export default function generateRequestBodyWithVars(body: string, variables: { [
             return `"${variable.value}"`;
         });
     };
-    const bodyWithReplacedVars = replaceVariables(body);
-    // console.log(bodyWithReplacedVars);
-    return bodyWithReplacedVars;
+    return replaceVariables(body);
 }
 
 export function generateHeaders(headers: { [key: string]: string }[]) {
-    const result: { [key: string]: string } = {};
+    const headersObject = new Headers();
+
     headers.forEach((header) => {
-        if (header.value && header.value.length > 0) {
-            result[header.key] = header.value;
+        if (header.key && header.value && header.value.trim().length > 0) {
+            headersObject.set(header.key, header.value);
         }
     });
 
-    // console.log(result);
-    return result;
+    return headersObject;
 }
