@@ -5,6 +5,7 @@ export interface RestSlice {
     requestBody: { [key: string]: string };
     responseBody: { [key: string]: string };
     statusCode: number;
+    statusText: string;
 }
 
 const initialState: RestSlice = {
@@ -12,6 +13,7 @@ const initialState: RestSlice = {
     requestBody: {},
     responseBody: {},
     statusCode: null,
+    statusText: '',
 };
 
 export const restSlice = createSlice({
@@ -24,6 +26,9 @@ export const restSlice = createSlice({
         setStatusCode(state, action: PayloadAction<number>) {
             state.statusCode = action.payload;
         },
+        setStatusText(state, action: PayloadAction<string>) {
+            state.statusText = action.payload;
+        },
         setMethod(state, action: PayloadAction<string>) {
             state.method = action.payload;
         },
@@ -33,5 +38,5 @@ export const restSlice = createSlice({
     },
 });
 
-export const { setResponseBody, setStatusCode, setMethod } = restSlice.actions;
+export const { setResponseBody, setStatusCode, setMethod, setStatusText } = restSlice.actions;
 export default restSlice.reducer;
