@@ -5,7 +5,7 @@ import Endpoint from '@/components/Endpoint';
 import { Box, Button } from '@mui/material';
 import { usePathname } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
-import { setResponseBody, setStatusCode } from '@/lib/features/restSlice';
+import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/restSlice';
 import { useTranslations } from 'next-intl';
 import generateRequestBodyWithVars, { generateHeaders } from '@/utils/generateRequestBodyWithVars';
 import { toast } from 'react-toastify';
@@ -30,25 +30,29 @@ export default function SendRequestBar() {
             try {
                 if (decodeData.body && decodeData.method !== 'GET') {
                     requestOptions.body = generateRequestBodyWithVars(decodeData.body, variablesBody);
-                    requestOptions.headers = generateHeaders(headers);
                 }
+                requestOptions.headers = generateHeaders(headers);
             } catch (err) {
                 toast.warn(err.message);
             }
 
             try {
                 const response = await fetch(decodeData.url, requestOptions);
-                const data = await response.json();
-                dispatch(setStatusCode(response.status));
+                const statusCode = response.status;
+                dispatch(setStatusCode(statusCode));
+                const contentType = response.headers.get('content-type');
+
+                let data;
+                if (contentType && contentType.includes('application/json')) {
+                    data = await response.json();
+                } else {
+                    data = await response.text();
+                }
                 dispatch(setResponseBody(data));
             } catch (err) {
-                console.error(err);
+                dispatch(setStatusText(err.message));
                 toast.error(`Error ${err}`);
             }
-            // console.log(requestOptions);
-
-            // console.log(data);
-            // console.log(response);
         }
     };
     return (
