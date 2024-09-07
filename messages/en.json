@@ -16,7 +16,8 @@
     "haveAcc": "Already have an account?",
     "toastLoginS": "Logged in successfully!",
     "toastRegisterS": "Signed up successfully!",
-    "toastAuthE": "Error:"
+    "toastAuthE": "Error:",
+    "history": "History"
   },
   "Validation": {
     "required": "Required",
@@ -36,5 +37,10 @@
     "responseBody": "Response body: ",
     "beautify": "Beautify",
     "send": "Send"
+  },
+  "History": {
+    "title": "Request history",
+    "empty": "You have not made any requests yet",
+    "try": "Here is empty. Try these variants:"
   }
 }
