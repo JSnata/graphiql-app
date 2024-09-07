@@ -93,7 +93,13 @@ export default function Header() {
                         </Link>
 
                         {/* mobile menu */}
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' }, justifyContent: 'flex-end' }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'flex', sm: 'none' },
+                                justifyContent: 'flex-end',
+                            }}
+                        >
                             <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
                                 <MenuIcon />
                             </IconButton>
@@ -141,7 +147,13 @@ export default function Header() {
                             </Menu>
                         </Box>
                         {/* desktop menu */}
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, justifyContent: 'flex-end' }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'none', sm: 'flex' },
+                                justifyContent: 'flex-end',
+                            }}
+                        >
                             {session ? (
                                 <Stack direction="row" spacing={2} alignItems="center">
                                     <LocaleSwitcher />

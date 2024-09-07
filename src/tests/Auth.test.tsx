@@ -35,13 +35,17 @@ describe.each([
         Component: SignIn,
         buttonText: 'Login',
         handleSubmitMock: signIn,
-        messages: { Auth: { signin: 'Login', haveAcc: 'Don’t have an account?' } },
+        messages: {
+            Auth: { signin: 'Login', haveAcc: 'Don’t have an account?' },
+        },
     },
     {
         Component: SignUp,
         buttonText: 'Sign Up',
         handleSubmitMock: createUserWithEmailAndPassword,
-        messages: { Auth: { signup: 'Sign Up', haveAcc: 'Already have an account?' } },
+        messages: {
+            Auth: { signup: 'Sign Up', haveAcc: 'Already have an account?' },
+        },
     },
 ])('Auth Form Component', ({ Component, buttonText, handleSubmitMock, messages }) => {
     it(`should render form and handle submission`, async () => {
@@ -70,13 +74,17 @@ describe.each([
 
         const emailInput = await screen.findByLabelText('Auth.email');
         const passwordInput = await screen.findByLabelText('Auth.password');
-        const submitButton = await screen.findByRole('button', { name: `${buttonText}` });
+        const submitButton = await screen.findByRole('button', {
+            name: `${buttonText}`,
+        });
 
         expect(emailInput).toBeInTheDocument();
         expect(passwordInput).toBeInTheDocument();
         expect(submitButton).toBeInTheDocument();
 
-        fireEvent.change(emailInput, { target: { value: 'test@gmail.com' } });
+        fireEvent.change(emailInput, {
+            target: { value: 'test@gmail.com' },
+        });
         fireEvent.change(passwordInput, { target: { value: 'test11!!' } });
         fireEvent.click(submitButton);
 

@@ -52,7 +52,13 @@ export default function HttpHeaders() {
         replace(updatedUrl);
     }, [encodeHeadersToBase64, variablesHeader, pathname, replace]);
     const handleSave = (keyField: string, valueField: string, index: number) => {
-        dispatch(saveHeaderVariable({ key: keyField, value: valueField, selectedIndex: index }));
+        dispatch(
+            saveHeaderVariable({
+                key: keyField,
+                value: valueField,
+                selectedIndex: index,
+            }),
+        );
         updateUrlWithHeaders();
     };
     const handleRemove = (keyValue: string) => {

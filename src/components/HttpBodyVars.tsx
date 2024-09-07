@@ -9,7 +9,13 @@ export default function HttpBodyVars() {
     const dispatch = useAppDispatch();
 
     const handleSave = (keyField: string, valueField: string, index: number) => {
-        dispatch(saveBodyVariable({ key: keyField, value: valueField, selectedIndex: index }));
+        dispatch(
+            saveBodyVariable({
+                key: keyField,
+                value: valueField,
+                selectedIndex: index,
+            }),
+        );
     };
 
     const handleRemove = (keyValue: string) => {

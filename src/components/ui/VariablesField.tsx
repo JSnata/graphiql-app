@@ -67,7 +67,14 @@ export default function VariablesField(props: IVariablesProps) {
     );
 
     return (
-        <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+            }}
+        >
             <Box onClick={(e) => handleAddVariable(e)} sx={{ width: '100%', my: 2 }}>
                 <Paper
                     sx={{

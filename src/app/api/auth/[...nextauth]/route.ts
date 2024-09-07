@@ -8,7 +8,11 @@ export const authOptions = {
         CredentialsProvider({
             name: 'Firebase Email',
             credentials: {
-                email: { label: 'Email', type: 'email', placeholder: 'email@example.com' },
+                email: {
+                    label: 'Email',
+                    type: 'email',
+                    placeholder: 'email@example.com',
+                },
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials) {

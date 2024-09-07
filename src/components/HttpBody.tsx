@@ -21,7 +21,12 @@ export default function HttpBody() {
         if (!code) return;
         try {
             if (code.trim().startsWith('{') && code.trim().endsWith('}')) {
-                setCode(await format(code, { parser: 'json', plugins: [parser, estree] }));
+                setCode(
+                    await format(code, {
+                        parser: 'json',
+                        plugins: [parser, estree],
+                    }),
+                );
             }
             setError('');
         } catch (err: unknown) {
@@ -46,7 +51,14 @@ export default function HttpBody() {
                 height="150px"
                 // style={{ fontSize: '18px' }}
             />
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '25px', mt: 2 }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '25px',
+                    mt: 2,
+                }}
+            >
                 <Button onClick={makeBeautify} variant="contained">
                     {t('beautify')}
                 </Button>
