@@ -7,16 +7,7 @@ export interface VariablesSlice {
 
 const initialState: VariablesSlice = {
     variablesBody: [],
-    variablesHeader: [
-        {
-            key: 'Content-Type',
-            value: 'application/json',
-        },
-        {
-            key: 'Authorization',
-            value: 'your-token-here',
-        },
-    ],
+    variablesHeader: [],
 };
 
 export const variableSlice = createSlice({
