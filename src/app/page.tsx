@@ -35,6 +35,9 @@ export default function Home() {
                         <Link href="/graphql">
                             <Button variant="contained">GraphQL</Button>
                         </Link>
+                        <Link href="/history">
+                            <Button variant="contained">{t('history')}</Button>
+                        </Link>
                         <Button variant="contained" color="secondary" onClick={() => signOut()}>
                             {t('logout')}
                         </Button>
