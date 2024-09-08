@@ -27,13 +27,9 @@ export default function VariableInput(props: IVariableInputProps) {
         setValueField(e.target.value);
     };
 
-    const handleSave = async () => {
-        try {
-            await saveFn(keyField, valueField, index);
-            setEditMode(false);
-        } catch (error) {
-            console.error(error);
-        }
+    const handleSave = () => {
+        saveFn(keyField, valueField, index);
+        setEditMode(false);
     };
 
     const handleDelete = () => {
