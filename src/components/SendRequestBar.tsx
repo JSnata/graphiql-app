@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 import generateRequestBodyWithVars, { generateHeaders } from '@/utils/generateRequestBodyWithVars';
 import { toast } from 'react-toastify';
 import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
+import { ILsRequestData } from '@/types/lsData';
 
 export default function SendRequestBar() {
     const pathname = usePathname();
@@ -56,7 +57,7 @@ export default function SendRequestBar() {
                     url: decodeData.url,
                     body: decodeData.body,
                     headers,
-                });
+                } as ILsRequestData);
             } catch (err) {
                 dispatch(setStatusText(err.message));
                 toast.error(`Error ${err}`);
