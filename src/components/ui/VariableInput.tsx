@@ -62,15 +62,20 @@ export default function VariableInput(props: IVariableInputProps) {
             />
 
             {editMode ? (
-                <IconButton aria-label="variable-delete" size="small" onClick={handleSave} color="success">
+                <IconButton aria-label="variable-save" size="medium" onClick={handleSave} color="success">
                     <SaveIcon fontSize="inherit" />
                 </IconButton>
             ) : (
-                <IconButton aria-label="variable-change" size="small" onClick={() => setEditMode(true)} color="primary">
+                <IconButton
+                    aria-label="variable-change"
+                    size="medium"
+                    onClick={() => setEditMode(true)}
+                    color="primary"
+                >
                     <EditIcon fontSize="inherit" />
                 </IconButton>
             )}
-            <IconButton aria-label="variable-delete" size="small" onClick={handleDelete} color="error">
+            <IconButton aria-label="variable-delete" size="medium" onClick={handleDelete} color="error">
                 <DeleteIcon fontSize="inherit" />
             </IconButton>
         </Stack>
