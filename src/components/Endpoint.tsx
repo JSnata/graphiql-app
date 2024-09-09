@@ -3,6 +3,7 @@
 import { TextField } from '@mui/material';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { decodeBase64, encodeBase64 } from '@/utils/base64';
 
 export default function Endpoint() {
     const { request } = useParams<{ request: string[] }>();
@@ -13,7 +14,7 @@ export default function Endpoint() {
                 window.history.replaceState(
                     null,
                     '',
-                    `/${request[0]}${e.target.value ? `/${btoa(e.target.value)}` : ''}/${request[2] || ''}`,
+                    `/${request[0]}${e.target.value ? `/${encodeBase64(e.target.value)}` : ''}/${request[2] || ''}`,
                 )
             }
             sx={{
@@ -23,7 +24,7 @@ export default function Endpoint() {
                 },
             }}
             label={t('emptyEndpoint')}
-            defaultValue={request[1] ? atob(decodeURIComponent(request[1])) : ''}
+            defaultValue={request[1] ? decodeBase64(decodeURIComponent(request[1])) : ''}
         />
     );
 }

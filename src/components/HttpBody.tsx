@@ -8,13 +8,14 @@ import { format } from 'prettier';
 import * as parser from 'prettier/plugins/babel';
 import * as estree from 'prettier/plugins/estree';
 import { useTranslations } from 'next-intl';
+import { decodeBase64, encodeBase64 } from '@/utils/base64';
 
 export default function HttpBody() {
     const { replace } = useRouter();
     const pathname = usePathname();
     const t = useTranslations('Request');
     const params = pathname.split('/').filter(Boolean); // аналог useParams, обновляющийся при использовании history API
-    const [code, setCode] = useState(atob(decodeURIComponent(params[2] || '')));
+    const [code, setCode] = useState(decodeBase64(decodeURIComponent(params[2] || '')));
     const [error, setError] = useState('');
 
     const makeBeautify = async () => {
@@ -41,7 +42,7 @@ export default function HttpBody() {
                 onChange={setCode}
                 onBlur={() => {
                     if (params[1]) {
-                        replace(`/${params[0]}/${params[1]}/${btoa(code)}`);
+                        replace(`/${params[0]}/${params[1]}/${encodeBase64(code)}`);
                     } else {
                         setError(t('emptyEndpoint'));
                     }

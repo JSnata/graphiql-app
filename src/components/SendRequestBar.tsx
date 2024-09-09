@@ -11,6 +11,7 @@ import generateRequestBodyWithVars, { generateHeaders, toVariablesArray } from '
 import { toast } from 'react-toastify';
 import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
+import { decodeBase64 } from '@/utils/base64';
 
 export default function SendRequestBar() {
     const pathname = usePathname();
@@ -23,8 +24,8 @@ export default function SendRequestBar() {
         const requestParams = pathname.split('/').filter(Boolean);
         const decodeData = {
             method: requestParams[0].toUpperCase(),
-            url: requestParams[1] ? atob(decodeURIComponent(requestParams[1])) : '',
-            body: requestParams[2] ? atob(decodeURIComponent(requestParams[2])) : null,
+            url: requestParams[1] ? decodeBase64(decodeURIComponent(requestParams[1])) : '',
+            body: requestParams[2] ? decodeBase64(decodeURIComponent(requestParams[2])) : null,
         };
 
         if (decodeData.url) {
