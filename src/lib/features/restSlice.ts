@@ -32,9 +32,6 @@ export const restSlice = createSlice({
         setStatusText(state, action: PayloadAction<string>) {
             state.statusText = action.payload;
         },
-        setMethod(state, action: PayloadAction<string>) {
-            state.method = action.payload;
-        },
         setRequestBody(state, action: PayloadAction<{ [key: string]: string }>) {
             state.requestBody = action.payload;
         },
@@ -47,5 +44,5 @@ export const restSlice = createSlice({
     },
 });
 
-export const { setResponseBody, setStatusCode, setMethod, setStatusText, setDataLS, clearDataLS } = restSlice.actions;
+export const { setResponseBody, setStatusCode, setStatusText, setDataLS, clearDataLS } = restSlice.actions;
 export default restSlice.reducer;

@@ -1,3 +1,5 @@
+import { ReadonlyURLSearchParams } from 'next/navigation';
+
 export default function generateRequestBodyWithVars(body: string, variables: { [key: string]: string }[]) {
     const regex = /{{(.*?)}}/g;
     const replaceVariables = (str: string) => {
@@ -22,4 +24,14 @@ export function generateHeaders(headers: { [key: string]: string }[]) {
     });
 
     return headersObject;
+}
+
+export function toVariablesArray(searchParams: ReadonlyURLSearchParams) {
+    const result = [];
+
+    searchParams.forEach((value, key) => {
+        result.push({ key: decodeURIComponent(key), value: decodeURIComponent(value) });
+    });
+
+    return result;
 }

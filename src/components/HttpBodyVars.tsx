@@ -2,24 +2,23 @@
 
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
 import VariablesField from '@/components/ui/VariablesField';
-import { addVariableBodyField, removeVariableBodyField, saveBodyVariable } from '@/lib/features/variablesSlice';
+import {
+    addVariableBodyField,
+    ChangedVariable,
+    removeVariableBodyField,
+    saveBodyVariable,
+} from '@/lib/features/variablesSlice';
 
 export default function HttpBodyVars() {
     const variablesBody = useAppSelector((state) => state.variables.variablesBody);
     const dispatch = useAppDispatch();
 
-    const handleSave = (keyField: string, valueField: string, index: number) => {
-        dispatch(
-            saveBodyVariable({
-                key: keyField,
-                value: valueField,
-                selectedIndex: index,
-            }),
-        );
+    const handleSave = ({ oldKey, newKey, value }: ChangedVariable) => {
+        dispatch(saveBodyVariable({ oldKey, newKey, value }));
     };
 
-    const handleRemove = (keyValue: string) => {
-        dispatch(removeVariableBodyField(keyValue));
+    const handleRemove = (key: string) => {
+        dispatch(removeVariableBodyField(key));
     };
 
     const handleAdd = ({ key, value }: { key: string; value: string }) => {

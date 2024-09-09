@@ -49,7 +49,6 @@ export default function HttpBody() {
                 placeholder="Text/JSON"
                 theme="light"
                 height="150px"
-                // style={{ fontSize: '18px' }}
             />
             <Box
                 sx={{

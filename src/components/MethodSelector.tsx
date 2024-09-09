@@ -1,8 +1,6 @@
 'use client';
 
 import isMethod from '@/helpers/isMethod';
-import { setMethod } from '@/lib/features/restSlice';
-import { useAppDispatch } from '@/lib/hook';
 import { MenuItem, Select } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -23,7 +21,6 @@ export default function MethodSelector() {
     const { replace } = useRouter();
     const { request } = useParams<{ request: string[] }>();
     const method = request[0];
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (!isMethod(request[0])) replace('/get');
@@ -40,8 +37,6 @@ export default function MethodSelector() {
             value={isMethod(method) ? method : 'get'}
             onChange={(e) => {
                 replace(`/${e.target.value}/${request.slice(1).join('/')}`);
-                // воможно можно удалить. я беру из url метод
-                dispatch(setMethod(e.target.value));
             }}
         >
             {methods.map(({ color, name }) => (

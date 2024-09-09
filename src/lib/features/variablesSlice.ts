@@ -1,50 +1,42 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
+export interface Variable {
+    key: string;
+    value: string;
+}
+
+export interface ChangedVariable {
+    oldKey: string;
+    newKey: string;
+    value: string;
+}
+
 export interface VariablesSlice {
-    variablesBody: Array<{ [key: string]: string }>;
-    variablesHeader: Array<{ [key: string]: string }>;
+    variablesBody: Variable[];
 }
 
 const initialState: VariablesSlice = {
     variablesBody: [],
-    variablesHeader: [],
 };
 
 export const variableSlice = createSlice({
     name: 'variables',
     initialState,
     reducers: {
-        addVariableBodyField(state, action: PayloadAction<{ [key: string]: string }>) {
+        addVariableBodyField(state, action: PayloadAction<Variable>) {
             state.variablesBody.push(action.payload);
         },
         removeVariableBodyField(state, action: PayloadAction<string>) {
             state.variablesBody = state.variablesBody.filter((data) => data.key !== action.payload);
         },
-        saveBodyVariable(state, action: PayloadAction<{ key: string; value: string; selectedIndex: number }>) {
-            const { key, value, selectedIndex } = action.payload;
-            state.variablesBody[selectedIndex].key = key;
-            state.variablesBody[selectedIndex].value = value;
-        },
-        addVariableHeaderField(state, action: PayloadAction<{ [key: string]: string }>) {
-            state.variablesHeader.push(action.payload);
-        },
-        removeVariableHeaderField(state, action: PayloadAction<string>) {
-            state.variablesHeader = state.variablesHeader.filter((data) => data.key !== action.payload);
-        },
-        saveHeaderVariable(state, action: PayloadAction<{ key: string; value: string; selectedIndex: number }>) {
-            const { key, value, selectedIndex } = action.payload;
-            state.variablesHeader[selectedIndex].key = key;
-            state.variablesHeader[selectedIndex].value = value;
+        saveBodyVariable(state, action: PayloadAction<ChangedVariable>) {
+            const { oldKey, newKey, value } = action.payload;
+            const targetVariable = state.variablesBody.find((variable) => variable.key === oldKey);
+            targetVariable.key = newKey;
+            targetVariable.value = value;
         },
     },
 });
 
-export const {
-    addVariableBodyField,
-    removeVariableBodyField,
-    saveBodyVariable,
-    addVariableHeaderField,
-    removeVariableHeaderField,
-    saveHeaderVariable,
-} = variableSlice.actions;
+export const { addVariableBodyField, removeVariableBodyField, saveBodyVariable } = variableSlice.actions;
 export default variableSlice.reducer;
