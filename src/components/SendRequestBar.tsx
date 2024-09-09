@@ -3,11 +3,11 @@
 import MethodSelector from '@/components/MethodSelector';
 import Endpoint from '@/components/Endpoint';
 import { Box, Button } from '@mui/material';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
 import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/restSlice';
 import { useTranslations } from 'next-intl';
-import generateRequestBodyWithVars, { generateHeaders } from '@/utils/generateRequestBodyWithVars';
+import generateRequestBodyWithVars, { generateHeaders, toVariablesArray } from '@/utils/generateRequestBodyWithVars';
 import { toast } from 'react-toastify';
 import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
@@ -16,8 +16,8 @@ export default function SendRequestBar() {
     const pathname = usePathname();
     const t = useTranslations('Request');
     const dispatch = useAppDispatch();
+    const searchParams = useSearchParams();
     const variablesBody = useAppSelector((state) => state.variables.variablesBody);
-    const headers = useAppSelector((state) => state.variables.variablesHeader);
 
     const handleSend = async () => {
         const requestParams = pathname.split('/').filter(Boolean);
@@ -29,6 +29,7 @@ export default function SendRequestBar() {
 
         if (decodeData.url) {
             const requestOptions: RequestInit = { method: decodeData.method };
+            const headers = toVariablesArray(searchParams);
             try {
                 if (decodeData.body && decodeData.method !== 'GET') {
                     requestOptions.body = generateRequestBodyWithVars(decodeData.body, variablesBody);
@@ -44,13 +45,13 @@ export default function SendRequestBar() {
                 dispatch(setStatusCode(statusCode));
                 const contentType = response.headers.get('content-type');
 
-                let data;
+                let data: { [key: string]: string } | string;
                 if (contentType && contentType.includes('application/json')) {
                     data = await response.json();
                 } else {
                     data = await response.text();
                 }
-                dispatch(setResponseBody(data));
+                dispatch(setResponseBody(data as { [key: string]: string }));
                 saveRequestsToLocalStorage({
                     type: 'REST',
                     method: decodeData.method,
@@ -68,7 +69,7 @@ export default function SendRequestBar() {
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <MethodSelector />
             <Endpoint />
-            <Button variant="contained" onClick={handleSend}>
+            <Button sx={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }} variant="contained" onClick={handleSend}>
                 {t('send')}
             </Button>
         </Box>

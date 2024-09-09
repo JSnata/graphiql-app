@@ -19,8 +19,7 @@ export default function Endpoint() {
             sx={{
                 width: '70%',
                 '& .MuiInputBase-root': {
-                    borderTopLeftRadius: 0,
-                    borderBottomLeftRadius: 0,
+                    borderRadius: 0,
                 },
             }}
             label={t('emptyEndpoint')}
