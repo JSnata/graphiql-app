@@ -5,6 +5,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { useTranslations } from 'next-intl';
 import { useAppSelector } from '@/lib/hook';
 import ChipStatusCode from '@/components/ui/ChipStatusCode';
+import { json } from '@codemirror/lang-json';
 
 export default function HttpResponse() {
     const t = useTranslations('Request');
@@ -28,6 +29,7 @@ export default function HttpResponse() {
                 theme="light"
                 minHeight="220px"
                 maxHeight="800px"
+                extensions={[json()]}
             />
         </Box>
     );
