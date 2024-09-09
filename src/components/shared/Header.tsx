@@ -31,7 +31,7 @@ function AnimatedScroll(props: IScrollProps) {
     const { children } = props;
     const trigger = useScrollTrigger({
         disableHysteresis: true,
-        threshold: 100,
+        threshold: 1,
     });
     return React.cloneElement(children, {
         elevation: trigger ? 4 : 0,
