@@ -1,6 +1,6 @@
 'use client';
 
-import isMethod from '@/helpers/isMethod';
+import isMethod from '@/utils/isMethod';
 import { MenuItem, Select } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
