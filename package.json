@@ -17,6 +17,8 @@
         "test:watch": "vitest"
     },
     "dependencies": {
+        "@codemirror/autocomplete": "^6.18.0",
+        "@codemirror/lang-json": "^6.0.1",
         "@emotion/cache": "^11.13.1",
         "@emotion/react": "^11.13.3",
         "@emotion/styled": "^11.13.0",
@@ -29,8 +31,8 @@
         "firebase-admin": "^12.3.1",
         "formik": "^2.4.6",
         "next": "14.2.5",
-        "next-intl": "^3.17.6",
         "next-auth": "^4.24.7",
+        "next-intl": "^3.17.6",
         "prettier": "^3.3.3",
         "react": "^18",
         "react-dom": "^18",
