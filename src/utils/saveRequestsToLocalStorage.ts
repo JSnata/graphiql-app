@@ -13,7 +13,7 @@ export function saveRequestsToLocalStorage(requestData: ILsRequestData) {
 
 export function getSortedRequests(): ILsRequestData[] | null {
     if (typeof window !== 'undefined') {
-        const requests = JSON.parse(localStorage.getItem('requests')) || [];
+        const requests: ILsRequestData[] = JSON.parse(localStorage.getItem('requests')) || [];
         return requests.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
     }
     return null;
