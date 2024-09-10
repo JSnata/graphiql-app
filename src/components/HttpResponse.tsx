@@ -3,14 +3,22 @@
 import { Box, Stack, Typography } from '@mui/material';
 import CodeMirror from '@uiw/react-codemirror';
 import { useTranslations } from 'next-intl';
-import { useAppSelector } from '@/lib/hook';
+import { useAppDispatch, useAppSelector } from '@/lib/hook';
 import ChipStatusCode from '@/components/ui/ChipStatusCode';
+import { useEffect } from 'react';
+import { setResponseBody } from '@/lib/features/requestSlice';
 
 export default function HttpResponse() {
     const t = useTranslations('Request');
-    const response = useAppSelector((state) => state.rest.responseBody);
-    const statusCode = useAppSelector((state) => state.rest.statusCode);
+    const response = useAppSelector((state) => state.request.responseBody);
+    const statusCode = useAppSelector((state) => state.request.statusCode);
+    const dispatch = useAppDispatch();
     const formattedResponse = JSON.stringify(response, null, 2);
+
+    useEffect(() => {
+        dispatch(setResponseBody({}));
+    }, [dispatch]);
+
     return (
         <Box sx={{ width: '100%' }}>
             <Typography variant="h4" sx={{ textAlign: 'center' }}>

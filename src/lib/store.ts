@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import variablesReducer from './features/variablesSlice';
-import restReducer from './features/restSlice';
+import requestReducer from './features/requestSlice';
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
             variables: variablesReducer,
-            rest: restReducer,
+            request: requestReducer,
         },
         // middleware: (getDefaultMiddleware) => {
         //   return getDefaultMiddleware().concat(quotesApiSlice.middleware);

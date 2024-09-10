@@ -5,7 +5,7 @@ import Endpoint from '@/components/Endpoint';
 import { Box, Button } from '@mui/material';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
-import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/restSlice';
+import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/requestSlice';
 import { useTranslations } from 'next-intl';
 import generateRequestBodyWithVars, { generateHeaders, toVariablesArray } from '@/utils/generateRequestBodyWithVars';
 import { toast } from 'react-toastify';
