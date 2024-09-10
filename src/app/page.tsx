@@ -32,7 +32,7 @@ export default function Home() {
                         <Link href="/get">
                             <Button variant="contained">Restful</Button>
                         </Link>
-                        <Link href="/graphql">
+                        <Link href="/GRAPHQL">
                             <Button variant="contained">GraphQL</Button>
                         </Link>
                         <Link href="/history">
