@@ -25,6 +25,7 @@ export default function MethodSelector() {
 
     return (
         <Select
+            MenuProps={{ disableScrollLock: true }}
             sx={{
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,

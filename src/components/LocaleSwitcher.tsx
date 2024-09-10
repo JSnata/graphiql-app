@@ -36,7 +36,15 @@ export default function LocaleSwitcher() {
             <InputLabel id="" color="secondary">
                 {t('label')}
             </InputLabel>
-            <Select labelId="" id="" value={locale} label="Locale" onChange={handleChange} color="secondary">
+            <Select
+                MenuProps={{ disableScrollLock: true }}
+                labelId=""
+                id=""
+                value={locale}
+                label="Locale"
+                onChange={handleChange}
+                color="secondary"
+            >
                 <MenuItem value="en">{t('en')}</MenuItem>
                 <MenuItem value="ru">{t('ru')}</MenuItem>
             </Select>
