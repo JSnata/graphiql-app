@@ -2,8 +2,7 @@
 
 import isMethod from '@/utils/isMethod';
 import { MenuItem, Select } from '@mui/material';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { notFound, useParams, useRouter } from 'next/navigation';
 
 const methods = [
     { name: 'get', color: '#007f31' },
@@ -22,9 +21,7 @@ export default function MethodSelector() {
     const { request } = useParams<{ request: string[] }>();
     const method = request[0];
 
-    useEffect(() => {
-        if (!isMethod(request[0])) replace('/get');
-    }, [replace, request]);
+    if (!isMethod(request[0])) return notFound();
 
     return (
         <Select
