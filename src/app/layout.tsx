@@ -14,6 +14,7 @@ import { Container, CssBaseline } from '@mui/material';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import React from 'react';
+import AuthWatcher from '@/components/AuthWatcher';
 import theme from './theme';
 import { authOptions } from './api/auth/[...nextauth]/route';
 
@@ -46,6 +47,7 @@ export default async function RootLayout({
                                 <StoreProvider>
                                     <ToastProvider>
                                         <ThemeProvider theme={theme}>
+                                            <AuthWatcher />
                                             <Header />
                                             <Container
                                                 component="main"
