@@ -42,5 +42,9 @@
     "title": "Request history",
     "empty": "You have not made any requests yet",
     "try": "Here is empty. Try these variants:"
+  },
+  "GraphQL": {
+    "endpoint": "Endpoint",
+    "sdlEndpoint": "SDL Endpoint"
   }
 }

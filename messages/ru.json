@@ -42,5 +42,9 @@
     "title": "История запросов",
     "empty": "Вы еще не выполнили ни одного запроса",
     "try": "Здесь пусто. Попробуйте эти варианты:"
+  },
+  "GraphQL": {
+    "endpoint": "Endpoint",
+    "sdlEndpoint": "SDL Endpoint"
   }
 }
