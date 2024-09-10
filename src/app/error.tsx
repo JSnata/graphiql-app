@@ -2,8 +2,11 @@
 
 import { useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+    const t = useTranslations('ErrorPages');
+
     useEffect(() => {
         console.error(error);
     }, [error]);
@@ -20,13 +23,13 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
             }}
         >
             <Typography variant="h4" component="h1" gutterBottom>
-                Something went wrong!
+                {t('errorTitle')}
             </Typography>
             <Typography variant="body1" gutterBottom>
-                An unexpected error occurred. Please try again later.
+                {t('errorDescription')}
             </Typography>
             <Button variant="contained" color="primary" onClick={reset} sx={{ marginTop: 2 }}>
-                Try again
+                {t('tryButton')}
             </Button>
         </Box>
     );
