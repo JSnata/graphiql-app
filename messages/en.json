@@ -30,6 +30,7 @@
         "logout": "Logout",
         "signup": "Signup",
         "email": "Email",
+        "loading": "loading",
         "password": "Password",
         "noHaveAcc": "Do not have an account?",
         "haveAcc": "Already have an account?",

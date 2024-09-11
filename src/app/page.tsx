@@ -2,16 +2,27 @@
 
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/components/AuthWatcher';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase/config';
 import InfoCard from '../components/ui/InfoCard';
 
 export default function Home() {
-    const { data: session, status } = useSession();
     const t = useTranslations('Auth');
     const tAbout = useTranslations('About');
-    if (status === 'loading') {
-        return <div>Loading...</div>;
+    const { user, loading } = useAuth();
+
+    const handleSignOut = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error('Ошибка при выходе:', error);
+        }
+    };
+
+    if (loading) {
+        return <div>{t('loading')}</div>;
     }
 
     return (
@@ -31,7 +42,7 @@ export default function Home() {
                 <Typography variant="body1">{`${tAbout('project')}`}</Typography>
             </Box>
             <Box>
-                {session ? (
+                {user ? (
                     <Stack
                         spacing={2}
                         direction={{ xs: 'column', sm: 'row' }}
@@ -46,7 +57,7 @@ export default function Home() {
                         <Link href="/history">
                             <Button variant="contained">{t('history')}</Button>
                         </Link>
-                        <Button variant="contained" color="secondary" onClick={() => signOut()}>
+                        <Button variant="contained" color="secondary" onClick={handleSignOut}>
                             {t('logout')}
                         </Button>
                     </Stack>

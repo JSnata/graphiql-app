@@ -1,39 +1,35 @@
-'use client';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/lib/firebase/config';
+import { useTranslations } from 'next-intl';
 
-import { useEffect } from 'react';
-import { useSession, signOut, getSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-
-const handleLogout = async () => {
-    try {
-        await signOut({ callbackUrl: '/' });
-    } catch (err) {
-        console.error('Error during logout:', err);
-    }
-};
-
-function AuthWatcher() {
-    const { data: session, status } = useSession();
-    const router = useRouter();
+export const useAuth = () => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (status === 'authenticated' && session) {
-            const intervalId = setInterval(async () => {
-                const sessionToken = await getSession();
-                if (!sessionToken) {
-                    await handleLogout();
-                    router.push('/');
-                }
-            }, 3000);
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
+                setUser(currentUser);
+            } else {
+                setUser(null);
+            }
+            setLoading(false);
+        });
 
-            return () => clearInterval(intervalId);
-        }
+        return () => unsubscribe();
+    }, []);
 
-        // Возвращаем undefined, если условие не выполнено
-        return undefined;
-    }, [status, session, router]);
+    return { user, loading };
+};
 
-    return null;
+export default function AuthWatcher({ children }) {
+    const t = useTranslations('Auth');
+    const { loading } = useAuth();
+
+    if (loading) {
+        return <div>{t('loading')}</div>;
+    }
+
+    return children;
 }
-
-export default AuthWatcher;
