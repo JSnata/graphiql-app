@@ -1,3 +1,4 @@
+import React from 'react';
 import { Stack, Typography } from '@mui/material';
 import HttpBody from '@/components/HttpBody';
 import HttpResponse from '@/components/HttpResponse';

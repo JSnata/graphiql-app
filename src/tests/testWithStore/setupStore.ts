@@ -1,21 +1,21 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { testSlice } from '../../lib/features/requestSlice';
+// import { combineReducers, configureStore } from '@reduxjs/toolkit';
+// import { testSlice } from '../../lib/features/restSlice';
 
-const rootReducer = combineReducers({
-    test: testSlice,
-});
+// const rootReducer = combineReducers({
+//     test: testSlice,
+// });
 
-export type RootState = ReturnType<typeof rootReducer>;
+// export type RootState = ReturnType<typeof rootReducer>;
 
-export const setupStore = (preloadedState?: Partial<RootState>) => {
-    return configureStore({
-        reducer: rootReducer,
-        preloadedState,
-        // middleware: (getDefaultMiddleware) => {
-        //     return getDefaultMiddleware().concat();
-        // },
-    });
-};
+// export const setupStore = (preloadedState?: Partial<RootState>) => {
+//     return configureStore({
+//         reducer: rootReducer,
+//         preloadedState,
+//         // middleware: (getDefaultMiddleware) => {
+//         //     return getDefaultMiddleware().concat();
+//         // },
+//     });
+// };
 
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore['dispatch'];
+// export type AppStore = ReturnType<typeof setupStore>;
+// export type AppDispatch = AppStore['dispatch'];

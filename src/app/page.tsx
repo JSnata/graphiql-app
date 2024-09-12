@@ -2,14 +2,27 @@
 
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/components/AuthWatcher';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase/config';
+import InfoCard from '../components/ui/InfoCard';
 
 export default function Home() {
-    const { data: session, status } = useSession();
     const t = useTranslations('Auth');
-    if (status === 'loading') {
-        return <div>Loading...</div>;
+    const tAbout = useTranslations('About');
+    const { user, loading } = useAuth();
+
+    const handleSignOut = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error('Ошибка при выходе:', error);
+        }
+    };
+
+    if (loading) {
+        return <div>{t('loading')}</div>;
     }
 
     return (
@@ -18,12 +31,18 @@ export default function Home() {
                 textAlign: 'center',
                 display: 'flex',
                 flex: 1,
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
+                gap: 4,
             }}
         >
             <Box>
-                {session && (
+                <Typography variant="h4" sx={{ mb: 2 }}>{`${t('welcome')} Restful/GraphQL Client`}</Typography>
+                <Typography variant="body1">{`${tAbout('project')}`}</Typography>
+            </Box>
+            <Box>
+                {user ? (
                     <Stack
                         spacing={2}
                         direction={{ xs: 'column', sm: 'row' }}
@@ -38,12 +57,11 @@ export default function Home() {
                         <Link href="/history">
                             <Button variant="contained">{t('history')}</Button>
                         </Link>
-                        <Button variant="contained" color="secondary" onClick={() => signOut()}>
+                        <Button variant="contained" color="secondary" onClick={handleSignOut}>
                             {t('logout')}
                         </Button>
                     </Stack>
-                )}
-                {!session && (
+                ) : (
                     <Box
                         sx={{
                             display: 'flex',
@@ -53,8 +71,6 @@ export default function Home() {
                             alignItems: 'center',
                         }}
                     >
-                        {' '}
-                        <Typography variant="h4">{`${t('welcome')} Restful/GraphQL Client`}</Typography>
                         <Stack direction="row" spacing={2}>
                             <Link href="/signin">
                                 <Button variant="contained">{t('signin')}</Button>
@@ -65,6 +81,29 @@ export default function Home() {
                         </Stack>
                     </Box>
                 )}
+            </Box>
+            <Box sx={{ mb: 4 }}>
+                <Divider sx={{ mb: 4 }} />
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
+                    <InfoCard
+                        name={`${tAbout('ilya')}`}
+                        github="LinderJK"
+                        githubLink="https://github.com/LinderJK"
+                        location={`${tAbout('moscow')}`}
+                    />
+                    <InfoCard
+                        name={`${tAbout('natallia')}`}
+                        github="JSNata"
+                        githubLink="https://github.com/jsnata"
+                        location={`${tAbout('poland')}`}
+                    />
+                    <InfoCard
+                        name="Denis Shmuratkin"
+                        github="DialecticalLaw"
+                        githubLink="https://github.com/DialecticalLAw"
+                        location={`${tAbout('syktyvkar')}`}
+                    />
+                </Stack>
             </Box>
         </Box>
     );

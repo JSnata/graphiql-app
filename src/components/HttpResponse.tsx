@@ -1,11 +1,12 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import CodeMirror from '@uiw/react-codemirror';
 import { useTranslations } from 'next-intl';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
 import ChipStatusCode from '@/components/ui/ChipStatusCode';
-import { useEffect } from 'react';
+import { json } from '@codemirror/lang-json';
 import { setResponseBody } from '@/lib/features/requestSlice';
 
 export default function HttpResponse() {
@@ -36,6 +37,7 @@ export default function HttpResponse() {
                 theme="light"
                 minHeight="220px"
                 maxHeight="800px"
+                extensions={[json()]}
             />
         </Box>
     );

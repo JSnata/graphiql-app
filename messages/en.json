@@ -4,6 +4,25 @@
         "ru": "Russian",
         "en": "English"
     },
+    "ErrorPages": {
+        "errorTitle": "Something went wrong!",
+        "errorDescription": "An unexpected error occurred. Please try again later.",
+        "tryButton": "Try again",
+        "notFoundTitle": "404 Not Found",
+        "notFoundDescription": "Could not find requested resource",
+        "returnButton": "Return Home"
+    },
+    "About": {
+        "project": "This project is developed as a final task of the RS School React course. It demonstrates the use of RESTful and GraphQL API.",
+        "location": "Location",
+        "github": "Github",
+        "natallia": "Natallia Kulikouskaya",
+        "ilya": "Ilya Slepchenkov",
+        "denis": "Denis Shmuratkin",
+        "moscow": "Moscow, Russia",
+        "syktyvkar": "Syktyvkar, Russia",
+        "poland": "Wrocław, Poland"
+    },
     "Auth": {
         "welcome": "Welcome to",
         "userWelcome": "Hi,",
@@ -11,6 +30,7 @@
         "logout": "Logout",
         "signup": "Signup",
         "email": "Email",
+        "loading": "loading",
         "password": "Password",
         "noHaveAcc": "Do not have an account?",
         "haveAcc": "Already have an account?",
