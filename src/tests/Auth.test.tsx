@@ -16,8 +16,8 @@ vi.mock('firebase/auth', () => ({
     createUserWithEmailAndPassword: vi.fn(),
     signInWithEmailAndPassword: vi.fn(),
     onAuthStateChanged: vi.fn((auth, callback) => {
-        callback(null); // or pass a mock user object if needed
-        return vi.fn(); // return a mock unsubscribe function
+        callback(null);
+        return vi.fn();
     }),
 }));
 
