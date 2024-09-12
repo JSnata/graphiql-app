@@ -17,7 +17,6 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@codemirror/lang-json": "^6.0.1",
     "@codemirror/language": "^6.2.1",
     "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
@@ -27,11 +26,11 @@
     "@mui/material-nextjs": "^5.16.6",
     "@reduxjs/toolkit": "^2.2.7",
     "@uiw/react-codemirror": "^4.23.0",
-    "cm6-graphql": "^0.1.1",
+    "cm6-graphql": "^0.0.7",
     "firebase": "^10.13.0",
     "firebase-admin": "^12.3.1",
     "formik": "^2.4.6",
-    "graphql": "^16.5.0",
+    "graphiql": "^3.7.1",
     "graphql-ws": "^5.16.0",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
@@ -45,7 +44,7 @@
     "yup": "^1.4.0"
   },
   "overrides": {
-    "@codemirror/state": "^6.2.0"
+    "@codemirror/state": "6.2.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
@@ -73,9 +72,6 @@
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.1.0",
     "vitest": "^2.0.5"
-  },
-  "resolutions": {
-    "graphql": "^16.5.0"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,js,jsx}": [
