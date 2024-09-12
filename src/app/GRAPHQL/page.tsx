@@ -1,125 +1,72 @@
-// @ts-ignore
-
 'use client';
 
 import { Box, Typography } from '@mui/material';
-// import dynamic from 'next/dynamic';
 import RequestBar from '@/components/graphqlComponents/RequestBar';
-import GraphQLEditor from '@/components/graphqlComponents/GraphQLEditor';
+import { toast } from 'react-toastify';
 import { GraphQLSchema } from 'graphql/type';
+import { fetchSchema, fetchSchemaWithIntrospection } from '@/services/API';
+import createGraphQLSchema from '@/utils/createGraphQLSchema';
+import QueryBar from '@/components/graphqlComponents/QueryBar';
 import { useState } from 'react';
-import { buildClientSchema, getIntrospectionQuery } from 'graphql/utilities';
+import dynamic from 'next/dynamic';
 
-// этот импорт пока не нужен
-// const DynamicGraphiQL = dynamic(() => import('@/components/graphqlComponents/GraphiQL'), { ssr: false });
-
-// это строка запроса схемы graphQL, но была заменена на getIntrospectionQuery() функцию. Пока не используется
-// const introspectionQuery = `
-//   query IntrospectionQuery {
-//     __schema {
-//       types {
-//         ...FullType
-//       }
-//     }
-//   }
-//
-//   fragment FullType on __Type {
-//     kind
-//     name
-//     fields(includeDeprecated: true) {
-//       name
-//       args {
-//         name
-//         type {
-//           ...TypeRef
-//         }
-//       }
-//       type {
-//         ...TypeRef
-//       }
-//       isDeprecated
-//       deprecationReason
-//     }
-//     inputFields {
-//       name
-//       type {
-//         ...TypeRef
-//       }
-//     }
-//     interfaces {
-//       name
-//     }
-//     enumValues(includeDeprecated: true) {
-//       name
-//       isDeprecated
-//       deprecationReason
-//     }
-//     possibleTypes {
-//       name
-//     }
-//   }
-//
-//   fragment TypeRef on __Type {
-//     kind
-//     name
-//     ofType {
-//       kind
-//       name
-//       ofType {
-//         kind
-//         name
-//         ofType {
-//           kind
-//           name
-//         }
-//       }
-//     }
-//   }
-// `;
-
-// запрос для получения схемы
-const fetchSchema = async (url) => {
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            query: getIntrospectionQuery(),
-        }),
-    });
-
-    const result = await response.json();
-    // console.log(result, 'RESPONSE with schema');
-    return result;
-};
+const ReactGraphqlEditor = dynamic(() => import('@/components/graphqlComponents/ReactGraphqlEditor'), { ssr: false });
 
 export default function GraphqlPage() {
     const [schema, setSchema] = useState<GraphQLSchema | null>(null);
-    const handleSendRequest = async (url: string, sdlUrl: string) => {
-        // console.log(url, sdlUrl, 'url and sdlUrl');
-        if (!url || !sdlUrl) return;
+    const [docsUrl, setDocsUrl] = useState('');
+    // const [query, setQuery] = useState('');
+    const handleSendRequest = async (url: string) => {
+        if (!url) {
+            toast.warn('Please enter URL');
+            return;
+        }
+
         try {
-            const response = await fetchSchema(sdlUrl);
+            // console.log(query, 'my query');
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleSendIntrospection = async (sdlUrl: string) => {
+        // console.log(sdlUrl, 'sdlUrl');
+        if (!sdlUrl) {
+            toast.warn('Please enter SDL URL');
+            return;
+        }
+        setDocsUrl(sdlUrl);
+        const url = new URL(sdlUrl);
+
+        try {
+            let response;
+            if (url.searchParams.has('sdl')) {
+                // console.log(url, 'URL with SDL!!');
+                response = await fetchSchema(url.href);
+            } else {
+                // console.log(url, 'URL with Introspection without sdl!!');
+                response = await fetchSchemaWithIntrospection(url.href);
+            }
+
             if (response) {
-                // тут схема билдится
-                const schemaObj = buildClientSchema(response.data);
+                const schemaObj = createGraphQLSchema(response);
                 setSchema(schemaObj);
-                // console.log(schemaObj, 'GRAPHQL SCHEMA');
             } else {
                 throw new Error('Invalid schema data received');
             }
         } catch (error) {
             console.error(error);
+            toast.error(`Failed to fetch schema ${error.message}`);
         }
     };
 
     return (
         <Box>
             <Typography variant="h5">GraphQL Client</Typography>
-            <RequestBar sendRequestFunc={handleSendRequest} />
-            <GraphQLEditor schema={schema} />
-            {/* <DynamicGraphiQL /> */}
+            <RequestBar sendRequest={handleSendRequest} sendIntrospection={handleSendIntrospection} />
+            <QueryBar schema={schema}>
+                <ReactGraphqlEditor url={docsUrl} />
+            </QueryBar>
         </Box>
     );
 }
