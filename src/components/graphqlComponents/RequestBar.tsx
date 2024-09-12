@@ -5,14 +5,12 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 interface IRequestBarProps {
-    sendRequestFunc: (url: string, sdlUrl: string) => void;
+    sendRequest: (url: string) => void;
+    sendIntrospection: (sdlUrl: string) => void;
 }
 
 export default function RequestBar(props: IRequestBarProps) {
-    const { sendRequestFunc } = props;
-    // const params = useParams();
-    // const router = useRouter();
-    // console.log(params, 'params');
+    const { sendRequest, sendIntrospection } = props;
     const t = useTranslations('GraphQL');
     const [endpoint, setEndpoint] = useState<string>('');
     const [sdlEndpoint, setSdlEndpoint] = useState<string>('');
@@ -35,16 +33,25 @@ export default function RequestBar(props: IRequestBarProps) {
     };
 
     const handleSendRequest = () => {
-        sendRequestFunc(endpoint, sdlEndpoint);
+        sendRequest(endpoint);
+    };
+
+    const handleExplorer = () => {
+        sendIntrospection(sdlEndpoint);
     };
 
     return (
-        <Box sx={{ width: '100%', my: 2 }}>
-            <Stack direction="row" spacing={2}>
+        <Box>
+            <Stack direction={{ xs: 'column', md: 'row' }} sx={{ my: 2 }} spacing={2}>
                 <TextField fullWidth value={endpoint} onChange={handleChangeEndpoint} label={t('endpoint')} />
                 <TextField fullWidth value={sdlEndpoint} onChange={handleChangeSdlEndpoint} label={t('sdlEndpoint')} />
+            </Stack>
+            <Stack direction="row" sx={{ my: 2, justifyContent: 'center' }} spacing={2}>
                 <Button variant="contained" onClick={handleSendRequest}>
                     Send
+                </Button>
+                <Button variant="contained" onClick={handleExplorer}>
+                    Explorer
                 </Button>
             </Stack>
         </Box>
