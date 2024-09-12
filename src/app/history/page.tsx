@@ -6,7 +6,7 @@ import { getSortedRequests } from '@/utils/saveRequestsToLocalStorage';
 import Link from 'next/link';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { useAppDispatch } from '@/lib/hook';
-import { setDataLS } from '@/lib/features/restSlice';
+import { setDataLS } from '@/lib/features/requestSlice';
 import { ILsRequestData } from '@/types/lsData';
 import { useRouter } from 'next/navigation';
 

@@ -1,4 +1,7 @@
-export default function generateRequestBodyWithVars(body: string, variables: { [key: string]: string }[]) {
+import { Variable } from '@/lib/features/variablesSlice';
+import { ReadonlyURLSearchParams } from 'next/navigation';
+
+export default function generateRequestBodyWithVars(body: string, variables: Variable[]) {
     const regex = /{{(.*?)}}/g;
     const replaceVariables = (str: string) => {
         return str.replace(regex, (match, variableName) => {
@@ -12,7 +15,7 @@ export default function generateRequestBodyWithVars(body: string, variables: { [
     return replaceVariables(body);
 }
 
-export function generateHeaders(headers: { [key: string]: string }[]) {
+export function generateHeaders(headers: Variable[]) {
     const headersObject = new Headers();
 
     headers.forEach((header) => {
@@ -22,4 +25,14 @@ export function generateHeaders(headers: { [key: string]: string }[]) {
     });
 
     return headersObject;
+}
+
+export function toVariablesArray(searchParams: ReadonlyURLSearchParams) {
+    const result = [];
+
+    searchParams.forEach((value, key) => {
+        result.push({ key: decodeURIComponent(key), value: decodeURIComponent(value) });
+    });
+
+    return result;
 }

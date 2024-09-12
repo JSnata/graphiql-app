@@ -14,7 +14,7 @@ export default function Restful() {
             <SendRequestBar />
 
             <TabsSection
-                labels={['Headers', 'Variables Body']}
+                labels={['Headers', 'Variables']}
                 elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
             />
             <HttpBody />

@@ -1,51 +1,51 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/lib/hook';
-import { addVariableHeaderField, removeVariableHeaderField, saveHeaderVariable } from '@/lib/features/variablesSlice';
 import VariablesField from '@/components/ui/VariablesField';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { ChangedVariable } from '@/lib/features/variablesSlice';
+import { toVariablesArray } from '@/utils/generateRequestBodyWithVars';
 
 export default function HttpHeaders() {
     const { replace } = useRouter();
     const pathname = usePathname();
-    const variablesHeader = useAppSelector((state) => state.variables.variablesHeader);
-    const dispatch = useAppDispatch();
+    const searchParams = useSearchParams();
 
-    const encodeHeadersToURI = (headers: { [key: string]: string }[]) => {
-        return headers
-            .filter((header) => header.key && header.value)
-            .map((header) => `${encodeURIComponent(header.key)}=${encodeURIComponent(header.value)}`)
-            .join('&');
+    const updateUrl = (params: string) => replace(`${pathname}?${params}`);
+
+    const handleSave = ({ oldKey, newKey, value }: ChangedVariable) => {
+        const params = new URLSearchParams(searchParams.toString());
+        if (params.has(oldKey)) {
+            const updatedParams = Object.fromEntries(
+                Array.from(params.entries()).map(([key, val]) => {
+                    if (key === oldKey) {
+                        return [encodeURIComponent(newKey), encodeURIComponent(value)];
+                    }
+                    return [key, val];
+                }),
+            );
+            const newParams = new URLSearchParams(updatedParams);
+            updateUrl(newParams.toString());
+        } else {
+            params.set(encodeURIComponent(newKey), encodeURIComponent(value));
+            updateUrl(params.toString());
+        }
     };
 
-    useEffect(() => {
-        const encodedHeaders = encodeHeadersToURI(variablesHeader);
-        const updatedUrl = `${pathname}?${encodedHeaders}`;
-        replace(updatedUrl);
-    }, [pathname, replace, variablesHeader]);
-
-    const handleSave = (keyField: string, valueField: string, index: number) => {
-        dispatch(
-            saveHeaderVariable({
-                key: keyField,
-                value: valueField,
-                selectedIndex: index,
-            }),
-        );
-    };
-
-    const handleRemove = (keyValue: string) => {
-        dispatch(removeVariableHeaderField(keyValue));
+    const handleRemove = (key: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete(key);
+        updateUrl(params.toString());
     };
 
     const handleAdd = ({ key, value }: { key: string; value: string }) => {
-        dispatch(addVariableHeaderField({ key, value }));
+        const params = new URLSearchParams(searchParams.toString());
+        params.set(encodeURIComponent(key), encodeURIComponent(value));
+        updateUrl(params.toString());
     };
 
     return (
         <VariablesField
-            variables={variablesHeader}
+            variables={toVariablesArray(searchParams)}
             saveDispatch={handleSave}
             removeDispatch={handleRemove}
             addDispatch={handleAdd}

@@ -18,6 +18,7 @@ import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/lib/store';
 import { json } from '@codemirror/lang-json';
+import { decodeBase64, encodeBase64 } from '@/utils/base64';
 
 const updateDecorations = StateEffect.define<DecorationSet>();
 
@@ -41,8 +42,8 @@ export default function HttpBody() {
     const { replace } = useRouter();
     const pathname = usePathname();
     const t = useTranslations('Request');
-    const params = pathname.split('/').filter(Boolean);
-    const [code, setCode] = useState(atob(decodeURIComponent(params[2] || '')));
+    const params = pathname.split('/').filter(Boolean); // аналог useParams, обновляющийся при использовании history API
+    const [code, setCode] = useState(decodeBase64(decodeURIComponent(params[2] || '')));
     const [error, setError] = useState('');
     const variablesBody = useSelector((state: RootState) => state.variables.variablesBody);
 
@@ -115,7 +116,7 @@ export default function HttpBody() {
                 }}
                 onBlur={() => {
                     if (params[1]) {
-                        replace(`/${params[0]}/${params[1]}/${btoa(code)}`);
+                        replace(`/${params[0]}/${params[1]}/${encodeBase64(code)}`);
                     } else {
                         setError(t('emptyEndpoint'));
                     }

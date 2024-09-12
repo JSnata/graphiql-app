@@ -5,31 +5,33 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
+import { ChangedVariable, Variable } from '@/lib/features/variablesSlice';
 
 interface IVariableInputProps {
-    variable: { [key: string]: string };
+    variable: Variable;
     index: number;
     deleteFn: (keyValue: string) => void;
-    saveFn: (keyField: string, valueField: string, index: number) => void;
+    saveFn: ({ newKey, oldKey, value }: ChangedVariable & { index: number }) => boolean;
 }
 
 export default function VariableInput(props: IVariableInputProps) {
-    const { variable, index, deleteFn, saveFn } = props;
-    const [keyField, setKeyField] = useState(variable.key);
-    const [valueField, setValueField] = useState(variable.value);
+    const { variable, deleteFn, saveFn, index } = props;
+    const [currentKey, setCurrentKey] = useState(variable.key);
+    const [oldKey, setOldKey] = useState(variable.key);
+    const [value, setValue] = useState(variable.value);
     const [editMode, setEditMode] = useState(false);
 
     const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setKeyField(e.target.value);
+        setCurrentKey(e.target.value);
     };
 
     const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValueField(e.target.value);
+        setValue(e.target.value);
     };
 
     const handleSave = () => {
-        saveFn(keyField, valueField, index);
-        setEditMode(false);
+        const isSuccess = saveFn({ newKey: currentKey, oldKey, value, index });
+        if (isSuccess) setEditMode(false);
     };
 
     const handleDelete = () => {
@@ -44,7 +46,7 @@ export default function VariableInput(props: IVariableInputProps) {
                 fullWidth
                 id="variable-key"
                 label="Key"
-                value={keyField}
+                value={currentKey}
                 onChange={handleKeyChange}
             />
             <TextField
@@ -53,7 +55,7 @@ export default function VariableInput(props: IVariableInputProps) {
                 disabled={!editMode}
                 id="variable-value"
                 label="Value"
-                value={valueField}
+                value={value}
                 onChange={handleValueChange}
             />
 
@@ -65,7 +67,10 @@ export default function VariableInput(props: IVariableInputProps) {
                 <IconButton
                     aria-label="variable-change"
                     size="medium"
-                    onClick={() => setEditMode(true)}
+                    onClick={() => {
+                        setOldKey(currentKey);
+                        setEditMode(true);
+                    }}
                     color="primary"
                 >
                     <EditIcon fontSize="inherit" />
