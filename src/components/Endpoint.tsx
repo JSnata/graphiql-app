@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { TextField } from '@mui/material';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';

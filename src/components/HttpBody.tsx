@@ -10,7 +10,7 @@ import CodeMirror, {
     StateField,
 } from '@uiw/react-codemirror';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { format } from 'prettier';
 import * as parser from 'prettier/plugins/babel';
 import * as estree from 'prettier/plugins/estree';
