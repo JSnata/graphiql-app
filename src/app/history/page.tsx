@@ -1,10 +1,9 @@
 'use client';
 
-import { Box, Button, ListItemButton, ListItemText, Stack, Typography } from '@mui/material';
+import { Box, Button, List, ListItemButton, ListItemText, Stack, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { getSortedRequests } from '@/utils/saveRequestsToLocalStorage';
 import Link from 'next/link';
-import Grid2 from '@mui/material/Unstable_Grid2';
 import { useAppDispatch } from '@/lib/hook';
 import { setDataLS } from '@/lib/features/requestSlice';
 import { ILsRequestData } from '@/types/lsData';
@@ -18,13 +17,12 @@ export default function HistoryPage() {
 
     const handleClick = (data: ILsRequestData) => {
         dispatch(setDataLS(data));
-        router.push(data.type);
+        router.push('/get');
     };
 
     if (requests && requests.length === 0) {
         return (
             <>
-                {' '}
                 <Typography variant="h5">{t('title')}</Typography>
                 <Typography variant="body1">{t('empty')}</Typography>
                 <Typography variant="body1">{t('try')}</Typography>
@@ -40,58 +38,57 @@ export default function HistoryPage() {
         );
     }
     return (
-        <>
-            <Typography variant="h5">{t('title')}</Typography>
-            <Grid2 container sx={{ my: 2 }}>
-                {requests.map((request) => {
-                    const date = new Date(request.timestamp).toLocaleString();
-                    return (
-                        <Grid2 xs={12} sm={6} md={4} key={request.timestamp} spacing={2}>
-                            <ListItemButton
-                                component="button"
-                                onClick={() => handleClick(request)}
-                                sx={{ width: '100%' }}
-                                key={request.timestamp}
-                            >
-                                <ListItemText
-                                    primary={date}
-                                    secondary={
-                                        <Box
-                                            sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: 1,
-                                            }}
-                                        >
-                                            <Typography
-                                                component="span"
-                                                variant="body2"
-                                                fontWeight={700}
-                                                sx={{
-                                                    color: 'text.primary',
-                                                    display: 'inline',
-                                                }}
-                                            >
+        <Box position="relative">
+            <Box sx={{ py: 5 }}>
+                <Typography textAlign="center" variant="h4">
+                    {t('title')}
+                </Typography>
+                <List>
+                    {requests.map((request) => {
+                        const date = new Date(request.timestamp).toLocaleString();
+                        return (
+                            <Box key={request.timestamp}>
+                                <ListItemButton
+                                    divider
+                                    component="button"
+                                    onClick={() => handleClick(request)}
+                                    sx={{ width: '100%' }}
+                                >
+                                    <ListItemText
+                                        primary={date}
+                                        secondary={
+                                            <Typography fontWeight="bold">
                                                 {request.method}
+                                                <Typography component="span" fontWeight="normal">
+                                                    {' '}
+                                                    {request.url}
+                                                </Typography>
                                             </Typography>
-                                            <Typography
-                                                component="span"
-                                                variant="body2"
-                                                sx={{
-                                                    color: 'text.primary',
-                                                    display: 'inline',
-                                                }}
-                                            >
-                                                {request.url}
-                                            </Typography>
-                                        </Box>
-                                    }
-                                />
-                            </ListItemButton>
-                        </Grid2>
-                    );
-                })}
-            </Grid2>
-        </>
+                                        }
+                                    />
+                                </ListItemButton>
+                            </Box>
+                        );
+                    })}
+                </List>
+            </Box>
+            <Box
+                sx={{
+                    width: '35%',
+                    height: '65%',
+                    zIndex: -1,
+                    transform: 'translate(30%)',
+                    opacity: 0.1,
+                    backgroundImage: 'url("./history.svg")',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    right: 0,
+                    margin: 'auto',
+                }}
+            />
+        </Box>
     );
 }
