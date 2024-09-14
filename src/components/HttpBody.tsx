@@ -4,10 +4,8 @@ import { Box, Button, Typography } from '@mui/material';
 import CodeMirror from '@uiw/react-codemirror';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { format } from 'prettier';
-import * as parser from 'prettier/plugins/babel';
-import * as estree from 'prettier/plugins/estree';
 import { useTranslations } from 'next-intl';
+import makeBeautify from '@/utils/makeBautify';
 
 export default function HttpBody() {
     const { replace } = useRouter();
@@ -17,21 +15,10 @@ export default function HttpBody() {
     const [code, setCode] = useState(atob(decodeURIComponent(params[2] || '')));
     const [error, setError] = useState('');
 
-    const makeBeautify = async () => {
-        if (!code) return;
-        try {
-            if (code.trim().startsWith('{') && code.trim().endsWith('}')) {
-                setCode(
-                    await format(code, {
-                        parser: 'json',
-                        plugins: [parser, estree],
-                    }),
-                );
-            }
-            setError('');
-        } catch (err: unknown) {
-            if (err instanceof Error) setError(`${t('bodyError')} ${err.message}`);
-        }
+    const handleFormat = async () => {
+        const result = await makeBeautify(code, 'json');
+        setCode(result.code);
+        setError(result.error);
     };
 
     return (
@@ -59,7 +46,7 @@ export default function HttpBody() {
                     mt: 2,
                 }}
             >
-                <Button onClick={makeBeautify} variant="contained">
+                <Button onClick={handleFormat} variant="contained">
                     {t('beautify')}
                 </Button>
                 {error && <Typography sx={{ color: 'red' }}>{error}</Typography>}

@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import RequestBar from '@/components/graphqlComponents/RequestBar';
 import { toast } from 'react-toastify';
 import { GraphQLSchema } from 'graphql/type';
@@ -18,6 +18,7 @@ import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/gr
 import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
 import { useTranslations } from 'next-intl';
+import makeBeautify from '@/utils/makeBautify';
 
 const ReactGraphqlEditor = dynamic(() => import('@/components/graphqlComponents/ReactGraphqlEditor'), { ssr: false });
 
@@ -29,6 +30,8 @@ export default function GraphqlPage() {
     const variablesBody = useAppSelector((state) => state.variables.variablesBody);
     const dispatch = useAppDispatch();
     const t = useTranslations('GraphQL');
+    const [errorFormat, setErrorFormat] = useState('');
+
     const handleSendRequest = async (url: string) => {
         if (!url) {
             toast.warn(t('enterEndpoint'));
@@ -85,6 +88,12 @@ export default function GraphqlPage() {
         }
     };
 
+    const handleFormat = async () => {
+        const result = await makeBeautify(query, 'graphql');
+        setQuery(result.code);
+        setErrorFormat(result.error);
+    };
+
     return (
         <Box>
             <Typography variant="h5">GraphQL Client</Typography>
@@ -92,7 +101,16 @@ export default function GraphqlPage() {
             <QueryBar schema={schema} handleChangeQuery={(value) => setQuery(value)}>
                 <ReactGraphqlEditor url={docsUrl} />
             </QueryBar>
-
+            <Stack direction="row" sx={{ my: 2, alignItems: 'center' }} spacing={2}>
+                <Button variant="contained" onClick={handleFormat}>
+                    {t('format')}
+                </Button>
+                {errorFormat && (
+                    <Typography sx={{ color: 'red' }}>
+                        {t('error')}: {errorFormat}
+                    </Typography>
+                )}
+            </Stack>
             <TabsSection
                 labels={[`${t('headers')}`, `${t('variablesBody')}`]}
                 elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
