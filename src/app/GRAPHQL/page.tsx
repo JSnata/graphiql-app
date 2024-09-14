@@ -15,6 +15,8 @@ import TabsSection from '@/components/TabsSection';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
 import HttpResponse from '@/components/HttpResponse';
 import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/graphqlSlice';
+import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
+import { ILsRequestData } from '@/types/lsData';
 
 const ReactGraphqlEditor = dynamic(() => import('@/components/graphqlComponents/ReactGraphqlEditor'), { ssr: false });
 
@@ -25,36 +27,23 @@ export default function GraphqlPage() {
     const variablesHeader = useAppSelector((state) => state.variables.variablesHeader);
     const variablesBody = useAppSelector((state) => state.variables.variablesBody);
     const dispatch = useAppDispatch();
-    // const [query, setQuery] = useState('');
     const handleSendRequest = async (url: string) => {
         if (!url) {
             toast.warn('Please enter URL');
             return;
         }
-        // console.log(url, 'url');
         try {
             const response = await graphqlSendRequest(url, query, variablesHeader, variablesBody);
-            const statusCode = response.status;
-            dispatch(setStatusCode(statusCode));
-            // const contentType = response.headers.get('content-type');
-            // console.log(response, 'graphql response');
-            // console.log(response, 'response');
-            // console.log(response);
-            // let data;
-            // if (contentType && contentType.includes('application/json')) {
-            //     data = await response.json();
-            // } else {
-            //     data = await response.text();
-            // }
+            dispatch(setStatusCode(response.status));
             dispatch(setResponseBody(response.data));
-            toast.success('Request sent successfully');
-            // saveRequestsToLocalStorage({
-            //     type: 'GRAPHQL',
-            //     method: 'GRAPHQL',
-            //     url,
-            //     body: query,
-            //     variablesHeader,
-            // } as ILsRequestData);
+            dispatch(setStatusText(response.statusText));
+            saveRequestsToLocalStorage({
+                type: 'GRAPHQL',
+                method: 'GRAPHQL',
+                url,
+                body: query,
+                headers: variablesHeader.map((header) => ({ key: header.key, value: header.value })),
+            } as ILsRequestData);
         } catch (error) {
             dispatch(setStatusText(error.message));
             console.error(error);
