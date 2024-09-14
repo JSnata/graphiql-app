@@ -12,9 +12,9 @@ import { setResponseBody } from '@/lib/features/requestSlice';
 export default function HttpResponse({ type }: { type: 'REST' | 'GRAPHQL' }) {
     const t = useTranslations('Request');
     const dispatch = useAppDispatch();
-    const restResponse = useAppSelector((state) => state.rest.responseBody);
+    const restResponse = useAppSelector((state) => state.request.responseBody);
     const graphqlResponse = useAppSelector((state) => state.graphql.responseBody);
-    const restStatusCode = useAppSelector((state) => state.rest.statusCode);
+    const restStatusCode = useAppSelector((state) => state.request.statusCode);
     const graphqlStatusCode = useAppSelector((state) => state.graphql.statusCode);
 
     // const formattedResponse = JSON.stringify(response, null, 2);
