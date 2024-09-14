@@ -54,10 +54,12 @@
     "headers": "Headers",
     "key": "Key",
     "value": "Value",
-    "responseStatus": "Response status: "
+    "responseStatus": "Response status: ",
+    "error": "Error"
   },
-  "VariablesInfo": {
+  "Variables": {
     "title": "Variables",
-    "description": "Variables are used in the request body. "
+    "format": "Format",
+    "text": "If you are making RESTful requests, variables in the request body should be specified using double curly braces. If you are making GraphQL requests, variables should be specified using a dollar sign."
   }
 }
