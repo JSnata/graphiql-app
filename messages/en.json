@@ -44,7 +44,20 @@
     "try": "Here is empty. Try these variants:"
   },
   "GraphQL": {
-    "endpoint": "Endpoint",
-    "sdlEndpoint": "SDL Endpoint"
+    "send": "Send",
+    "explorer": "Explorer",
+    "requestSchemaS": "SchemaSDL fetched successfully",
+    "enterSDL": "Please enter SDL endpoint",
+    "enterEndpoint": "Please enter endpoint",
+    "requestE": "Request error:",
+    "variablesBody": "Variables body",
+    "headers": "Headers",
+    "key": "Key",
+    "value": "Value",
+    "responseStatus": "Response status: "
+  },
+  "VariablesInfo": {
+    "title": "Variables",
+    "description": "Variables are used in the request body. "
   }
 }
