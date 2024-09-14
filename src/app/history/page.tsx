@@ -5,9 +5,10 @@ import { useTranslations } from 'next-intl';
 import { getSortedRequests } from '@/utils/saveRequestsToLocalStorage';
 import Link from 'next/link';
 import { useAppDispatch } from '@/lib/hook';
-import { setDataLS } from '@/lib/features/requestSlice';
 import { ILsRequestData } from '@/types/lsData';
 import { useRouter } from 'next/navigation';
+import { encodeBase64 } from '@/utils/base64';
+import { setVariables } from '@/lib/features/variablesSlice';
 
 export default function HistoryPage() {
     const t = useTranslations('History');
@@ -16,25 +17,29 @@ export default function HistoryPage() {
     const router = useRouter();
 
     const handleClick = (data: ILsRequestData) => {
-        dispatch(setDataLS(data));
-        router.push('/get');
+        dispatch(setVariables(data.variables));
+        const params = new URLSearchParams();
+        data.headers.forEach(({ key, value }) => params.set(encodeURIComponent(key), encodeURIComponent(value)));
+        router.push(
+            `${data.method.toLowerCase()}/${encodeBase64(data.url)}/${encodeBase64(data.body)}?${params.toString()}`,
+        );
     };
 
     if (requests && requests.length === 0) {
         return (
-            <>
-                <Typography variant="h5">{t('title')}</Typography>
+            <Box textAlign="center" pt={3}>
+                <Typography variant="h4">{t('title')}</Typography>
                 <Typography variant="body1">{t('empty')}</Typography>
                 <Typography variant="body1">{t('try')}</Typography>
                 <Stack direction="row" spacing={1} sx={{ justifyContent: 'center', mt: 2 }}>
-                    <Link href="/restful">
+                    <Link href="/get">
                         <Button variant="contained">Restful</Button>
                     </Link>
                     <Link href="/graphql">
                         <Button variant="contained">GraphQL</Button>
                     </Link>
                 </Stack>
-            </>
+            </Box>
         );
     }
     return (

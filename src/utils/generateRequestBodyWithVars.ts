@@ -27,7 +27,7 @@ export function generateHeaders(headers: Variable[]) {
     return headersObject;
 }
 
-export function toVariablesArray(searchParams: ReadonlyURLSearchParams) {
+export function toVariablesArray(searchParams: ReadonlyURLSearchParams): Variable[] {
     const result = [];
 
     searchParams.forEach((value, key) => {

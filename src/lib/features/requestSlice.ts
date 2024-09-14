@@ -1,18 +1,15 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { ILsRequestData } from '@/types/lsData';
 
 export interface RequestSlice {
     responseBody: { [key: string]: string };
     statusCode: number;
     statusText: string;
-    dataLS?: ILsRequestData;
 }
 
 const initialState: RequestSlice = {
     responseBody: {},
     statusCode: null,
     statusText: '',
-    dataLS: null,
 };
 
 export const requestSlice = createSlice({
@@ -28,11 +25,8 @@ export const requestSlice = createSlice({
         setStatusText(state, action: PayloadAction<string>) {
             state.statusText = action.payload;
         },
-        setDataLS(state, action: PayloadAction<ILsRequestData>) {
-            state.dataLS = action.payload;
-        },
     },
 });
 
-export const { setResponseBody, setStatusCode, setStatusText, setDataLS } = requestSlice.actions;
+export const { setResponseBody, setStatusCode, setStatusText } = requestSlice.actions;
 export default requestSlice.reducer;

@@ -59,6 +59,7 @@ export default function SendRequestBar() {
                     url: decodeData.url,
                     body: decodeData.body,
                     headers,
+                    variables: variablesBody,
                 } as ILsRequestData);
             } catch (err) {
                 dispatch(setStatusText(err.message));
