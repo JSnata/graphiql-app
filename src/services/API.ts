@@ -73,12 +73,16 @@ export const graphqlSendRequest = async (
 
         return {
             status: response.status,
+            statusText: response.statusText,
+            message: `Success ${response.status} ${response.statusText}`,
             data,
             error: false,
         };
     } catch (error) {
         return {
             status: 500,
+            statusText: 'Internal Server Error',
+            data: null,
             message: error instanceof Error ? error.message : 'Unknown error',
             error: true,
         };
