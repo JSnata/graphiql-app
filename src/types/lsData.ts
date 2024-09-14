@@ -4,5 +4,5 @@ export interface ILsRequestData {
     url: string;
     body: string;
     headers: Array<{ [key: string]: string }>;
-    timestamp: string;
+    timestamp?: string;
 }
