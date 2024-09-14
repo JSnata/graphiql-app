@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';

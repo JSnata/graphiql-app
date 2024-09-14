@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -71,7 +72,7 @@ export default function Home() {
                             alignItems: 'center',
                         }}
                     >
-                        <Stack direction="row" spacing={2}>
+                        <Stack direction="row" spacing={2} data-testid="auth-actions-container">
                             <Link href="/signin">
                                 <Button variant="contained">{t('signin')}</Button>
                             </Link>

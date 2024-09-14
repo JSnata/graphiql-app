@@ -2,7 +2,7 @@
 
 import { IconButton, Stack, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
 import { ChangedVariable, Variable } from '@/lib/features/variablesSlice';

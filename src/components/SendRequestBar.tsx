@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import MethodSelector from '@/components/MethodSelector';
 import Endpoint from '@/components/Endpoint';
 import { Box, Button } from '@mui/material';

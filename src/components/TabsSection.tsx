@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Tab, Tabs } from '@mui/material';
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 export default function TabsSection({ elems, labels }: { elems: ReactNode[]; labels: string[] }) {
     const [value, setValue] = useState(0);
