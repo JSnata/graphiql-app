@@ -10,10 +10,11 @@ import { usePathname } from 'next/navigation';
 interface IQueryBarProps {
     schema: GraphQLSchema | null;
     children: React.ReactNode;
+    handleChangeQuery: (value: string) => void;
 }
 
 export default function QueryBar(props: IQueryBarProps) {
-    const { schema, children } = props;
+    const { schema, children, handleChangeQuery } = props;
     const [showDocumentation, setShowDocumentation] = useState(false);
     const pathName = usePathname();
     const toggleDocumentation = () => {
@@ -42,7 +43,13 @@ export default function QueryBar(props: IQueryBarProps) {
         <Box sx={{ my: 2, display: 'flex', flexDirection: 'row' }}>
             <Grid container spacing={2}>
                 <Grid item xs={showDocumentation ? 5 : 12}>
-                    <CodeMirrorGraphqlEditor schema={schema} handleChange={(value) => setQueryToUrl(value)} />
+                    <CodeMirrorGraphqlEditor
+                        schema={schema}
+                        handleChange={(value) => {
+                            setQueryToUrl(value);
+                            handleChangeQuery(value);
+                        }}
+                    />
                 </Grid>
 
                 {showDocumentation && (
