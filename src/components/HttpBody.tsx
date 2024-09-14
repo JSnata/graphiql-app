@@ -9,7 +9,7 @@ import CodeMirror, {
     StateEffect,
     StateField,
 } from '@uiw/react-codemirror';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { format } from 'prettier';
 import * as parser from 'prettier/plugins/babel';
@@ -43,6 +43,7 @@ export default function HttpBody() {
     const pathname = usePathname();
     const t = useTranslations('Request');
     const params = pathname.split('/').filter(Boolean); // аналог useParams, обновляющийся при использовании history API
+    const searchParams = useSearchParams();
     const [code, setCode] = useState(decodeBase64(decodeURIComponent(params[2] || '')));
     const [error, setError] = useState('');
     const variablesBody = useSelector((state: RootState) => state.variables.variablesBody);
@@ -116,7 +117,7 @@ export default function HttpBody() {
                 }}
                 onBlur={() => {
                     if (params[1]) {
-                        replace(`/${params[0]}/${params[1]}/${encodeBase64(code)}`);
+                        replace(`/${params[0]}/${params[1]}/${encodeBase64(code)}?${searchParams.toString()}`);
                     } else {
                         setError(t('emptyEndpoint'));
                     }

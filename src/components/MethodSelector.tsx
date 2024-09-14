@@ -2,7 +2,7 @@
 
 import isMethod from '@/utils/isMethod';
 import { MenuItem, Select } from '@mui/material';
-import { notFound, useParams, useRouter } from 'next/navigation';
+import { notFound, useParams, useRouter, useSearchParams } from 'next/navigation';
 
 const methods = [
     { name: 'get', color: '#007f31' },
@@ -19,6 +19,7 @@ const findColor = (selectedMethod: string) => methods.find(({ name }) => selecte
 export default function MethodSelector() {
     const { replace } = useRouter();
     const { request } = useParams<{ request: string[] }>();
+    const searchParams = useSearchParams();
     const method = request[0];
 
     if (!isMethod(request[0])) return notFound();
@@ -34,7 +35,7 @@ export default function MethodSelector() {
             }}
             value={isMethod(method) ? method : 'get'}
             onChange={(e) => {
-                replace(`/${e.target.value}/${request.slice(1).join('/')}`);
+                replace(`/${e.target.value}/${request.slice(1).join('/')}?${searchParams.toString()}`);
             }}
         >
             {methods.map(({ color, name }) => (
