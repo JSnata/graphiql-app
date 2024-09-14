@@ -17,6 +17,7 @@ import HttpResponse from '@/components/HttpResponse';
 import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/graphqlSlice';
 import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
+import { useTranslations } from 'next-intl';
 
 const ReactGraphqlEditor = dynamic(() => import('@/components/graphqlComponents/ReactGraphqlEditor'), { ssr: false });
 
@@ -27,9 +28,10 @@ export default function GraphqlPage() {
     const variablesHeader = useAppSelector((state) => state.variables.variablesHeader);
     const variablesBody = useAppSelector((state) => state.variables.variablesBody);
     const dispatch = useAppDispatch();
+    const t = useTranslations('GraphQL');
     const handleSendRequest = async (url: string) => {
         if (!url) {
-            toast.warn('Please enter URL');
+            toast.warn(t('enterEndpoint'));
             return;
         }
         try {
@@ -44,16 +46,19 @@ export default function GraphqlPage() {
                 body: query,
                 headers: variablesHeader.map((header) => ({ key: header.key, value: header.value })),
             } as ILsRequestData);
+            toast(`${t('responseStatus')} ${response.message}`, {
+                theme: 'dark',
+            });
         } catch (error) {
             dispatch(setStatusText(error.message));
+            toast.error(`${t('requestE')} ${error.message}`);
             console.error(error);
         }
     };
 
     const handleSendIntrospection = async (sdlUrl: string) => {
-        // console.log(sdlUrl, 'sdlUrl');
         if (!sdlUrl) {
-            toast.warn('Please enter SDL URL');
+            toast.warn(t('enterSDL'));
             return;
         }
         setDocsUrl(sdlUrl);
@@ -62,22 +67,21 @@ export default function GraphqlPage() {
         try {
             let response;
             if (url.searchParams.has('sdl')) {
-                // console.log(url, 'URL with SDL!!');
                 response = await fetchSchema(url.href);
             } else {
-                // console.log(url, 'URL with Introspection without sdl!!');
                 response = await fetchSchemaWithIntrospection(url.href);
             }
 
             if (response) {
                 const schemaObj = createGraphQLSchema(response);
                 setSchema(schemaObj);
+                toast.success(t('requestSchemaS'));
             } else {
                 throw new Error('Invalid schema data received');
             }
         } catch (error) {
             console.error(error);
-            toast.error(`Failed to fetch schema ${error.message}`);
+            toast.error(`${t('requestE')} ${error.message}`);
         }
     };
 
@@ -88,8 +92,9 @@ export default function GraphqlPage() {
             <QueryBar schema={schema} handleChangeQuery={(value) => setQuery(value)}>
                 <ReactGraphqlEditor url={docsUrl} />
             </QueryBar>
+
             <TabsSection
-                labels={['Headers', 'Variables Body']}
+                labels={[`${t('headers')}`, `${t('variablesBody')}`]}
                 elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
             />
             <HttpResponse type="GRAPHQL" />
