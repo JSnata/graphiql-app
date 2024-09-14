@@ -1,8 +1,6 @@
 'use client';
 
 import { Box, Paper, Stack } from '@mui/material';
-// import { useAppDispatch, useAppSelector } from '@/lib/hook';
-// import { addVariableBodyField, removeVariableBodyField, saveBodyVariable } from '@/lib/features/variablesSlice';
 import VariableInput from '@/components/ui/VariableInput';
 import { toast } from 'react-toastify';
 import { useCallback } from 'react';
@@ -16,8 +14,6 @@ interface IVariablesProps {
 
 export default function VariablesField(props: IVariablesProps) {
     const { variables, saveDispatch, removeDispatch, addDispatch } = props;
-    // const variables = useAppSelector((state) => state.variables.variables);
-    // const dispatch = useAppDispatch();
 
     const isEmpty = variables.find((data) => data.key === '' && data.value === '');
     const handleAddVariable = (e: React.MouseEvent) => {
@@ -32,14 +28,12 @@ export default function VariablesField(props: IVariablesProps) {
         }
 
         if (!isEmpty) {
-            // dispatch(addVariableField({ key: '', value: '' }));
             addDispatch({ key: '', value: '' });
         }
     };
 
     const handleDelete = useCallback(
         (keyValue: string) => {
-            // dispatch(removeVariableField(keyValue));
             removeDispatch(keyValue);
         },
         [removeDispatch],
@@ -50,14 +44,12 @@ export default function VariablesField(props: IVariablesProps) {
             return new Promise((resolve, reject) => {
                 const indexExist = variables.findIndex((data) => data.key === keyField);
                 if (indexExist === index) {
-                    // dispatch(saveVariable({ key: keyField, value: valueField, selectedIndex: index }));
                     saveDispatch(keyField, valueField, index);
                     resolve(true);
                 } else if (indexExist !== -1) {
                     toast.error('Key already exists');
                     reject();
                 } else {
-                    // dispatch(saveVariable({ key: keyField, value: valueField, selectedIndex: index }));
                     saveDispatch(keyField, valueField, index);
                     resolve(true);
                 }
