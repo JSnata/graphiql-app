@@ -9,6 +9,7 @@ import { ILsRequestData } from '@/types/lsData';
 import { useRouter } from 'next/navigation';
 import { encodeBase64 } from '@/utils/base64';
 import { setVariables } from '@/lib/features/variablesSlice';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function HistoryPage() {
     const t = useTranslations('History');
@@ -59,6 +60,7 @@ export default function HistoryPage() {
                                     onClick={() => handleClick(request)}
                                     sx={{ width: '100%' }}
                                 >
+                                    <ArrowForwardIosIcon sx={{ marginRight: 3 }} />
                                     <ListItemText
                                         primary={date}
                                         secondary={
