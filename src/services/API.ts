@@ -45,28 +45,42 @@ export const graphqlSendRequest = async (
         [key: string]: string;
     }[],
 ) => {
-    const requestOptions: RequestInit = { method: 'POST' };
-    requestOptions.body = JSON.stringify({
-        query: generateRequestBodyWithVars(query, variables, false),
-    });
-    const generatedHeaders = generateHeaders(headers);
-    generatedHeaders.set('Content-Type', 'application/json');
-    requestOptions.headers = generatedHeaders;
+    try {
+        const requestOptions: RequestInit = { method: 'POST' };
+        requestOptions.body = JSON.stringify({
+            query: generateRequestBodyWithVars(query, variables, false),
+        });
+        const generatedHeaders = generateHeaders(headers);
+        generatedHeaders.set('Content-Type', 'application/json');
+        requestOptions.headers = generatedHeaders;
 
-    const response = await fetch(url, requestOptions);
-    if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
-    }
-    const contentType = response.headers.get('content-type');
-    let data;
-    if (contentType && contentType.includes('application/json')) {
-        data = await response.json();
-    } else {
-        data = await response.text();
-    }
+        const response = await fetch(url, requestOptions);
+        if (!response.ok) {
+            return {
+                status: response.status,
+                statusText: response.statusText,
+                message: `Error: ${response.status} ${response.statusText}`,
+                error: true,
+            };
+        }
+        const contentType = response.headers.get('content-type');
+        let data;
+        if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+        } else {
+            data = await response.text();
+        }
 
-    return {
-        status: response.status,
-        data,
-    };
+        return {
+            status: response.status,
+            data,
+            error: false,
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            message: error instanceof Error ? error.message : 'Unknown error',
+            error: true,
+        };
+    }
 };
