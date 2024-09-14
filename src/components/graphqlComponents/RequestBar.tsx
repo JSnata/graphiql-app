@@ -43,15 +43,15 @@ export default function RequestBar(props: IRequestBarProps) {
     return (
         <Box>
             <Stack direction={{ xs: 'column', md: 'row' }} sx={{ my: 2 }} spacing={2}>
-                <TextField fullWidth value={endpoint} onChange={handleChangeEndpoint} label={t('endpoint')} />
-                <TextField fullWidth value={sdlEndpoint} onChange={handleChangeSdlEndpoint} label={t('sdlEndpoint')} />
+                <TextField fullWidth value={endpoint} onChange={handleChangeEndpoint} label={t('enterEndpoint')} />
+                <TextField fullWidth value={sdlEndpoint} onChange={handleChangeSdlEndpoint} label={t('enterSDL')} />
             </Stack>
             <Stack direction="row" sx={{ my: 2, justifyContent: 'center' }} spacing={2}>
                 <Button variant="contained" onClick={handleSendRequest}>
-                    Send
+                    {t('send')}
                 </Button>
                 <Button variant="contained" onClick={handleExplorer}>
-                    Explorer
+                    {t('explorer')}
                 </Button>
             </Stack>
         </Box>

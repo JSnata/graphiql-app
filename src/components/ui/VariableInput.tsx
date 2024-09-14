@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
+import { useTranslations } from 'next-intl';
 
 interface IVariableInputProps {
     variable: { [key: string]: string };
@@ -18,6 +19,7 @@ export default function VariableInput(props: IVariableInputProps) {
     const [keyField, setKeyField] = useState(variable.key);
     const [valueField, setValueField] = useState(variable.value);
     const [editMode, setEditMode] = useState(false);
+    const t = useTranslations('GraphQL');
 
     const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setKeyField(e.target.value);
@@ -47,7 +49,7 @@ export default function VariableInput(props: IVariableInputProps) {
                 disabled={!editMode}
                 fullWidth
                 id="variable-key"
-                label="Key"
+                label={t('key')}
                 value={keyField}
                 onChange={handleKeyChange}
             />
@@ -56,7 +58,7 @@ export default function VariableInput(props: IVariableInputProps) {
                 fullWidth
                 disabled={!editMode}
                 id="variable-value"
-                label="Value"
+                label={t('value')}
                 value={valueField}
                 onChange={handleValueChange}
             />
