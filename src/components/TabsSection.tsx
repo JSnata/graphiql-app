@@ -2,6 +2,7 @@
 
 import { Box, Tab, Tabs } from '@mui/material';
 import React, { ReactNode, useState } from 'react';
+import VariablesInfo from '@/components/ui/VariablesInfo';
 
 export default function TabsSection({ elems, labels }: { elems: ReactNode[]; labels: string[] }) {
     const [value, setValue] = useState(0);
@@ -19,12 +20,15 @@ export default function TabsSection({ elems, labels }: { elems: ReactNode[]; lab
                 alignItems: 'center',
             }}
         >
-            <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%', position: 'relative' }}>
                 <Tabs value={value} onChange={handleChange}>
                     {labels.map((label) => (
                         <Tab key={label} label={label} />
                     ))}
                 </Tabs>
+                <Box sx={{ position: 'absolute', top: '10px', right: 0 }}>
+                    <VariablesInfo />
+                </Box>
             </Box>
 
             {elems.map((child, index) => index === value && child)}

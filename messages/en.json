@@ -24,20 +24,19 @@
         "poland": "Wrocław, Poland"
     },
     "Auth": {
-        "welcome": "Welcome to",
-        "userWelcome": "Hi,",
-        "signin": "Sign in",
-        "logout": "Logout",
-        "signup": "Sign up",
-        "email": "Email",
-        "loading": "loading",
-        "password": "Password",
-        "noHaveAcc": "Do not have an account?",
-        "haveAcc": "Already have an account?",
-        "toastLoginS": "Logged in successfully!",
-        "toastRegisterS": "Signed up successfully!",
-        "toastAuthE": "Error:",
-        "history": "History"
+      "welcome": "Welcome to",
+      "userWelcome": "Hi,",
+      "signin": "Sign in",
+      "logout": "Logout",
+      "signup": "Signup",
+      "email": "Email",
+      "password": "Password",
+      "noHaveAcc": "Do not have an account?",
+      "haveAcc": "Already have an account?",
+      "toastLoginS": "Logged in successfully!",
+      "toastRegisterS": "Signed up successfully!",
+      "toastAuthE": "Error:",
+      "history": "History"
     },
     "Validation": {
         "required": "Required",
@@ -63,5 +62,24 @@
         "title": "Request history",
         "empty": "You have not made any requests yet",
         "try": "Here is empty. Try these variants:"
-    }
+    },
+  "GraphQL": {
+    "send": "Send",
+    "explorer": "Explorer",
+    "requestSchemaS": "SchemaSDL fetched successfully",
+    "enterSDL": "Please enter SDL endpoint",
+    "enterEndpoint": "Please enter endpoint",
+    "requestE": "Request error:",
+    "variablesBody": "Variables body",
+    "headers": "Headers",
+    "key": "Key",
+    "value": "Value",
+    "responseStatus": "Response status: ",
+    "error": "Error"
+  },
+  "Variables": {
+    "title": "Variables",
+    "format": "Format",
+    "text": "If you are making RESTful requests, variables in the request body should be specified using double curly braces. If you are making GraphQL requests, variables should be specified using a dollar sign."
+  }
 }

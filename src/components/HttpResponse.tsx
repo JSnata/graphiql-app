@@ -9,16 +9,23 @@ import ChipStatusCode from '@/components/ui/ChipStatusCode';
 import { json } from '@codemirror/lang-json';
 import { setResponseBody } from '@/lib/features/requestSlice';
 
-export default function HttpResponse() {
+export default function HttpResponse({ type }: { type: 'REST' | 'GRAPHQL' }) {
     const t = useTranslations('Request');
-    const response = useAppSelector((state) => state.request.responseBody);
-    const statusCode = useAppSelector((state) => state.request.statusCode);
     const dispatch = useAppDispatch();
+    const restResponse = useAppSelector((state) => state.rest.responseBody);
+    const graphqlResponse = useAppSelector((state) => state.graphql.responseBody);
+    const restStatusCode = useAppSelector((state) => state.rest.statusCode);
+    const graphqlStatusCode = useAppSelector((state) => state.graphql.statusCode);
+
+    // const formattedResponse = JSON.stringify(response, null, 2);
+    const response = type === 'REST' ? restResponse : graphqlResponse;
     const formattedResponse = JSON.stringify(response, null, 2);
 
     useEffect(() => {
         dispatch(setResponseBody({}));
     }, [dispatch]);
+
+    const statusCode = type === 'REST' ? restStatusCode : graphqlStatusCode;
 
     return (
         <Box sx={{ width: '100%' }}>

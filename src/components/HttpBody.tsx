@@ -11,14 +11,12 @@ import CodeMirror, {
 } from '@uiw/react-codemirror';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { format } from 'prettier';
-import * as parser from 'prettier/plugins/babel';
-import * as estree from 'prettier/plugins/estree';
 import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/lib/store';
 import { json } from '@codemirror/lang-json';
-import { decodeBase64, encodeBase64 } from '@/utils/base64';
+import { decodeBase64 } from '@/utils/base64';
+import makeBeautify from '@/utils/makeBautify';
 
 const updateDecorations = StateEffect.define<DecorationSet>();
 
@@ -49,21 +47,10 @@ export default function HttpBody() {
 
     const editorRef = useRef<EditorView | null>(null);
 
-    const makeBeautify = async () => {
-        if (!code) return;
-        try {
-            if (code.trim().startsWith('{') && code.trim().endsWith('}')) {
-                setCode(
-                    await format(code, {
-                        parser: 'json',
-                        plugins: [parser, estree],
-                    }),
-                );
-            }
-            setError('');
-        } catch (err: unknown) {
-            if (err instanceof Error) setError(`${t('bodyError')} ${err.message}`);
-        }
+    const handleFormat = async () => {
+        const result = await makeBeautify(code, 'json');
+        setCode(result.code);
+        setError(result.error);
     };
 
     const highlightVariables = useCallback(
@@ -116,7 +103,7 @@ export default function HttpBody() {
                 }}
                 onBlur={() => {
                     if (params[1]) {
-                        replace(`/${params[0]}/${params[1]}/${encodeBase64(code)}`);
+                        replace(`/${params[0]}/${params[1]}/${btoa(code)}`);
                     } else {
                         setError(t('emptyEndpoint'));
                     }
@@ -125,6 +112,7 @@ export default function HttpBody() {
                 placeholder="Text/JSON"
                 theme="light"
                 height="150px"
+                // style={{ fontSize: '18px' }}
             />
             <Box
                 sx={{
@@ -134,7 +122,7 @@ export default function HttpBody() {
                     mt: 2,
                 }}
             >
-                <Button onClick={makeBeautify} variant="contained">
+                <Button onClick={handleFormat} variant="contained">
                     {t('beautify')}
                 </Button>
                 {error && <Typography sx={{ color: 'red' }}>{error}</Typography>}

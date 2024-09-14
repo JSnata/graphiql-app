@@ -2,10 +2,11 @@
 
 import { IconButton, Stack, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
 import { ChangedVariable, Variable } from '@/lib/features/variablesSlice';
+import { useTranslations } from 'next-intl';
 
 interface IVariableInputProps {
     variable: Variable;
@@ -20,6 +21,7 @@ export default function VariableInput(props: IVariableInputProps) {
     const [oldKey, setOldKey] = useState(variable.key);
     const [value, setValue] = useState(variable.value);
     const [editMode, setEditMode] = useState(false);
+    const t = useTranslations('GraphQL');
 
     const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentKey(e.target.value);
@@ -45,8 +47,8 @@ export default function VariableInput(props: IVariableInputProps) {
                 disabled={!editMode}
                 fullWidth
                 id="variable-key"
-                label="Key"
                 value={currentKey}
+                label={t('key')}
                 onChange={handleKeyChange}
             />
             <TextField
@@ -54,7 +56,7 @@ export default function VariableInput(props: IVariableInputProps) {
                 fullWidth
                 disabled={!editMode}
                 id="variable-value"
-                label="Value"
+                label={t('value')}
                 value={value}
                 onChange={handleValueChange}
             />
