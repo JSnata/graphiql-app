@@ -1,8 +1,7 @@
 'use client';
 
-import { Box, Button, List, ListItemButton, ListItemText, Stack, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, List, ListItemButton, ListItemText, Stack, Typography } from '@mui/material';
 import { useTranslations } from 'next-intl';
-import { getSortedRequests } from '@/utils/saveRequestsToLocalStorage';
 import Link from 'next/link';
 import { useAppDispatch } from '@/lib/hook';
 import { ILsRequestData } from '@/types/lsData';
@@ -10,12 +9,22 @@ import { useRouter } from 'next/navigation';
 import { encodeBase64 } from '@/utils/base64';
 import { setVariables } from '@/lib/features/variablesSlice';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import HistoryIcon from '@mui/icons-material/History';
+import { useEffect, useState } from 'react';
 
 export default function HistoryPage() {
     const t = useTranslations('History');
-    const requests = getSortedRequests();
+    const [requests, setRequests] = useState(null);
     const dispatch = useAppDispatch();
     const router = useRouter();
+
+    useEffect(() => {
+        const LSRequests: ILsRequestData[] = JSON.parse(localStorage.getItem('requests')) || [];
+        const sortedRequests = LSRequests.sort(
+            (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+        );
+        setRequests(sortedRequests);
+    }, []);
 
     const handleClick = (data: ILsRequestData) => {
         dispatch(setVariables(data.variables));
@@ -26,7 +35,24 @@ export default function HistoryPage() {
         );
     };
 
-    if (requests && requests.length === 0) {
+    if (!requests) {
+        return (
+            <Box
+                sx={{
+                    position: 'absolute',
+                    inset: 0,
+                    m: 'auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        );
+    }
+
+    if (requests.length === 0) {
         return (
             <Box textAlign="center" pt={3}>
                 <Typography variant="h4">{t('title')}</Typography>
@@ -79,16 +105,13 @@ export default function HistoryPage() {
                     })}
                 </List>
             </Box>
-            <Box
+            <HistoryIcon
                 sx={{
-                    width: '35%',
-                    height: '65%',
+                    width: '45%',
+                    height: '75%',
                     zIndex: -1,
-                    transform: 'translate(30%)',
+                    transform: 'translate(35%)',
                     opacity: 0.1,
-                    backgroundImage: 'url("./history.svg")',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
                     position: 'absolute',
                     top: 0,
                     bottom: 0,

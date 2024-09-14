@@ -9,7 +9,7 @@ import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/re
 import { useTranslations } from 'next-intl';
 import generateRequestBodyWithVars, { generateHeaders, toVariablesArray } from '@/utils/generateRequestBodyWithVars';
 import { toast } from 'react-toastify';
-import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
+import saveRequestsToLocalStorage from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
 import { decodeBase64 } from '@/utils/base64';
 
