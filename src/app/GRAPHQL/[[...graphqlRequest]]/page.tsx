@@ -21,6 +21,7 @@ import makeBeautify from '@/utils/makeBeautify';
 import { useSearchParams } from 'next/navigation';
 import { toVariablesArray } from '@/utils/generateRequestBodyWithVars';
 import { setQuery, setResponseBody, setStatusCode } from '@/lib/features/requestSlice';
+import PrivateRoute from '@/app/router/PrivateRoute';
 
 const ReactGraphqlEditor = dynamic(() => import('@/components/graphqlComponents/ReactGraphqlEditor'), { ssr: false });
 
@@ -98,31 +99,33 @@ export default function GraphqlPage() {
     };
 
     return (
-        <Box>
-            <Typography variant="h5">GraphQL Client</Typography>
-            <RequestBar sendRequest={handleSendRequest} sendIntrospection={handleSendIntrospection} />
-            <TabsSection
-                labels={[`${tRequest('headers')}`, `${tRequest('variablesBody')}`]}
-                elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
-            />
-            <QueryBar
-                setErrorFormat={setErrorFormat}
-                schema={schema}
-                handleChangeQuery={(value) => dispatch(setQuery(value))}
-            >
-                <ReactGraphqlEditor url={docsUrl} />
-            </QueryBar>
-            <Stack direction="row" sx={{ my: 2, alignItems: 'center' }} spacing={2}>
-                <Button variant="contained" onClick={handleFormat}>
-                    {tRequest('beautify')}
-                </Button>
-                {errorFormat && (
-                    <Typography sx={{ color: 'red' }}>
-                        {tRequest('error')}: {errorFormat}
-                    </Typography>
-                )}
-            </Stack>
-            <HttpResponse />
-        </Box>
+        <PrivateRoute>
+            <Box>
+                <Typography variant="h5">GraphQL Client</Typography>
+                <RequestBar sendRequest={handleSendRequest} sendIntrospection={handleSendIntrospection} />
+                <TabsSection
+                    labels={[`${tRequest('headers')}`, `${tRequest('variablesBody')}`]}
+                    elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
+                />
+                <QueryBar
+                    setErrorFormat={setErrorFormat}
+                    schema={schema}
+                    handleChangeQuery={(value) => dispatch(setQuery(value))}
+                >
+                    <ReactGraphqlEditor url={docsUrl} />
+                </QueryBar>
+                <Stack direction="row" sx={{ my: 2, alignItems: 'center' }} spacing={2}>
+                    <Button variant="contained" onClick={handleFormat}>
+                        {tRequest('beautify')}
+                    </Button>
+                    {errorFormat && (
+                        <Typography sx={{ color: 'red' }}>
+                            {tRequest('error')}: {errorFormat}
+                        </Typography>
+                    )}
+                </Stack>
+                <HttpResponse />
+            </Box>
+        </PrivateRoute>
     );
 }
