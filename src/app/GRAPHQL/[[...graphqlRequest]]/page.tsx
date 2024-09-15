@@ -104,7 +104,11 @@ export default function GraphqlPage() {
                 labels={[`${t('headers')}`, `${t('variablesBody')}`]}
                 elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
             />
-            <QueryBar schema={schema} handleChangeQuery={(value) => dispatch(setQuery(value))}>
+            <QueryBar
+                setErrorFormat={setErrorFormat}
+                schema={schema}
+                handleChangeQuery={(value) => dispatch(setQuery(value))}
+            >
                 <ReactGraphqlEditor url={docsUrl} />
             </QueryBar>
             <Stack direction="row" sx={{ my: 2, alignItems: 'center' }} spacing={2}>

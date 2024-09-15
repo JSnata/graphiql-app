@@ -7,20 +7,23 @@ import { useState } from 'react';
 import { GraphQLSchema } from 'graphql/type';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { encodeBase64 } from '@/utils/base64';
+import { useTranslations } from 'next-intl';
 
 interface IQueryBarProps {
     schema: GraphQLSchema | null;
     children: React.ReactNode;
     handleChangeQuery: (value: string) => void;
+    setErrorFormat: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function QueryBar(props: IQueryBarProps) {
-    const { schema, children, handleChangeQuery } = props;
+    const { schema, children, handleChangeQuery, setErrorFormat } = props;
     const [showDocumentation, setShowDocumentation] = useState(false);
     const pathname = usePathname();
     const params = pathname.split('/').filter(Boolean);
     const { replace } = useRouter();
     const searchParams = useSearchParams();
+    const t = useTranslations('Request');
 
     const toggleDocumentation = () => {
         setShowDocumentation((prev) => !prev);
@@ -37,7 +40,9 @@ export default function QueryBar(props: IQueryBarProps) {
                     <CodeMirrorGraphqlEditor
                         schema={schema}
                         handleChange={(value) => {
-                            if (params.length > 1) setQueryToUrl(value);
+                            if (params.length > 1) {
+                                setQueryToUrl(value);
+                            } else setErrorFormat(t('emptyEndpoint'));
                             handleChangeQuery(value);
                         }}
                     />
