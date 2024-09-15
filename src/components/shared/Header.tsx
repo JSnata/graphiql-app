@@ -169,7 +169,6 @@ export default function Header() {
                             sx={{
                                 flexGrow: 1,
                                 display: { xs: 'none', sm: 'flex' },
-                                // justifyContent: 'flex-end',
                             }}
                         >
                             {user ? (
