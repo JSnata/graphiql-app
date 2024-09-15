@@ -100,6 +100,10 @@ export default function GraphqlPage() {
         <Box>
             <Typography variant="h5">GraphQL Client</Typography>
             <RequestBar sendRequest={handleSendRequest} sendIntrospection={handleSendIntrospection} />
+            <TabsSection
+                labels={[`${t('headers')}`, `${t('variablesBody')}`]}
+                elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
+            />
             <QueryBar schema={schema} handleChangeQuery={(value) => setQuery(value)}>
                 <ReactGraphqlEditor url={docsUrl} />
             </QueryBar>
@@ -113,10 +117,6 @@ export default function GraphqlPage() {
                     </Typography>
                 )}
             </Stack>
-            <TabsSection
-                labels={[`${t('headers')}`, `${t('variablesBody')}`]}
-                elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
-            />
             <HttpResponse />
         </Box>
     );
