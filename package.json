@@ -27,6 +27,7 @@
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "@mui/material-nextjs": "^5.16.6",
+    "@netlify/plugin-nextjs": "^5.7.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@uiw/react-codemirror": "^4.23.0",
     "@vitest/coverage-istanbul": "^2.1.0",
