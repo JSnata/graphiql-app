@@ -65,7 +65,7 @@ export default function HistoryPage() {
                     <Link href="/GET">
                         <Button variant="contained">Restful</Button>
                     </Link>
-                    <Link href="/graphql">
+                    <Link href="/GRAPHQL">
                         <Button variant="contained">GraphQL</Button>
                     </Link>
                 </Stack>
