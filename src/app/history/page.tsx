@@ -18,7 +18,7 @@ export default function HistoryPage() {
 
     const handleClick = (data: ILsRequestData) => {
         dispatch(setDataLS(data));
-        router.push(data.type);
+        router.push('/get');
     };
 
     if (requests && requests.length === 0) {

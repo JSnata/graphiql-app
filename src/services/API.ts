@@ -2,6 +2,7 @@
 
 import { getIntrospectionQuery, IntrospectionQuery } from 'graphql/utilities';
 import generateRequestBodyWithVars, { generateHeaders } from '@/utils/generateRequestBodyWithVars';
+import { Variable } from '@/lib/features/variablesSlice';
 
 export const fetchSchema = async (sdlUrl: string) => {
     const response = await fetch(sdlUrl, {
@@ -13,7 +14,7 @@ export const fetchSchema = async (sdlUrl: string) => {
     if (!response.ok) {
         throw new Error(`${response.status + response.statusText}`);
     }
-    const result = await response.json();
+    const result: string = await response.json();
     return result;
 };
 
@@ -32,19 +33,12 @@ export const fetchSchemaWithIntrospection = async (sdlUrl: string) => {
         throw new Error(`${response.status} ${response.statusText}`);
     }
 
-    const result = await response.json();
+    const result: { [key: string]: string } = await response.json();
     const introspectionData = result && (result.data as unknown as IntrospectionQuery);
     return JSON.stringify(introspectionData, null, 2);
 };
 
-export const graphqlSendRequest = async (
-    url: string,
-    query: string,
-    variables: { [key: string]: string }[],
-    headers: {
-        [key: string]: string;
-    }[],
-) => {
+export const graphqlSendRequest = async (url: string, query: string, variables: Variable[], headers: Variable[]) => {
     try {
         const requestOptions: RequestInit = { method: 'POST' };
         requestOptions.body = JSON.stringify({
@@ -64,7 +58,7 @@ export const graphqlSendRequest = async (
             };
         }
         const contentType = response.headers.get('content-type');
-        let data;
+        let data: string | { [key: string]: string };
         if (contentType && contentType.includes('application/json')) {
             data = await response.json();
         } else {

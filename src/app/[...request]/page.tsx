@@ -18,7 +18,7 @@ export default function Restful() {
                 elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
             />
             <HttpBody />
-            <HttpResponse type="REST" />
+            <HttpResponse />
         </Stack>
     );
 }

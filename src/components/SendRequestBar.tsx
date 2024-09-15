@@ -55,7 +55,6 @@ export default function SendRequestBar() {
                 }
                 dispatch(setResponseBody(data as { [key: string]: string }));
                 saveRequestsToLocalStorage({
-                    type: 'REST',
                     method: decodeData.method,
                     url: decodeData.url,
                     body: decodeData.body,

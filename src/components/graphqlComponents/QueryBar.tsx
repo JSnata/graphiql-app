@@ -6,6 +6,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import { useState } from 'react';
 import { GraphQLSchema } from 'graphql/type';
 import { usePathname } from 'next/navigation';
+import { encodeBase64 } from '@/utils/base64';
 
 interface IQueryBarProps {
     schema: GraphQLSchema | null;
@@ -24,7 +25,7 @@ export default function QueryBar(props: IQueryBarProps) {
     const setQueryToUrl = (query: string) => {
         if (query) {
             const pathSegments = pathName.split('/');
-            let encodedEndpoint;
+            let encodedEndpoint: string;
 
             if (pathSegments.length > 2 && pathSegments[2]) {
                 [, , encodedEndpoint] = pathSegments;
@@ -33,7 +34,7 @@ export default function QueryBar(props: IQueryBarProps) {
                 encodedEndpoint = btoa(endpoint);
             }
 
-            const encodedQuery = btoa(query);
+            const encodedQuery = encodeBase64(query);
             const newUrl = `${pathSegments[1] ? `/${pathSegments[1]}` : ''}/${encodedEndpoint}/${encodedQuery}`;
             window.history.replaceState(null, '', newUrl);
         }

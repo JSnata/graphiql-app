@@ -1,7 +1,9 @@
 'use client';
 
+import { decodeBase64, encodeBase64 } from '@/utils/base64';
 import { Box, Button, Stack, TextField } from '@mui/material';
 import { useTranslations } from 'next-intl';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface IRequestBarProps {
@@ -12,16 +14,16 @@ interface IRequestBarProps {
 export default function RequestBar(props: IRequestBarProps) {
     const { sendRequest, sendIntrospection } = props;
     const t = useTranslations('GraphQL');
-    const [endpoint, setEndpoint] = useState<string>('');
+    const { graphqlRequest } = useParams<{ graphqlRequest?: string[] }>();
+    const searchParams = useSearchParams();
+    const [endpoint, setEndpoint] = useState<string>(
+        graphqlRequest ? decodeBase64(decodeURIComponent(graphqlRequest[0] || '') || '') : '',
+    );
     const [sdlEndpoint, setSdlEndpoint] = useState<string>('');
 
     useEffect(() => {
-        if (endpoint) {
-            const encodedEndpoint = btoa(endpoint);
-            const newUrl = `/GRAPHQL/${encodedEndpoint}`;
-            window.history.replaceState(null, '', newUrl);
-        }
-    }, [endpoint]);
+        window.history.replaceState(null, '', `/GRAPHQL/${encodeBase64(endpoint)}?${searchParams.toString()}`);
+    }, [endpoint, searchParams]);
 
     const handleChangeEndpoint = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEndpoint(e.target.value);
@@ -32,13 +34,8 @@ export default function RequestBar(props: IRequestBarProps) {
         setSdlEndpoint(e.target.value);
     };
 
-    const handleSendRequest = () => {
-        sendRequest(endpoint);
-    };
-
-    const handleExplorer = () => {
-        sendIntrospection(sdlEndpoint);
-    };
+    const handleSendRequest = () => sendRequest(endpoint);
+    const handleExplorer = () => sendIntrospection(sdlEndpoint);
 
     return (
         <Box>

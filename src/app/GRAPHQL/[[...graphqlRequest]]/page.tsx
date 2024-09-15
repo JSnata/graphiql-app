@@ -14,11 +14,13 @@ import HttpBodyVars from '@/components/HttpBodyVars';
 import TabsSection from '@/components/TabsSection';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
 import HttpResponse from '@/components/HttpResponse';
-import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/graphqlSlice';
 import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
 import { useTranslations } from 'next-intl';
 import makeBeautify from '@/utils/makeBautify';
+import { useSearchParams } from 'next/navigation';
+import { toVariablesArray } from '@/utils/generateRequestBodyWithVars';
+import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/requestSlice';
 
 const ReactGraphqlEditor = dynamic(() => import('@/components/graphqlComponents/ReactGraphqlEditor'), { ssr: false });
 
@@ -26,7 +28,7 @@ export default function GraphqlPage() {
     const [schema, setSchema] = useState<GraphQLSchema | null>(null);
     const [docsUrl, setDocsUrl] = useState('');
     const [query, setQuery] = useState('');
-    const variablesHeader = useAppSelector((state) => state.variables.variablesHeader);
+    const searchParams = useSearchParams();
     const variablesBody = useAppSelector((state) => state.variables.variablesBody);
     const dispatch = useAppDispatch();
     const t = useTranslations('GraphQL');
@@ -38,16 +40,16 @@ export default function GraphqlPage() {
             return;
         }
         try {
-            const response = await graphqlSendRequest(url, query, variablesHeader, variablesBody);
+            const headers = toVariablesArray(searchParams);
+            const response = await graphqlSendRequest(url, query, headers, variablesBody);
             dispatch(setStatusCode(response.status));
             dispatch(setResponseBody(response.data));
             dispatch(setStatusText(response.statusText));
             saveRequestsToLocalStorage({
-                type: 'GRAPHQL',
                 method: 'GRAPHQL',
                 url,
                 body: query,
-                headers: variablesHeader.map((header) => ({ key: header.key, value: header.value })),
+                headers: headers.map((header) => ({ key: header.key, value: header.value })),
             } as ILsRequestData);
             toast(`${t('responseStatus')} ${response.message}`, {
                 theme: 'dark',
@@ -68,7 +70,7 @@ export default function GraphqlPage() {
         const url = new URL(sdlUrl);
 
         try {
-            let response;
+            let response: string;
             if (url.searchParams.has('sdl')) {
                 response = await fetchSchema(url.href);
             } else {
@@ -115,7 +117,7 @@ export default function GraphqlPage() {
                 labels={[`${t('headers')}`, `${t('variablesBody')}`]}
                 elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
             />
-            <HttpResponse type="GRAPHQL" />
+            <HttpResponse />
         </Box>
     );
 }

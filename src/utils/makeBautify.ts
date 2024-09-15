@@ -3,24 +3,29 @@ import * as babelParser from 'prettier/plugins/babel';
 import * as graphqlParser from 'prettier/plugins/graphql';
 import * as estree from 'prettier/plugins/estree';
 
-const makeBeautify = async (code: string, type: 'json' | 'graphql') => {
+const makeBeautify = async (code: string, parser: 'json' | 'graphql') => {
     if (!code) {
         return {
             code: '',
             error: 'Code is empty',
         };
     }
-    let result;
-    const parser = type === 'json' ? 'json' : 'graphql';
+
+    if ((parser === 'json' && !code.trim().startsWith('{')) || !code.trim().endsWith('}')) {
+        return {
+            code,
+            error: '',
+        };
+    }
+
+    let result: string;
     try {
-        // if (code.trim().startsWith('{') && code.trim().endsWith('}')) {
         result = await format(code, {
             parser,
-            plugins: [type === 'json' ? babelParser : graphqlParser, estree],
+            plugins: [parser === 'json' ? babelParser : graphqlParser, estree],
         });
-        // }
         return {
-            code: result || '',
+            code: result,
             error: '',
         };
     } catch (err: unknown) {
@@ -31,9 +36,11 @@ const makeBeautify = async (code: string, type: 'json' | 'graphql') => {
             };
         }
     }
+
     return {
         code: '',
         error: 'Invalid code structure',
     };
 };
+
 export default makeBeautify;
