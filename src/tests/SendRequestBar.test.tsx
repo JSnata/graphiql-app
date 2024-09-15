@@ -57,7 +57,7 @@ describe('SendRequestBar Component', () => {
             json: () => Promise.resolve(mockResponse),
         });
 
-        renderWithProviders(<SendRequestBar />);
+        await renderWithProviders(<SendRequestBar />);
 
         fireEvent.click(screen.getByText('Send'));
 

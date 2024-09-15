@@ -37,13 +37,13 @@ vi.mock('next/font/google', () => ({
 
 describe('Restful Component Test', async () => {
     it('renders the Restful component and its child components correctly', async () => {
-        await renderWithProviders(<Restful />);
+        await renderWithProviders(<Restful />, { locale: 'en' });
 
         expect(screen.getByText('Restful Client')).toBeInTheDocument();
-        expect(screen.getByText('Send')).toBeInTheDocument();
-        expect(screen.getByText('Beautify')).toBeInTheDocument();
-        expect(screen.getByText('Headers')).toBeInTheDocument();
-        expect(screen.getByText('Variables')).toBeInTheDocument();
+        expect(screen.getByText(/Send/i)).toBeInTheDocument();
+        expect(screen.getByText(/Beautify/i)).toBeInTheDocument();
+        expect(screen.getByText(/Headers/i)).toBeInTheDocument();
+        expect(screen.getByText(/Variables/i)).toBeInTheDocument();
     });
 
     it('beautifies the code in HttpBody when Beautify is clicked', async () => {

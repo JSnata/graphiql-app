@@ -83,7 +83,6 @@ export default function Header() {
             console.error(err);
         }
     };
-
     return (
         <Box sx={{ flexGrow: 1 }} component="header">
             <AnimatedScroll>
@@ -98,7 +97,7 @@ export default function Header() {
                                 style={{ marginRight: '10px' }}
                             />
                             <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
-                                REST/GraphQL Client
+                                RESTful/GraphQL Client
                             </Typography>
                         </Link>
 
@@ -135,11 +134,22 @@ export default function Header() {
                                                   {t('userWelcome')} {getName()}
                                               </Typography>
                                           </MenuItem>,
-                                          <Divider key="divider" />,
+                                          <Divider key="divider-restful" />,
+                                          <MenuItem key="restful" onClick={() => router.push('/GET')}>
+                                              RESTful
+                                          </MenuItem>,
+                                          <MenuItem key="graphql" onClick={() => router.push('/GRAPHQL/')}>
+                                              GraphQL
+                                          </MenuItem>,
+                                          <MenuItem key="history" onClick={() => router.push('/history')}>
+                                              {t('history')}
+                                          </MenuItem>,
+                                          <Divider key="divider-logout" />,
                                           <MenuItem key="logout" onClick={handleLogout}>
                                               {t('logout')}
                                               <LogoutIcon sx={{ ml: 1.2 }} />
                                           </MenuItem>,
+                                          <Divider key="divider-locale" />,
                                           <MenuItem key="localeSwitcher">
                                               <LocaleSwitcher />
                                           </MenuItem>,
@@ -162,20 +172,54 @@ export default function Header() {
                             sx={{
                                 flexGrow: 1,
                                 display: { xs: 'none', sm: 'flex' },
-                                justifyContent: 'flex-end',
                             }}
                         >
                             {user ? (
-                                <Stack direction="row" spacing={2} alignItems="center">
-                                    <LocaleSwitcher />
-                                    <Typography variant="subtitle1">
-                                        {t('userWelcome')} {getName()}
-                                    </Typography>
-                                    <Button size="small" variant="contained" color="secondary" onClick={handleLogout}>
-                                        {t('logout')}
-                                        <LogoutIcon sx={{ ml: 1.2 }} />
-                                    </Button>
-                                </Stack>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        width: '100%',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <Box sx={{ px: 2 }}>
+                                        <Stack direction="row" spacing={2} alignItems="center">
+                                            <Divider orientation="vertical" flexItem />
+                                            <Link href="/GET">
+                                                <Button size="small" variant="contained" color="secondary">
+                                                    RESTful
+                                                </Button>
+                                            </Link>
+                                            <Link href="/GRAPHQL">
+                                                <Button size="small" variant="contained" color="secondary">
+                                                    GRAPHQL
+                                                </Button>
+                                            </Link>
+                                            <Link href="/history">
+                                                <Button size="small" variant="contained" color="secondary">
+                                                    {t('history')}
+                                                </Button>
+                                            </Link>
+                                        </Stack>
+                                    </Box>
+                                    <Stack direction="row" spacing={2} alignItems="center">
+                                        <LocaleSwitcher />
+                                        <Typography variant="subtitle1">
+                                            {t('userWelcome')} {getName()}
+                                        </Typography>
+
+                                        <Button
+                                            size="small"
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={handleLogout}
+                                        >
+                                            {t('logout')}
+                                            <LogoutIcon sx={{ ml: 1.2 }} />
+                                        </Button>
+                                    </Stack>
+                                </Box>
                             ) : (
                                 <Stack direction="row" spacing={2}>
                                     <LocaleSwitcher />

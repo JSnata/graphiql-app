@@ -59,7 +59,6 @@ export default function GraphqlPage() {
             });
         } catch (error) {
             toast.error(`${tGraphql('requestE')} ${error.message}`);
-            console.error(error);
         }
     };
 
@@ -87,7 +86,6 @@ export default function GraphqlPage() {
                 throw new Error('Invalid schema data received');
             }
         } catch (error) {
-            console.error(error);
             toast.error(`${tGraphql('requestE')} ${error.message}`);
         }
     };

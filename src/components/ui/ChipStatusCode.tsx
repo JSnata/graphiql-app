@@ -44,5 +44,5 @@ export default function ChipStatusCode({ statusCode }: { statusCode: number }) {
     if (statusCode >= 500) {
         return <Chip label={label} color="error" icon={<ErrorIcon />} variant="outlined" />;
     }
-    return <Chip label="Unknown Status" color="default" />;
+    return <Chip label="Unknown" color="default" />;
 }
