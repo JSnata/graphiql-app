@@ -99,7 +99,7 @@ export default function Home() {
                         location={`${tAbout('poland')}`}
                     />
                     <InfoCard
-                        name="Denis Shmuratkin"
+                        name={`${tAbout('denis')}`}
                         github="DialecticalLaw"
                         githubLink="https://github.com/DialecticalLAw"
                         location={`${tAbout('syktyvkar')}`}
