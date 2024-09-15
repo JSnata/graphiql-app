@@ -4,7 +4,6 @@ import { ReadonlyURLSearchParams } from 'next/navigation';
 export default function generateRequestBodyWithVars(body: string, variables: Variable[], useBrackets = true) {
     const regexBrackets = /{{(.*?)}}/g;
     const regexDollar = /\$(\w+)/g;
-    // console.log(variables, variables.length, 'variables');
     const replaceVariables = (str: string) => {
         const regex = useBrackets ? regexBrackets : regexDollar;
         return str.replace(regex, (match, variableName) => {
