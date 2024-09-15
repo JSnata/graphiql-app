@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Box, Paper, Stack } from '@mui/material';
 import VariableInput from '@/components/ui/VariableInput';
 import { toast } from 'react-toastify';

@@ -11,10 +11,11 @@ import { setVariables } from '@/lib/features/variablesSlice';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HistoryIcon from '@mui/icons-material/History';
 import { useEffect, useState } from 'react';
+import { setQuery, setSdl } from '@/lib/features/requestSlice';
 
 export default function HistoryPage() {
     const t = useTranslations('History');
-    const [requests, setRequests] = useState(null);
+    const [requests, setRequests] = useState<ILsRequestData[]>(null);
     const dispatch = useAppDispatch();
     const router = useRouter();
 
@@ -28,6 +29,10 @@ export default function HistoryPage() {
 
     const handleClick = (data: ILsRequestData) => {
         dispatch(setVariables(data.variables));
+        if (data.method === 'GRAPHQL') {
+            dispatch(setQuery(data.body));
+            dispatch(setSdl(data.sdl));
+        }
         const params = new URLSearchParams();
         data.headers.forEach(({ key, value }) => params.set(encodeURIComponent(key), encodeURIComponent(value)));
         router.push(`${data.method}/${encodeBase64(data.url)}/${encodeBase64(data.body)}?${params.toString()}`);

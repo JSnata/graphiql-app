@@ -10,15 +10,12 @@ import CodeMirror, {
     StateField,
 } from '@uiw/react-codemirror';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState, useCallback } from 'react';
-import { format } from 'prettier';
-import * as parser from 'prettier/plugins/babel';
-import * as estree from 'prettier/plugins/estree';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/lib/store';
 import { json } from '@codemirror/lang-json';
 import { decodeBase64, encodeBase64 } from '@/utils/base64';
+import makeBeautify from '@/utils/makeBeautify';
+import { useAppSelector } from '@/lib/hook';
 
 const updateDecorations = StateEffect.define<DecorationSet>();
 
@@ -46,25 +43,23 @@ export default function HttpBody() {
     const searchParams = useSearchParams();
     const [code, setCode] = useState(decodeBase64(decodeURIComponent(params[2] || '')));
     const [error, setError] = useState('');
-    const variablesBody = useSelector((state: RootState) => state.variables.variablesBody);
+    const variablesBody = useAppSelector((state) => state.variables.variablesBody);
 
     const editorRef = useRef<EditorView | null>(null);
 
-    const makeBeautify = async () => {
-        if (!code) return;
-        try {
-            if (code.trim().startsWith('{') && code.trim().endsWith('}')) {
-                setCode(
-                    await format(code, {
-                        parser: 'json',
-                        plugins: [parser, estree],
-                    }),
-                );
-            }
-            setError('');
-        } catch (err: unknown) {
-            if (err instanceof Error) setError(`${t('bodyError')} ${err.message}`);
+    const updateUrl = (newCode: string) => {
+        if (params[1]) {
+            replace(`/${params[0]}/${params[1]}/${encodeBase64(newCode)}?${searchParams.toString()}`);
+        } else {
+            setError(t('emptyEndpoint'));
         }
+    };
+
+    const handleFormat = async () => {
+        const result = await makeBeautify(code, 'json');
+        setCode(result.code);
+        setError(result.error);
+        updateUrl(result.code);
     };
 
     const highlightVariables = useCallback(
@@ -115,13 +110,7 @@ export default function HttpBody() {
                         highlightVariables(value, editor);
                     }
                 }}
-                onBlur={() => {
-                    if (params[1]) {
-                        replace(`/${params[0]}/${params[1]}/${encodeBase64(code)}?${searchParams.toString()}`);
-                    } else {
-                        setError(t('emptyEndpoint'));
-                    }
-                }}
+                onBlur={() => updateUrl(code)}
                 extensions={[json(), decorationsField]}
                 placeholder="Text/JSON"
                 theme="light"
@@ -135,7 +124,7 @@ export default function HttpBody() {
                     mt: 2,
                 }}
             >
-                <Button onClick={makeBeautify} variant="contained">
+                <Button onClick={handleFormat} variant="contained">
                     {t('beautify')}
                 </Button>
                 {error && <Typography sx={{ color: 'red' }}>{error}</Typography>}

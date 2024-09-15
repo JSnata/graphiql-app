@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import VariablesField from '@/components/ui/VariablesField';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangedVariable } from '@/lib/features/variablesSlice';

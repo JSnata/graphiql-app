@@ -1,11 +1,12 @@
 'use client';
 
+import React from 'react';
 import MethodSelector from '@/components/MethodSelector';
 import Endpoint from '@/components/Endpoint';
 import { Box, Button } from '@mui/material';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
-import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/requestSlice';
+import { setResponseBody, setStatusCode } from '@/lib/features/requestSlice';
 import { useTranslations } from 'next-intl';
 import generateRequestBodyWithVars, { generateHeaders, toVariablesArray } from '@/utils/generateRequestBodyWithVars';
 import { toast } from 'react-toastify';
@@ -54,7 +55,6 @@ export default function SendRequestBar() {
                 }
                 dispatch(setResponseBody(data as { [key: string]: string }));
                 saveRequestsToLocalStorage({
-                    type: 'REST',
                     method: decodeData.method,
                     url: decodeData.url,
                     body: decodeData.body,
@@ -62,8 +62,7 @@ export default function SendRequestBar() {
                     variables: variablesBody,
                 } as ILsRequestData);
             } catch (err) {
-                dispatch(setStatusText(err.message));
-                toast.error(`Error ${err}`);
+                toast.error(`${t('error')} ${err}`);
             }
         }
     };

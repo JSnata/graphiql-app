@@ -1,32 +1,37 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 export interface RequestSlice {
-    responseBody: { [key: string]: string };
+    responseBody: { [key: string]: string } | string;
     statusCode: number;
-    statusText: string;
+    query: string;
+    sdl: string;
 }
 
 const initialState: RequestSlice = {
     responseBody: {},
     statusCode: null,
-    statusText: '',
+    query: '',
+    sdl: '',
 };
 
 export const requestSlice = createSlice({
     name: 'request',
     initialState,
     reducers: {
-        setResponseBody(state, action: PayloadAction<{ [key: string]: string }>) {
+        setResponseBody(state, action: PayloadAction<{ [key: string]: string } | string>) {
             state.responseBody = action.payload;
         },
         setStatusCode(state, action: PayloadAction<number>) {
             state.statusCode = action.payload;
         },
-        setStatusText(state, action: PayloadAction<string>) {
-            state.statusText = action.payload;
+        setQuery(state, action: PayloadAction<string>) {
+            state.query = action.payload;
+        },
+        setSdl(state, action: PayloadAction<string>) {
+            state.sdl = action.payload;
         },
     },
 });
 
-export const { setResponseBody, setStatusCode, setStatusText } = requestSlice.actions;
+export const { setResponseBody, setStatusCode, setQuery, setSdl } = requestSlice.actions;
 export default requestSlice.reducer;
