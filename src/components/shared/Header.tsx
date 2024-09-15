@@ -16,12 +16,13 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase/config';
 
 interface IScrollProps {
     children: React.ReactElement;
@@ -31,7 +32,7 @@ function AnimatedScroll(props: IScrollProps) {
     const { children } = props;
     const trigger = useScrollTrigger({
         disableHysteresis: true,
-        threshold: 100,
+        threshold: 1,
     });
     return React.cloneElement(children, {
         elevation: trigger ? 4 : 0,
@@ -46,10 +47,17 @@ const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 export default function Header() {
     const t = useTranslations('Auth');
-    const { data: session } = useSession();
     const router = useRouter();
-
+    const [user, setUser] = useState(null);
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+            setUser(currentUser);
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -60,15 +68,15 @@ export default function Header() {
     };
 
     const getName = () => {
-        if (!session) {
+        if (!user) {
             return null;
         }
-        return (session?.user?.email ?? 'unknown').split('@')[0];
+        return (user.email ?? 'unknown').split('@')[0];
     };
 
     const handleLogout = async () => {
         try {
-            await signOut();
+            await signOut(auth);
         } catch (err) {
             console.error(err);
         }
@@ -93,7 +101,13 @@ export default function Header() {
                         </Link>
 
                         {/* mobile menu */}
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' }, justifyContent: 'flex-end' }}>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'flex', sm: 'none' },
+                                justifyContent: 'flex-end',
+                            }}
+                        >
                             <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
                                 <MenuIcon />
                             </IconButton>
@@ -112,7 +126,7 @@ export default function Header() {
                                 open={Boolean(anchorElNav)}
                                 onClose={handleCloseNavMenu}
                             >
-                                {session
+                                {user
                                     ? [
                                           <MenuItem key="userWelcome" disableTouchRipple>
                                               <Typography variant="subtitle1">
@@ -141,8 +155,14 @@ export default function Header() {
                             </Menu>
                         </Box>
                         {/* desktop menu */}
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, justifyContent: 'flex-end' }}>
-                            {session ? (
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { xs: 'none', sm: 'flex' },
+                                justifyContent: 'flex-end',
+                            }}
+                        >
+                            {user ? (
                                 <Stack direction="row" spacing={2} alignItems="center">
                                     <LocaleSwitcher />
                                     <Typography variant="subtitle1">

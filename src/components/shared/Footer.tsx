@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,7 +8,6 @@ export default function Footer() {
         <Box
             sx={{
                 width: '100%',
-                // marginTop: 'auto',
                 flex: '0 0 auto',
                 backgroundColor: 'primary.main',
                 padding: '1rem',
