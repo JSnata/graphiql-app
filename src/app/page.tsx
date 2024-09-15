@@ -87,22 +87,22 @@ export default function Home() {
                 <Divider sx={{ mb: 4 }} />
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
                     <InfoCard
-                        name={`${tAbout('ilya')}`}
+                        name={tAbout('ilya')}
                         github="LinderJK"
                         githubLink="https://github.com/LinderJK"
-                        location={`${tAbout('moscow')}`}
+                        location={tAbout('moscow')}
                     />
                     <InfoCard
-                        name={`${tAbout('natallia')}`}
+                        name={tAbout('natallia')}
                         github="JSNata"
                         githubLink="https://github.com/jsnata"
-                        location={`${tAbout('poland')}`}
+                        location={tAbout('poland')}
                     />
                     <InfoCard
-                        name={`${tAbout('denis')}`}
+                        name={tAbout('denis')}
                         github="DialecticalLaw"
                         githubLink="https://github.com/DialecticalLAw"
-                        location={`${tAbout('syktyvkar')}`}
+                        location={tAbout('syktyvkar')}
                     />
                 </Stack>
             </Box>

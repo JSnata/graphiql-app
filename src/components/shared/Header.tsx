@@ -87,14 +87,14 @@ export default function Header() {
             <AnimatedScroll>
                 <AppBar component="nav" position="fixed">
                     <Toolbar>
-                        <Image
-                            src="./graph.svg"
-                            alt="Background"
-                            width={40}
-                            height={40}
-                            style={{ marginRight: '10px' }}
-                        />
-                        <Link href="/">
+                        <Link style={{ display: 'flex', alignItems: 'center' }} href="/">
+                            <Image
+                                src="./graph.svg"
+                                alt="Background"
+                                width={40}
+                                height={40}
+                                style={{ marginRight: '10px' }}
+                            />
                             <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
                                 REST/GraphQL Client
                             </Typography>
