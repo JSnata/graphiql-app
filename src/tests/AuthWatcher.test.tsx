@@ -1,11 +1,11 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
-import { describe, it, vi, expect, beforeEach } from 'vitest';
+import { describe, it, vi, expect, beforeEach, Mock } from 'vitest';
 import AuthWatcher, { useAuth } from '../components/AuthWatcher';
 import { renderWithProviders } from './testWithStore/renderWithProviders';
 
 vi.mock('@/components/AuthWatcher', async (importOriginal) => {
-    const actual = await importOriginal();
+    const actual: object = await importOriginal();
     return {
         ...actual,
         useAuth: vi.fn(),
@@ -33,7 +33,7 @@ describe('AuthWatcher Component', () => {
     });
 
     it('renders children after loading completes with no user', async () => {
-        (useAuth as vi.Mock).mockReturnValue({
+        (useAuth as Mock).mockReturnValue({
             user: null,
             loading: false,
         });
@@ -50,7 +50,7 @@ describe('AuthWatcher Component', () => {
     });
 
     it('renders children when user is authenticated', async () => {
-        (useAuth as vi.Mock).mockReturnValue({
+        (useAuth as Mock).mockReturnValue({
             user: { uid: '123', email: 'test@example.com' },
             loading: false,
         });

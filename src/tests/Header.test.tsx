@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, vi, expect, beforeEach } from 'vitest';
+import { describe, it, vi, expect, beforeEach, Mock } from 'vitest';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import Header from '@/components/shared/Header';
@@ -37,7 +37,7 @@ describe('Header Component', () => {
     const mockPush = vi.fn();
 
     beforeEach(() => {
-        (useRouter as vi.Mock).mockReturnValue({
+        (useRouter as Mock).mockReturnValue({
             push: mockPush,
         });
     });
@@ -54,7 +54,7 @@ describe('Header Component', () => {
     });
 
     it('renders correctly with a logged-in user', async () => {
-        (auth.onAuthStateChanged as vi.Mock).mockImplementationOnce((callback) => {
+        (auth.onAuthStateChanged as Mock).mockImplementationOnce((callback) => {
             callback({ email: 'testuser@gmail.com' });
             return vi.fn();
         });
@@ -67,7 +67,7 @@ describe('Header Component', () => {
     });
 
     it('handles logout click', async () => {
-        (auth.onAuthStateChanged as vi.Mock).mockImplementationOnce((callback) => {
+        (auth.onAuthStateChanged as Mock).mockImplementationOnce((callback) => {
             callback({ email: 'testuser@gmail.com' });
             return vi.fn();
         });

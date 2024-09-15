@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, Mock } from 'vitest';
 import { defaultLocale } from '@/localeConf';
 import { cookies } from 'next/headers';
 import { getUserLocale, setUserLocale } from '@/services/locale';
@@ -16,7 +16,7 @@ describe('getUserLocale', () => {
             get: vi.fn(() => ({ value: 'en' })),
         };
 
-        (cookies as vi.Mock).mockReturnValue(mockCookies);
+        (cookies as Mock).mockReturnValue(mockCookies);
 
         const locale = await getUserLocale();
         expect(locale).toBe('en');
@@ -27,7 +27,7 @@ describe('getUserLocale', () => {
             get: vi.fn(() => undefined),
         };
 
-        (cookies as vi.Mock).mockReturnValue(mockCookies);
+        (cookies as Mock).mockReturnValue(mockCookies);
 
         const locale = await getUserLocale();
         expect(locale).toBe(defaultLocale);
@@ -40,7 +40,7 @@ describe('setUserLocale', () => {
             set: vi.fn(),
         };
 
-        (cookies as vi.Mock).mockReturnValue(mockCookies);
+        (cookies as Mock).mockReturnValue(mockCookies);
 
         await setUserLocale('ru');
 

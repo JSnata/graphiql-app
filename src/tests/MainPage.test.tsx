@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, within } from '@testing-library/react';
 import { useAuth } from '@/components/AuthWatcher';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi, Mock } from 'vitest';
 import Home from '../app/page';
 import { renderWithProviders } from './testWithStore/renderWithProviders';
 
@@ -22,7 +22,7 @@ vi.mock('firebase/auth', () => ({
 
 describe('Home Component', () => {
     it('renders loading state', async () => {
-        (useAuth as vi.Mock).mockReturnValue({
+        (useAuth as Mock).mockReturnValue({
             user: null,
             loading: true,
         });
@@ -31,7 +31,7 @@ describe('Home Component', () => {
     });
 
     it('renders when user is authenticated', () => {
-        (useAuth as vi.Mock).mockReturnValue({
+        (useAuth as Mock).mockReturnValue({
             user: { uid: '123', email: 'test@test.com' },
             loading: false,
         });
@@ -43,7 +43,7 @@ describe('Home Component', () => {
     });
 
     it('renders when user not auth', () => {
-        (useAuth as vi.Mock).mockReturnValue({
+        (useAuth as Mock).mockReturnValue({
             user: null,
             loading: false,
         });

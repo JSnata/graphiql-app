@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, vi } from 'vitest';
+import { describe, it, vi, Mock } from 'vitest';
 import HttpHeaders from '@/components/HttpHeaders';
 import { useRouter } from 'next/navigation';
 import { renderWithProviders } from './testWithStore/renderWithProviders';
@@ -21,7 +21,7 @@ describe('HttpHeaders Component', () => {
     const mockReplace = vi.fn();
 
     beforeEach(() => {
-        (useRouter as vi.Mock).mockReturnValue({
+        (useRouter as Mock).mockReturnValue({
             replace: mockReplace,
         });
         mockReplace.mockClear();
