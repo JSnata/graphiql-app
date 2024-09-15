@@ -6,7 +6,7 @@ export default function VariablesInfo() {
     const t = useTranslations('Variables');
     return (
         <Tooltip title={t('text')}>
-            <IconButton size="small">
+            <IconButton sx={{ '&:hover': { cursor: 'default' } }} size="small">
                 <QuestionMarkIcon />
             </IconButton>
         </Tooltip>

@@ -37,8 +37,9 @@ function AnimatedScroll(props: IScrollProps) {
     return React.cloneElement(children, {
         elevation: trigger ? 4 : 0,
         style: {
-            transition: 'background-color 0.3s ease, height 0.3s ease',
-            backgroundColor: trigger ? '#3c5e79' : '#1976d2',
+            transition: '0.3s',
+            backgroundColor: trigger ? 'rgb(22 108 192 / 66%)' : '#1976d2',
+            backdropFilter: trigger ? 'blur(10px)' : 'none',
         },
     });
 }
