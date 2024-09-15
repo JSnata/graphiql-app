@@ -21,6 +21,7 @@ import makeBeautify from '@/utils/makeBeautify';
 import { useSearchParams } from 'next/navigation';
 import { toVariablesArray } from '@/utils/generateRequestBodyWithVars';
 import { setQuery, setResponseBody, setStatusCode } from '@/lib/features/requestSlice';
+import FormatPaintIcon from '@mui/icons-material/FormatPaint';
 
 const ReactGraphqlEditor = dynamic(() => import('@/components/graphqlComponents/ReactGraphqlEditor'), { ssr: false });
 
@@ -115,6 +116,7 @@ export default function GraphqlPage() {
             <Stack direction="row" sx={{ my: 2, alignItems: 'center' }} spacing={2}>
                 <Button variant="contained" onClick={handleFormat}>
                     {tRequest('beautify')}
+                    <FormatPaintIcon sx={{ ml: 1.2 }} />
                 </Button>
                 {errorFormat && (
                     <Typography sx={{ color: 'red' }}>

@@ -23,6 +23,7 @@ import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase/config';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 interface IScrollProps {
     children: React.ReactElement;
@@ -137,6 +138,7 @@ export default function Header() {
                                           <Divider key="divider" />,
                                           <MenuItem key="logout" onClick={handleLogout}>
                                               {t('logout')}
+                                              <LogoutIcon sx={{ ml: 1.2 }} />
                                           </MenuItem>,
                                           <MenuItem key="localeSwitcher">
                                               <LocaleSwitcher />
@@ -171,6 +173,7 @@ export default function Header() {
                                     </Typography>
                                     <Button size="small" variant="contained" color="secondary" onClick={handleLogout}>
                                         {t('logout')}
+                                        <LogoutIcon sx={{ ml: 1.2 }} />
                                     </Button>
                                 </Stack>
                             ) : (

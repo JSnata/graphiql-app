@@ -16,6 +16,7 @@ import { json } from '@codemirror/lang-json';
 import { decodeBase64, encodeBase64 } from '@/utils/base64';
 import makeBeautify from '@/utils/makeBeautify';
 import { useAppSelector } from '@/lib/hook';
+import FormatPaintIcon from '@mui/icons-material/FormatPaint';
 
 const updateDecorations = StateEffect.define<DecorationSet>();
 
@@ -126,6 +127,7 @@ export default function HttpBody() {
             >
                 <Button onClick={handleFormat} variant="contained">
                     {t('beautify')}
+                    <FormatPaintIcon sx={{ ml: 1.2 }} />
                 </Button>
                 {error && <Typography sx={{ color: 'red' }}>{error}</Typography>}
             </Box>

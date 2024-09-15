@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useAuth } from '@/components/AuthWatcher';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase/config';
+import LogoutIcon from '@mui/icons-material/Logout';
 import InfoCard from '../components/ui/InfoCard';
 
 export default function Home() {
@@ -60,6 +61,7 @@ export default function Home() {
                         </Link>
                         <Button variant="contained" color="secondary" onClick={handleSignOut}>
                             {t('logout')}
+                            <LogoutIcon sx={{ ml: 1.2 }} />
                         </Button>
                     </Stack>
                 ) : (

@@ -7,6 +7,8 @@ import { Box, Button, Stack, TextField } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import SendIcon from '@mui/icons-material/Send';
+import ExploreIcon from '@mui/icons-material/Explore';
 
 interface IRequestBarProps {
     sendRequest: (url: string) => void;
@@ -57,9 +59,11 @@ export default function RequestBar(props: IRequestBarProps) {
             <Stack direction="row" sx={{ my: 2, justifyContent: 'center' }} spacing={2}>
                 <Button variant="contained" onClick={handleSendRequest}>
                     {tRequest('send')}
+                    <SendIcon sx={{ ml: 1.2 }} />
                 </Button>
                 <Button variant="contained" onClick={handleExplorer}>
                     {tGraphql('explorer')}
+                    <ExploreIcon sx={{ ml: 1.2 }} />
                 </Button>
             </Stack>
         </Box>

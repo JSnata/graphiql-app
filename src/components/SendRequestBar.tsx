@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import saveRequestsToLocalStorage from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
 import { decodeBase64 } from '@/utils/base64';
+import SendIcon from '@mui/icons-material/Send';
 
 export default function SendRequestBar() {
     const pathname = usePathname();
@@ -72,6 +73,7 @@ export default function SendRequestBar() {
             <Endpoint />
             <Button sx={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }} variant="contained" onClick={handleSend}>
                 {t('send')}
+                <SendIcon sx={{ ml: 1.2 }} />
             </Button>
         </Box>
     );
