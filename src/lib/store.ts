@@ -8,9 +8,6 @@ export const makeStore = () => {
             variables: variablesReducer,
             request: requestReducer,
         },
-        // middleware: (getDefaultMiddleware) => {
-        //   return getDefaultMiddleware().concat(quotesApiSlice.middleware);
-        // },
     });
 };
 

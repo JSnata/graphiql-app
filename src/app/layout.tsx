@@ -17,7 +17,7 @@ import theme from './theme';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'Rest/GraphQL Client',
+    title: 'Restful/GraphQL Client',
     description: 'Rest/GraphQL Client for testing all REST and GraphQL APIs',
     icons: {
         icon: '/favicon.png',
