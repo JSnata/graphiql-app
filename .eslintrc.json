@@ -28,6 +28,7 @@
       }
     ],
     "import/no-extraneous-dependencies": "off",
+    "react/jsx-no-useless-fragment": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
