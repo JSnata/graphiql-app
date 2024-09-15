@@ -21,13 +21,13 @@ vi.mock('firebase/auth', () => ({
 }));
 
 describe('Home Component', () => {
-    it('renders loading state', () => {
+    it('renders loading state', async () => {
         (useAuth as vi.Mock).mockReturnValue({
             user: null,
             loading: true,
         });
-        renderWithProviders(<Home />);
-        expect(screen.getByText('loading')).toBeInTheDocument();
+        await renderWithProviders(<Home />, { locale: 'en' });
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
 
     it('renders when user is authenticated', () => {
@@ -53,8 +53,8 @@ describe('Home Component', () => {
         const container = screen.getByTestId('auth-actions-container');
         expect(container).toBeInTheDocument();
 
-        const signinButton = within(container).getByRole('button', { name: 'Sign in' });
-        const signupButton = within(container).getByRole('button', { name: 'Sign up' });
+        const signinButton = within(container).getByRole('button', { name: /Sign in/i });
+        const signupButton = within(container).getByRole('button', { name: /Signup/i });
 
         expect(signinButton).toBeInTheDocument();
         expect(signupButton).toBeInTheDocument();

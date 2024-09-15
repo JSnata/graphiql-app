@@ -28,7 +28,7 @@ describe('HttpHeaders Component', () => {
     });
 
     it('renders VariablesField with the correct variables', async () => {
-        renderWithProviders(<HttpHeaders />);
+        await renderWithProviders(<HttpHeaders />);
 
         expect(screen.getByDisplayValue('param1')).toBeInTheDocument();
         expect(screen.getByDisplayValue('value1')).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('HttpHeaders Component', () => {
     });
 
     it('handles saving a variable', async () => {
-        renderWithProviders(<HttpHeaders />);
+        await renderWithProviders(<HttpHeaders />);
 
         const keyInput = screen.getByDisplayValue('param1');
         const valueInput = screen.getByDisplayValue('value1');
@@ -58,7 +58,7 @@ describe('HttpHeaders Component', () => {
     });
 
     it('handles removing a variable', async () => {
-        renderWithProviders(<HttpHeaders />);
+        await renderWithProviders(<HttpHeaders />);
 
         const deleteButtons = screen.getAllByLabelText('variable-delete');
         const firstDeleteButton = deleteButtons[0];
