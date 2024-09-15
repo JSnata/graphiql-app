@@ -12,6 +12,16 @@ vi.mock('@uiw/react-codemirror', async () => {
     };
 });
 
+vi.mock('firebase/auth', () => ({
+    getAuth: vi.fn(() => ({})),
+    createUserWithEmailAndPassword: vi.fn(),
+    signInWithEmailAndPassword: vi.fn(),
+    onAuthStateChanged: vi.fn((auth, callback) => {
+        callback(null);
+        return vi.fn();
+    }),
+}));
+
 vi.mock('next/navigation', async () => {
     const original = await vi.importActual('next/navigation');
     return {
