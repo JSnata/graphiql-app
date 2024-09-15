@@ -21,7 +21,7 @@ export default function VariableInput(props: IVariableInputProps) {
     const [oldKey, setOldKey] = useState(variable.key);
     const [value, setValue] = useState(variable.value);
     const [editMode, setEditMode] = useState(false);
-    const t = useTranslations('GraphQL');
+    const t = useTranslations('Request');
 
     const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentKey(e.target.value);

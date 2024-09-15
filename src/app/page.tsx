@@ -49,7 +49,7 @@ export default function Home() {
                         direction={{ xs: 'column', sm: 'row' }}
                         divider={<Divider orientation="vertical" flexItem />}
                     >
-                        <Link href="/get">
+                        <Link href="/GET">
                             <Button variant="contained">Restful</Button>
                         </Link>
                         <Link href="/GRAPHQL/">

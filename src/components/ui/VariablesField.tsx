@@ -32,7 +32,6 @@ export default function VariablesField(props: IVariablesProps) {
         }
 
         if (!isEmpty) {
-            // dispatch(addVariableField({ key: '', value: '' }));
             addDispatch({ key: '', value: '' });
         }
     };

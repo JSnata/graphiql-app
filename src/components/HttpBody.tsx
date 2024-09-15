@@ -9,14 +9,13 @@ import CodeMirror, {
     StateEffect,
     StateField,
 } from '@uiw/react-codemirror';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/lib/store';
 import { json } from '@codemirror/lang-json';
 import { decodeBase64, encodeBase64 } from '@/utils/base64';
 import makeBeautify from '@/utils/makeBeautify';
+import { useAppSelector } from '@/lib/hook';
 
 const updateDecorations = StateEffect.define<DecorationSet>();
 
@@ -41,16 +40,26 @@ export default function HttpBody() {
     const pathname = usePathname();
     const t = useTranslations('Request');
     const params = pathname.split('/').filter(Boolean); // аналог useParams, обновляющийся при использовании history API
+    const searchParams = useSearchParams();
     const [code, setCode] = useState(decodeBase64(decodeURIComponent(params[2] || '')));
     const [error, setError] = useState('');
-    const variablesBody = useSelector((state: RootState) => state.variables.variablesBody);
+    const variablesBody = useAppSelector((state) => state.variables.variablesBody);
 
     const editorRef = useRef<EditorView | null>(null);
+
+    const updateUrl = (newCode: string) => {
+        if (params[1]) {
+            replace(`/${params[0]}/${params[1]}/${encodeBase64(newCode)}?${searchParams.toString()}`);
+        } else {
+            setError(t('emptyEndpoint'));
+        }
+    };
 
     const handleFormat = async () => {
         const result = await makeBeautify(code, 'json');
         setCode(result.code);
         setError(result.error);
+        updateUrl(result.code);
     };
 
     const highlightVariables = useCallback(
@@ -101,13 +110,7 @@ export default function HttpBody() {
                         highlightVariables(value, editor);
                     }
                 }}
-                onBlur={() => {
-                    if (params[1]) {
-                        replace(`/${params[0]}/${params[1]}/${encodeBase64(code)}`);
-                    } else {
-                        setError(t('emptyEndpoint'));
-                    }
-                }}
+                onBlur={() => updateUrl(code)}
                 extensions={[json(), decorationsField]}
                 placeholder="Text/JSON"
                 theme="light"

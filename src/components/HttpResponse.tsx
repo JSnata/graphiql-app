@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
 import ChipStatusCode from '@/components/ui/ChipStatusCode';
 import { json } from '@codemirror/lang-json';
-import { setResponseBody } from '@/lib/features/requestSlice';
+import { setResponseBody, setStatusCode } from '@/lib/features/requestSlice';
 
 export default function HttpResponse() {
     const t = useTranslations('Request');
@@ -18,6 +18,7 @@ export default function HttpResponse() {
 
     useEffect(() => {
         dispatch(setResponseBody({}));
+        dispatch(setStatusCode(null));
     }, [dispatch]);
 
     return (

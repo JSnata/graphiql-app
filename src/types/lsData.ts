@@ -1,9 +1,11 @@
 import { Variable } from '@/lib/features/variablesSlice';
 
 export interface ILsRequestData {
-    method: string;
+    method: 'GRAPHQL' | 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
     url: string;
     body: string;
     headers: Array<Variable>;
-    timestamp?: string;
+    variables: Variable[];
+    timestamp: string;
+    sdl?: string;
 }

@@ -51,13 +51,17 @@
     "Request": {
         "emptyEndpoint": "Please enter the endpoint",
         "keyExists": "Key already exists",
-        "bodyError": "Oops... Error:",
+        "error": "Error:",
         "status": "Status: ",
         "body": "Body: ",
         "response": "Response: ",
         "responseBody": "Response body: ",
         "beautify": "Beautify",
-        "send": "Send"
+        "send": "Send",
+        "key": "Key",
+        "value": "Value",
+        "variablesBody": "Variables body",
+        "headers": "Headers"
     },
     "History": {
         "title": "Request history",
@@ -65,19 +69,10 @@
         "try": "Here is empty. Try these variants:"
     },
     "GraphQL": {
-        "send": "Send",
         "explorer": "Explorer",
         "requestSchemaS": "SchemaSDL fetched successfully",
         "enterSDL": "Please enter SDL endpoint",
-        "enterEndpoint": "Please enter endpoint",
-        "requestE": "Request error:",
-        "variablesBody": "Variables body",
-        "headers": "Headers",
-        "key": "Key",
-        "value": "Value",
-        "responseStatus": "Response status: ",
-        "error": "Error",
-        "format": "Format"
+        "requestE": "Request error:"
     },
     "Variables": {
         "title": "Variables",

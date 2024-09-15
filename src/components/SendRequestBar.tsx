@@ -6,11 +6,11 @@ import Endpoint from '@/components/Endpoint';
 import { Box, Button } from '@mui/material';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
-import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/requestSlice';
+import { setResponseBody, setStatusCode } from '@/lib/features/requestSlice';
 import { useTranslations } from 'next-intl';
 import generateRequestBodyWithVars, { generateHeaders, toVariablesArray } from '@/utils/generateRequestBodyWithVars';
 import { toast } from 'react-toastify';
-import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
+import saveRequestsToLocalStorage from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
 import { decodeBase64 } from '@/utils/base64';
 
@@ -59,10 +59,10 @@ export default function SendRequestBar() {
                     url: decodeData.url,
                     body: decodeData.body,
                     headers,
+                    variables: variablesBody,
                 } as ILsRequestData);
             } catch (err) {
-                dispatch(setStatusText(err.message));
-                toast.error(`Error ${err}`);
+                toast.error(`${t('error')} ${err}`);
             }
         }
     };

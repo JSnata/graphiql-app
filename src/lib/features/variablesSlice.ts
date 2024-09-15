@@ -35,8 +35,11 @@ export const variableSlice = createSlice({
             targetVariable.key = newKey;
             targetVariable.value = value;
         },
+        setVariables(state, action: PayloadAction<Variable[]>) {
+            state.variablesBody = action.payload;
+        },
     },
 });
 
-export const { addVariableBodyField, removeVariableBodyField, saveBodyVariable } = variableSlice.actions;
+export const { addVariableBodyField, removeVariableBodyField, saveBodyVariable, setVariables } = variableSlice.actions;
 export default variableSlice.reducer;
