@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, vi, expect } from 'vitest';
+import { describe, it, vi, expect, Mock } from 'vitest';
 import { useRouter } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
@@ -85,7 +85,7 @@ describe.each([
 ])('Auth Form Component', ({ Component, buttonText, handleSubmitMock, messages }) => {
     it(`should render form and handle submission`, async () => {
         const mockPush = vi.fn();
-        (useRouter as vi.Mock).mockReturnValue({
+        (useRouter as Mock).mockReturnValue({
             push: mockPush,
         });
 

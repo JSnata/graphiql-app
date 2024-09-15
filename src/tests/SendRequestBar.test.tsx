@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, vi, beforeEach } from 'vitest';
+import { describe, it, vi, beforeEach, Mock } from 'vitest';
 import SendRequestBar from '@/components/SendRequestBar';
 import { setResponseBody, setStatusCode } from '@/lib/features/requestSlice';
 import { useAppDispatch } from '@/lib/hook';
@@ -39,8 +39,8 @@ describe('SendRequestBar Component', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-        (global.fetch as vi.Mock).mockClear();
-        (useAppDispatch as vi.Mock).mockReturnValue(mockDispatch);
+        (global.fetch as Mock).mockClear();
+        (useAppDispatch as unknown as Mock).mockReturnValue(mockDispatch);
     });
 
     it('renders correctly and displays the "Send" button', () => {
@@ -51,7 +51,7 @@ describe('SendRequestBar Component', () => {
     it('sends a successful request and dispatches the response', async () => {
         const mockResponse = { data: 'response data' };
 
-        (global.fetch as vi.Mock).mockResolvedValueOnce({
+        (global.fetch as Mock).mockResolvedValueOnce({
             status: 200,
             headers: { get: () => 'application/json' },
             json: () => Promise.resolve(mockResponse),

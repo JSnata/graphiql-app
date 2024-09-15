@@ -3,7 +3,7 @@ import { screen, fireEvent } from '@testing-library/react';
 import HttpBodyVars from '@/components/HttpBodyVars';
 import { removeVariableBodyField, saveBodyVariable } from '@/lib/features/variablesSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
-import { vi } from 'vitest';
+import { vi, Mock } from 'vitest';
 import { renderWithProviders } from './testWithStore/renderWithProviders';
 
 vi.mock('@/lib/hook', () => ({
@@ -20,8 +20,8 @@ vi.mock('next/font/google', () => ({
 describe('HttpBodyVars Component', () => {
     const mockDispatch = vi.fn();
     beforeEach(() => {
-        (useAppDispatch as vi.Mock).mockReturnValue(mockDispatch);
-        (useAppSelector as vi.Mock).mockReturnValue([{ key: 'var1', value: 'value1' }]);
+        (useAppDispatch as unknown as Mock).mockReturnValue(mockDispatch);
+        (useAppSelector as unknown as Mock).mockReturnValue([{ key: 'var1', value: 'value1' }]);
         mockDispatch.mockClear();
     });
 
