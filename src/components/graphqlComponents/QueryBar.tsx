@@ -5,7 +5,7 @@ import CodeMirrorGraphqlEditor from '@/components/graphqlComponents/CodeMirrorGr
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useState } from 'react';
 import { GraphQLSchema } from 'graphql/type';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { encodeBase64 } from '@/utils/base64';
 
 interface IQueryBarProps {
@@ -17,27 +17,17 @@ interface IQueryBarProps {
 export default function QueryBar(props: IQueryBarProps) {
     const { schema, children, handleChangeQuery } = props;
     const [showDocumentation, setShowDocumentation] = useState(false);
-    const pathName = usePathname();
+    const pathname = usePathname();
+    const params = pathname.split('/').filter(Boolean);
+    const { replace } = useRouter();
+    const searchParams = useSearchParams();
+
     const toggleDocumentation = () => {
         setShowDocumentation((prev) => !prev);
     };
 
-    const setQueryToUrl = (query: string) => {
-        if (query) {
-            const pathSegments = pathName.split('/');
-            let encodedEndpoint: string;
-
-            if (pathSegments.length > 2 && pathSegments[2]) {
-                [, , encodedEndpoint] = pathSegments;
-            } else {
-                const endpoint = '';
-                encodedEndpoint = btoa(endpoint);
-            }
-
-            const encodedQuery = encodeBase64(query);
-            const newUrl = `${pathSegments[1] ? `/${pathSegments[1]}` : ''}/${encodedEndpoint}/${encodedQuery}`;
-            window.history.replaceState(null, '', newUrl);
-        }
+    const setQueryToUrl = (value: string) => {
+        replace(`/GRAPHQL/${params[1] || ''}/${encodeBase64(value)}?${searchParams.toString()}`);
     };
 
     return (
@@ -47,7 +37,7 @@ export default function QueryBar(props: IQueryBarProps) {
                     <CodeMirrorGraphqlEditor
                         schema={schema}
                         handleChange={(value) => {
-                            setQueryToUrl(value);
+                            if (params.length > 1) setQueryToUrl(value);
                             handleChangeQuery(value);
                         }}
                     />

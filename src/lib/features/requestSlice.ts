@@ -6,6 +6,7 @@ export interface RequestSlice {
     statusCode: number;
     statusText: string;
     dataLS?: ILsRequestData;
+    query: string;
 }
 
 const initialState: RequestSlice = {
@@ -13,6 +14,7 @@ const initialState: RequestSlice = {
     statusCode: null,
     statusText: '',
     dataLS: null,
+    query: '',
 };
 
 export const requestSlice = createSlice({
@@ -31,8 +33,11 @@ export const requestSlice = createSlice({
         setDataLS(state, action: PayloadAction<ILsRequestData>) {
             state.dataLS = action.payload;
         },
+        setQuery(state, action: PayloadAction<string>) {
+            state.query = action.payload;
+        },
     },
 });
 
-export const { setResponseBody, setStatusCode, setStatusText, setDataLS } = requestSlice.actions;
+export const { setResponseBody, setStatusCode, setStatusText, setDataLS, setQuery } = requestSlice.actions;
 export default requestSlice.reducer;

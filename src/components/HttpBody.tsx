@@ -15,8 +15,8 @@ import { useTranslations } from 'next-intl';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/lib/store';
 import { json } from '@codemirror/lang-json';
-import { decodeBase64 } from '@/utils/base64';
-import makeBeautify from '@/utils/makeBautify';
+import { decodeBase64, encodeBase64 } from '@/utils/base64';
+import makeBeautify from '@/utils/makeBeautify';
 
 const updateDecorations = StateEffect.define<DecorationSet>();
 
@@ -103,7 +103,7 @@ export default function HttpBody() {
                 }}
                 onBlur={() => {
                     if (params[1]) {
-                        replace(`/${params[0]}/${params[1]}/${btoa(code)}`);
+                        replace(`/${params[0]}/${params[1]}/${encodeBase64(code)}`);
                     } else {
                         setError(t('emptyEndpoint'));
                     }
@@ -112,7 +112,6 @@ export default function HttpBody() {
                 placeholder="Text/JSON"
                 theme="light"
                 height="150px"
-                // style={{ fontSize: '18px' }}
             />
             <Box
                 sx={{

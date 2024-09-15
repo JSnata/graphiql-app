@@ -6,12 +6,12 @@ import * as estree from 'prettier/plugins/estree';
 const makeBeautify = async (code: string, parser: 'json' | 'graphql') => {
     if (!code) {
         return {
-            code: '',
+            code,
             error: 'Code is empty',
         };
     }
 
-    if ((parser === 'json' && !code.trim().startsWith('{')) || !code.trim().endsWith('}')) {
+    if (parser === 'json' && (!code.trim().startsWith('{') || !code.trim().endsWith('}'))) {
         return {
             code,
             error: '',
@@ -31,14 +31,14 @@ const makeBeautify = async (code: string, parser: 'json' | 'graphql') => {
     } catch (err: unknown) {
         if (err instanceof Error) {
             return {
-                code: '',
+                code,
                 error: err.message,
             };
         }
     }
 
     return {
-        code: '',
+        code,
         error: 'Invalid code structure',
     };
 };

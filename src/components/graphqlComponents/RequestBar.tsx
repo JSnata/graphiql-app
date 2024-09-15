@@ -4,7 +4,7 @@ import { decodeBase64, encodeBase64 } from '@/utils/base64';
 import { Box, Button, Stack, TextField } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useParams, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface IRequestBarProps {
     sendRequest: (url: string) => void;
@@ -21,12 +21,9 @@ export default function RequestBar(props: IRequestBarProps) {
     );
     const [sdlEndpoint, setSdlEndpoint] = useState<string>('');
 
-    useEffect(() => {
-        window.history.replaceState(null, '', `/GRAPHQL/${encodeBase64(endpoint)}?${searchParams.toString()}`);
-    }, [endpoint, searchParams]);
-
     const handleChangeEndpoint = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEndpoint(e.target.value);
+        window.history.replaceState(null, '', `/GRAPHQL/${encodeBase64(e.target.value)}?${searchParams.toString()}`);
         setSdlEndpoint(`${e.target.value}?sdl`);
     };
 

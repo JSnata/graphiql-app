@@ -17,19 +17,19 @@ import HttpResponse from '@/components/HttpResponse';
 import { saveRequestsToLocalStorage } from '@/utils/saveRequestsToLocalStorage';
 import { ILsRequestData } from '@/types/lsData';
 import { useTranslations } from 'next-intl';
-import makeBeautify from '@/utils/makeBautify';
+import makeBeautify from '@/utils/makeBeautify';
 import { useSearchParams } from 'next/navigation';
 import { toVariablesArray } from '@/utils/generateRequestBodyWithVars';
-import { setResponseBody, setStatusCode, setStatusText } from '@/lib/features/requestSlice';
+import { setQuery, setResponseBody, setStatusCode, setStatusText } from '@/lib/features/requestSlice';
 
 const ReactGraphqlEditor = dynamic(() => import('@/components/graphqlComponents/ReactGraphqlEditor'), { ssr: false });
 
 export default function GraphqlPage() {
     const [schema, setSchema] = useState<GraphQLSchema | null>(null);
     const [docsUrl, setDocsUrl] = useState('');
-    const [query, setQuery] = useState('');
     const searchParams = useSearchParams();
     const variablesBody = useAppSelector((state) => state.variables.variablesBody);
+    const query = useAppSelector((state) => state.request.query);
     const dispatch = useAppDispatch();
     const t = useTranslations('GraphQL');
     const [errorFormat, setErrorFormat] = useState('');
@@ -92,7 +92,7 @@ export default function GraphqlPage() {
 
     const handleFormat = async () => {
         const result = await makeBeautify(query, 'graphql');
-        setQuery(result.code);
+        dispatch(setQuery(result.code));
         setErrorFormat(result.error);
     };
 
@@ -104,7 +104,7 @@ export default function GraphqlPage() {
                 labels={[`${t('headers')}`, `${t('variablesBody')}`]}
                 elems={[<HttpHeaders key="headersVars" />, <HttpBodyVars key="bodyVars" />]}
             />
-            <QueryBar schema={schema} handleChangeQuery={(value) => setQuery(value)}>
+            <QueryBar schema={schema} handleChangeQuery={(value) => dispatch(setQuery(value))}>
                 <ReactGraphqlEditor url={docsUrl} />
             </QueryBar>
             <Stack direction="row" sx={{ my: 2, alignItems: 'center' }} spacing={2}>
