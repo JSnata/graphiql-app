@@ -1,3 +1,3 @@
 export default function isMethod(str: string): boolean {
-    return /^(get|post|put|patch|delete|head|options)$/i.test(str);
+    return /^(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)$/.test(str);
 }

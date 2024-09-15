@@ -30,9 +30,7 @@ export default function HistoryPage() {
         dispatch(setVariables(data.variables));
         const params = new URLSearchParams();
         data.headers.forEach(({ key, value }) => params.set(encodeURIComponent(key), encodeURIComponent(value)));
-        router.push(
-            `${data.method.toLowerCase()}/${encodeBase64(data.url)}/${encodeBase64(data.body)}?${params.toString()}`,
-        );
+        router.push(`${data.method}/${encodeBase64(data.url)}/${encodeBase64(data.body)}?${params.toString()}`);
     };
 
     if (!requests) {
@@ -59,7 +57,7 @@ export default function HistoryPage() {
                 <Typography variant="body1">{t('empty')}</Typography>
                 <Typography variant="body1">{t('try')}</Typography>
                 <Stack direction="row" spacing={1} sx={{ justifyContent: 'center', mt: 2 }}>
-                    <Link href="/get">
+                    <Link href="/GET">
                         <Button variant="contained">Restful</Button>
                     </Link>
                     <Link href="/graphql">
