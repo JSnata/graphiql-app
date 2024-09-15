@@ -28,7 +28,7 @@ describe('InfoCard Component', () => {
             />,
         );
         expect(screen.getByText('Natallia Kulikouskaya')).toBeInTheDocument();
-        expect(screen.getByText('Location: Wrocław, Poland')).toBeInTheDocument();
+        expect(screen.getByText('Wrocław, Poland')).toBeInTheDocument();
         const githubLink = screen.getByText('JSnata');
         expect(githubLink).toBeInTheDocument();
         expect(githubLink.closest('a')).toHaveAttribute('href', 'https://github.com/JSNata');
