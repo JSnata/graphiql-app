@@ -4,11 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { render, type RenderOptions } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 import ToastProvider from '@/providers/ToastProvider';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import { makeStore, type AppStore } from '../../lib/store';
-import theme from '../../app/theme';
+import { makeStore, type AppStore } from '@/lib/store';
 
 const messages = {
     en: {
@@ -42,10 +38,10 @@ const messages = {
             userWelcome: 'Hi,',
             signin: 'Sign in',
             logout: 'Logout',
-            signup: 'Sign up',
+            signup: 'Signup',
             email: 'Email',
-            loading: 'loading',
             password: 'Password',
+            loading: 'Loading...',
             noHaveAcc: 'Do not have an account?',
             haveAcc: 'Already have an account?',
             toastLoginS: 'Logged in successfully!',
@@ -78,6 +74,25 @@ const messages = {
             empty: 'You have not made any requests yet',
             try: 'Here is empty. Try these variants:',
         },
+        GraphQL: {
+            send: 'Send',
+            explorer: 'Explorer',
+            requestSchemaS: 'SchemaSDL fetched successfully',
+            enterSDL: 'Please enter SDL endpoint',
+            enterEndpoint: 'Please enter endpoint',
+            requestE: 'Request error:',
+            variablesBody: 'Variables body',
+            headers: 'Headers',
+            key: 'Key',
+            value: 'Value',
+            responseStatus: 'Response status: ',
+            error: 'Error',
+            format: 'Format',
+        },
+        Variables: {
+            title: 'Variables',
+            text: 'If you are making RESTful requests, variables in the request body should be specified using double curly braces. If you are making GraphQL requests, variables should be specified using a dollar sign.',
+        },
     },
 };
 
@@ -95,14 +110,7 @@ export async function renderWithProviders(
         return (
             <ReduxProvider store={store}>
                 <NextIntlClientProvider messages={messages.en} locale={locale}>
-                    <AppRouterCacheProvider>
-                        <ToastProvider>
-                            <ThemeProvider theme={theme}>
-                                <CssBaseline />
-                                {children}
-                            </ThemeProvider>
-                        </ToastProvider>
-                    </AppRouterCacheProvider>
+                    <ToastProvider>{children}</ToastProvider>
                 </NextIntlClientProvider>
             </ReduxProvider>
         );

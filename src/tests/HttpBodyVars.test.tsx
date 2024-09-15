@@ -1,9 +1,9 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import HttpBodyVars from '@/components/HttpBodyVars';
 import { removeVariableBodyField, saveBodyVariable } from '@/lib/features/variablesSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hook';
+import { vi } from 'vitest';
 import { renderWithProviders } from './testWithStore/renderWithProviders';
 
 vi.mock('@/lib/hook', () => ({
@@ -26,14 +26,14 @@ describe('HttpBodyVars Component', () => {
     });
 
     it('renders VariablesField with variables from Redux store', async () => {
-        renderWithProviders(<HttpBodyVars />);
+        await renderWithProviders(<HttpBodyVars />, { locale: 'en' });
 
         expect(screen.getByDisplayValue('var1')).toBeInTheDocument();
         expect(screen.getByDisplayValue('value1')).toBeInTheDocument();
     });
 
     it('dispatches saveBodyVariable when saving an existing variable', async () => {
-        renderWithProviders(<HttpBodyVars />);
+        await renderWithProviders(<HttpBodyVars />, { locale: 'en' });
 
         const keyInput = screen.getByDisplayValue('var1');
         const valueInput = screen.getByDisplayValue('value1');
@@ -53,7 +53,7 @@ describe('HttpBodyVars Component', () => {
     });
 
     it('dispatches removeVariableBodyField when removing a variable', async () => {
-        renderWithProviders(<HttpBodyVars />);
+        await renderWithProviders(<HttpBodyVars />, { locale: 'en' });
 
         const removeButton = screen.getByLabelText('variable-delete');
         fireEvent.click(removeButton);

@@ -48,7 +48,7 @@ describe('Header Component', () => {
         const signInButton = screen.getByRole('button', { name: /Sign in/i });
         expect(signInButton).toBeInTheDocument();
 
-        const signUpButton = screen.getByRole('button', { name: /Sign up/i });
+        const signUpButton = screen.getByRole('button', { name: /Signup/i });
         expect(signUpButton).toBeInTheDocument();
         expect(screen.queryByText(/Hi/i)).not.toBeInTheDocument();
     });
