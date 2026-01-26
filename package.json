@@ -38,7 +38,7 @@
     "graphiql": "^3.7.1",
     "graphql-ws": "^5.16.0",
     "js-cookie": "^3.0.5",
-    "next": "14.2.5",
+    "next": "14.2.35",
     "next-auth": "^4.24.7",
     "next-intl": "^3.17.6",
     "prettier": "^3.3.3",
